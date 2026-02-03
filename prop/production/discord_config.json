@@ -1,0 +1,8 @@
+{
+  "webhook_url": "https://discord.com/api/webhooks/1444379104429473884/OrLXBeonnM6hioriZrO798vNExWOLKXssuoJVMH6rtmWeIPNzkOfFoWHtXJutG7Jud80",
+  "enabled": true,
+  "notify_on_entry": true,
+  "notify_on_exit": true,
+  "notify_on_emergency": true,
+  "notify_on_milestone": true
+}
