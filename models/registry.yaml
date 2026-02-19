@@ -1,0 +1,613 @@
+sovereign_models:
+  source: sovereign_bot.py --train / --retrain
+  format: xgboost_json
+  directory: sovereign_models/
+  description: Per-symbol XGBoost H1 signal filters (WFO-trained)
+ml_boxes_native:
+  source: run_native_ml.sh
+  format: xgboost_json
+  directory: ml_boxes_native/
+  description: Native ML training output (no Wine)
+optuna_results:
+  source: optuna_orchestrator.py
+  format: csv + xgboost_json
+  directory: optuna_results/
+  description: Hyperparameter optimization results per symbol
+symbols:
+  ALGUSD:
+    champion: ALGUSD_20260211_100150
+    versions:
+    - version: ALGUSD_20260210_191530
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/ALGUSD_20260210_191530.json
+      timestamp: '20260210_191530'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0019594351702519087
+        num_boost_round: 1820
+    - version: ALGUSD_20260211_100150
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/ALGUSD_20260211_100150.json
+      timestamp: '20260211_100150'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0019594351702519087
+        num_boost_round: 1820
+    ab_results: []
+  AVAUSD:
+    champion: AVAUSD_20260211_100154
+    versions:
+    - version: AVAUSD_20260210_191533
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/AVAUSD_20260210_191533.json
+      timestamp: '20260210_191533'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0020453159413415583
+        num_boost_round: 159
+    - version: AVAUSD_20260211_100154
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/AVAUSD_20260211_100154.json
+      timestamp: '20260211_100154'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0020453159413415583
+        num_boost_round: 159
+    ab_results: []
+  BCHUSD:
+    champion: BCHUSD_20260211_100209
+    versions:
+    - version: BCHUSD_20260210_191552
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/BCHUSD_20260210_191552.json
+      timestamp: '20260210_191552'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0021068763215532616
+        num_boost_round: 702
+    - version: BCHUSD_20260211_100209
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/BCHUSD_20260211_100209.json
+      timestamp: '20260211_100209'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0021068763215532616
+        num_boost_round: 702
+    ab_results: []
+  ETCUSD:
+    champion: ETCUSD_20260211_100214
+    versions:
+    - version: ETCUSD_20260210_191601
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/ETCUSD_20260210_191601.json
+      timestamp: '20260210_191601'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.001327630609226625
+        num_boost_round: 620
+    - version: ETCUSD_20260211_100214
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/ETCUSD_20260211_100214.json
+      timestamp: '20260211_100214'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.001327630609226625
+        num_boost_round: 620
+    ab_results: []
+  GALUSD:
+    champion: GALUSD_20260211_100222
+    versions:
+    - version: GALUSD_20260210_191622
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/GALUSD_20260210_191622.json
+      timestamp: '20260210_191622'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0021606852105954233
+        num_boost_round: 1945
+    - version: GALUSD_20260211_100222
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/GALUSD_20260211_100222.json
+      timestamp: '20260211_100222'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0021606852105954233
+        num_boost_round: 1945
+    ab_results: []
+  GRTUSD:
+    champion: GRTUSD_20260211_100230
+    versions:
+    - version: GRTUSD_20260210_191638
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/GRTUSD_20260210_191638.json
+      timestamp: '20260210_191638'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0014405039615159013
+        num_boost_round: 1456
+    - version: GRTUSD_20260211_100230
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/GRTUSD_20260211_100230.json
+      timestamp: '20260211_100230'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0014405039615159013
+        num_boost_round: 1456
+    ab_results: []
+  ICPUSD:
+    champion: ICPUSD_20260211_100239
+    versions:
+    - version: ICPUSD_20260210_191700
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/ICPUSD_20260210_191700.json
+      timestamp: '20260210_191700'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0020416755209347287
+        num_boost_round: 1777
+    - version: ICPUSD_20260211_100239
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/ICPUSD_20260211_100239.json
+      timestamp: '20260211_100239'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0020416755209347287
+        num_boost_round: 1777
+    ab_results: []
+  JP225.cash:
+    champion: JP225.cash_20260217_182955
+    versions:
+    - version: JP225.cash_20260210_191720
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/JP225.cash_20260210_191720.json
+      timestamp: '20260210_191720'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0008983312138396248
+        num_boost_round: 1849
+    - version: JP225.cash_20260211_100248
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/JP225.cash_20260211_100248.json
+      timestamp: '20260211_100248'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0008983312138396248
+        num_boost_round: 1849
+    - version: JP225.cash_20260214_120643
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/JP225.cash_20260214_120643.json
+      timestamp: '20260214_120643'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0007036094362026698
+        num_boost_round: 979
+    - version: JP225.cash_20260215_103302
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/JP225.cash_20260215_103302.json
+      timestamp: '20260215_103302'
+      metadata:
+        train_samples: 29699
+        optuna_ev: 0.0007036094362026698
+        num_boost_round: 979
+    - version: JP225.cash_20260217_163122
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/JP225.cash_20260217_163122.json
+      timestamp: '20260217_163122'
+      metadata:
+        train_samples: 29699
+        optuna_ev: 0.0007036094362026698
+        num_boost_round: 979
+    - version: JP225.cash_20260217_182032
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/JP225.cash_20260217_182032.json
+      timestamp: '20260217_182032'
+      metadata:
+        train_samples: 29699
+        optuna_ev: 0.0007036094362026698
+        num_boost_round: 979
+    - version: JP225.cash_20260217_182955
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/JP225.cash_20260217_182955.json
+      timestamp: '20260217_182955'
+      metadata:
+        train_samples: 29699
+        optuna_ev: 0.0007036094362026698
+        num_boost_round: 979
+    ab_results: []
+  LNKUSD:
+    champion: LNKUSD_20260211_100254
+    versions:
+    - version: LNKUSD_20260210_191726
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/LNKUSD_20260210_191726.json
+      timestamp: '20260210_191726'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.001143039887285324
+        num_boost_round: 149
+    - version: LNKUSD_20260211_100254
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/LNKUSD_20260211_100254.json
+      timestamp: '20260211_100254'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.001143039887285324
+        num_boost_round: 149
+    ab_results: []
+  MANUSD:
+    champion: MANUSD_20260211_100258
+    versions:
+    - version: MANUSD_20260210_191731
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/MANUSD_20260210_191731.json
+      timestamp: '20260210_191731'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.002836723224475624
+        num_boost_round: 403
+    - version: MANUSD_20260211_100258
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/MANUSD_20260211_100258.json
+      timestamp: '20260211_100258'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.002836723224475624
+        num_boost_round: 403
+    ab_results: []
+  NERUSD:
+    champion: NERUSD_20260211_100303
+    versions:
+    - version: NERUSD_20260210_191741
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/NERUSD_20260210_191741.json
+      timestamp: '20260210_191741'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.005170754187999071
+        num_boost_round: 945
+    - version: NERUSD_20260211_100303
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/NERUSD_20260211_100303.json
+      timestamp: '20260211_100303'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.005170754187999071
+        num_boost_round: 945
+    ab_results: []
+  SANUSD:
+    champion: SANUSD_20260211_100309
+    versions:
+    - version: SANUSD_20260210_191754
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/SANUSD_20260210_191754.json
+      timestamp: '20260210_191754'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0023949617297067917
+        num_boost_round: 1206
+    - version: SANUSD_20260211_100309
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/SANUSD_20260211_100309.json
+      timestamp: '20260211_100309'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0023949617297067917
+        num_boost_round: 1206
+    ab_results: []
+  SOLUSD:
+    champion: SOLUSD_20260211_100315
+    versions:
+    - version: SOLUSD_20260210_191808
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/SOLUSD_20260210_191808.json
+      timestamp: '20260210_191808'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.001083692705491508
+        num_boost_round: 1305
+    - version: SOLUSD_20260211_100315
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/SOLUSD_20260211_100315.json
+      timestamp: '20260211_100315'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.001083692705491508
+        num_boost_round: 1305
+    ab_results: []
+  VECUSD:
+    champion: VECUSD_20260211_100319
+    versions:
+    - version: VECUSD_20260210_191813
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/VECUSD_20260210_191813.json
+      timestamp: '20260210_191813'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0021024169666888116
+        num_boost_round: 353
+    - version: VECUSD_20260211_100319
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/VECUSD_20260211_100319.json
+      timestamp: '20260211_100319'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0021024169666888116
+        num_boost_round: 353
+    ab_results: []
+  WHEAT.c:
+    champion: WHEAT.c_20260211_100326
+    versions:
+    - version: WHEAT.c_20260210_191825
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/WHEAT.c_20260210_191825.json
+      timestamp: '20260210_191825'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0027566429649940657
+        num_boost_round: 1195
+    - version: WHEAT.c_20260211_100326
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/WHEAT.c_20260211_100326.json
+      timestamp: '20260211_100326'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0027566429649940657
+        num_boost_round: 1195
+    ab_results: []
+  XMRUSD:
+    champion: XMRUSD_20260211_100337
+    versions:
+    - version: XMRUSD_20260210_191841
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/XMRUSD_20260210_191841.json
+      timestamp: '20260210_191841'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.012789782022167615
+        num_boost_round: 1069
+    - version: XMRUSD_20260211_100337
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/XMRUSD_20260211_100337.json
+      timestamp: '20260211_100337'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.012789782022167615
+        num_boost_round: 1069
+    ab_results: []
+  XTZUSD:
+    champion: XTZUSD_20260211_100341
+    versions:
+    - version: XTZUSD_20260210_191847
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/XTZUSD_20260210_191847.json
+      timestamp: '20260210_191847'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0071256991852052445
+        num_boost_round: 536
+    - version: XTZUSD_20260211_100341
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/XTZUSD_20260211_100341.json
+      timestamp: '20260211_100341'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0071256991852052445
+        num_boost_round: 536
+    ab_results: []
+  TSLA:
+    champion: TSLA_20260212_085922
+    versions:
+    - version: TSLA_20260212_085922
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/TSLA_20260212_085922.json
+      timestamp: '20260212_085922'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.004475163054565171
+        num_boost_round: 634
+    ab_results: []
+  NVDA:
+    champion: NVDA_20260217_183057
+    versions:
+    - version: NVDA_20260212_085943
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/NVDA_20260212_085943.json
+      timestamp: '20260212_085943'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.002431124632763561
+        num_boost_round: 868
+    - version: NVDA_20260215_103424
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/NVDA_20260215_103424.json
+      timestamp: '20260215_103424'
+      metadata:
+        train_samples: 15711
+        optuna_ev: 0.002431124632763561
+        num_boost_round: 868
+    - version: NVDA_20260217_183057
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/NVDA_20260217_183057.json
+      timestamp: '20260217_183057'
+      metadata:
+        train_samples: 8913
+        optuna_ev: 0.006689
+        num_boost_round: 1654
+    ab_results: []
+  LVMH:
+    champion: LVMH_20260217_183029
+    versions:
+    - version: LVMH_20260212_090024
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/LVMH_20260212_090024.json
+      timestamp: '20260212_090024'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.001895999945309458
+        num_boost_round: 1094
+    - version: LVMH_20260215_103350
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/LVMH_20260215_103350.json
+      timestamp: '20260215_103350'
+      metadata:
+        train_samples: 22931
+        optuna_ev: 0.001895999945309458
+        num_boost_round: 1094
+    - version: LVMH_20260217_183029
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/LVMH_20260217_183029.json
+      timestamp: '20260217_183029'
+      metadata:
+        train_samples: 14067
+        optuna_ev: 0.004114
+        num_boost_round: 1875
+    ab_results: []
+  AMZN:
+    champion: AMZN_20260215_103046
+    versions:
+    - version: AMZN_20260212_090103
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/AMZN_20260212_090103.json
+      timestamp: '20260212_090103'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0017762837927276693
+        num_boost_round: 1558
+    - version: AMZN_20260215_103046
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/AMZN_20260215_103046.json
+      timestamp: '20260215_103046'
+      metadata:
+        train_samples: 11621
+        optuna_ev: 0.0017762837927276693
+        num_boost_round: 1558
+    ab_results: []
+  META:
+    champion: META_20260212_090133
+    versions:
+    - version: META_20260212_090133
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/META_20260212_090133.json
+      timestamp: '20260212_090133'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0017717526812463446
+        num_boost_round: 932
+    ab_results: []
+  AAPL:
+    champion: AAPL_20260217_182758
+    versions:
+    - version: AAPL_20260212_090200
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/AAPL_20260212_090200.json
+      timestamp: '20260212_090200'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0011348392821423
+        num_boost_round: 449
+    - version: AAPL_20260217_162925
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/AAPL_20260217_162925.json
+      timestamp: '20260217_162925'
+      metadata:
+        train_samples: 29272
+        optuna_ev: 0.0011348392821423
+        num_boost_round: 449
+    - version: AAPL_20260217_181834
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/AAPL_20260217_181834.json
+      timestamp: '20260217_181834'
+      metadata:
+        train_samples: 29272
+        optuna_ev: 0.0011348392821423
+        num_boost_round: 449
+    - version: AAPL_20260217_182758
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/AAPL_20260217_182758.json
+      timestamp: '20260217_182758'
+      metadata:
+        train_samples: 29272
+        optuna_ev: 0.0011348392821423
+        num_boost_round: 449
+    ab_results: []
+  BABA:
+    champion: BABA_20260212_152853
+    versions:
+    - version: BABA_20260212_152853
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/BABA_20260212_152853.json
+      timestamp: '20260212_152853'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0007700835965930355
+        num_boost_round: 245
+    ab_results: []
+  MSFT:
+    champion: MSFT_20260212_152905
+    versions:
+    - version: MSFT_20260212_152905
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/MSFT_20260212_152905.json
+      timestamp: '20260212_152905'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.00026400730438825735
+        num_boost_round: 1381
+    ab_results: []
+  HK50.cash:
+    champion: HK50.cash_20260214_120635
+    versions:
+    - version: HK50.cash_20260212_152918
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/HK50.cash_20260212_152918.json
+      timestamp: '20260212_152918'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0008667426305533937
+        num_boost_round: 1296
+    - version: HK50.cash_20260214_120635
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/HK50.cash_20260214_120635.json
+      timestamp: '20260214_120635'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0008736971990047787
+        num_boost_round: 1016
+    ab_results: []
+  US100.cash:
+    champion: US100.cash_20260214_120657
+    versions:
+    - version: US100.cash_20260212_152936
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/US100.cash_20260212_152936.json
+      timestamp: '20260212_152936'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0004637445257106406
+        num_boost_round: 1677
+    - version: US100.cash_20260214_120657
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/US100.cash_20260214_120657.json
+      timestamp: '20260214_120657'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0005076777492072817
+        num_boost_round: 1680
+    ab_results: []
+  FETUSD:
+    champion: FETUSD_20260214_120627
+    versions:
+    - version: FETUSD_20260212_152949
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/FETUSD_20260212_152949.json
+      timestamp: '20260212_152949'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0011548226778546806
+        num_boost_round: 1982
+    - version: FETUSD_20260214_120627
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/FETUSD_20260214_120627.json
+      timestamp: '20260214_120627'
+      metadata:
+        train_samples: 800
+        optuna_ev: 0.0011548226778546806
+        num_boost_round: 244
+    ab_results: []
+  AAVUSD:
+    champion: AAVUSD_20260215_103019
+    versions:
+    - version: AAVUSD_20260215_103019
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/AAVUSD_20260215_103019.json
+      timestamp: '20260215_103019'
+      metadata:
+        train_samples: 11233
+        optuna_ev: 0.00034861092430714787
+        num_boost_round: 950
+    ab_results: []
+  FRA40.cash:
+    champion: FRA40.cash_20260215_103105
+    versions:
+    - version: FRA40.cash_20260215_103105
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/FRA40.cash_20260215_103105.json
+      timestamp: '20260215_103105'
+      metadata:
+        train_samples: 7178
+        optuna_ev: 0.00019961493750405494
+        num_boost_round: 367
+    ab_results: []
+  PFE:
+    champion: PFE_20260217_183144
+    versions:
+    - version: PFE_20260217_182120
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/PFE_20260217_182120.json
+      timestamp: '20260217_182120'
+      metadata:
+        train_samples: 11623
+        optuna_ev: 0.00121797
+        num_boost_round: 590
+    - version: PFE_20260217_183144
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/PFE_20260217_183144.json
+      timestamp: '20260217_183144'
+      metadata:
+        train_samples: 11623
+        optuna_ev: 0.00121797
+        num_boost_round: 590
+    ab_results: []
+  RACE:
+    champion: RACE_20260217_183155
+    versions:
+    - version: RACE_20260217_182131
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/RACE_20260217_182131.json
+      timestamp: '20260217_182131'
+      metadata:
+        train_samples: 2780
+        optuna_ev: 0.00129833
+        num_boost_round: 1446
+    - version: RACE_20260217_183155
+      path: /home/tradebot/tradebots/models/sovereign_models/versions/RACE_20260217_183155.json
+      timestamp: '20260217_183155'
+      metadata:
+        train_samples: 2780
+        optuna_ev: 0.00129833
+        num_boost_round: 1446
+    ab_results: []

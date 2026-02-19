@@ -1,0 +1,29 @@
+symbol,description,asset_class,contract_size,margin_percent,leverage,leverage_swing,commission,commission_type,timezone,mon_open,mon_close,tue_open,tue_close,wed_open,wed_close,thu_open,thu_close,fri_open,fri_close,sat_status,sun_status
+AUD/CAD,Australian Dollar vs Canadian Dollar,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+AUD/JPY,Australian Dollar vs Japanese Yen,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+AUD/NZD,Australian Dollar vs New Zealand Dollar,Forex,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+AUD/CHF,Australian Dollar vs Swiss Franc,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+AUD/USD,Australian Dollar vs US Dollar,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+GBP/AUD,Great Britain Pound vs Australian Dollar,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+GBP/CAD,Great Britain Pound vs Canadian Dollar,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+GBP/JPY,Great Britain Pound vs Japanese Yen,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+GBP/NZD,Great Britain Pound vs New Zealand Dollar,Forex,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+GBP/CHF,Great Britain Pound vs Swiss Franc,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+GBP/USD,Great Britain Pound vs US Dollar,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+CAD/JPY,Canadian Dollar vs Japanese Yen,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+CAD/CHF,Canadian Dollar vs Swiss Franc,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+EUR/AUD,Euro vs Australian Dollar,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+EUR/GBP,Euro vs Great Britain Pound,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+EUR/CAD,Euro vs Canadian Dollar,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+EUR/JPY,Euro vs Japanese Yen,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+EUR/CHF,Euro vs Swiss Franc,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+EUR/USD,Euro vs United States Dollar,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+EUR/NZD,Euro vs New Zealand Dollar,Forex,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+NZD/CAD,New Zealand Dollar vs Canadian Dollar,Forex,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+NZD/CHF,New Zealand Dollar vs Swiss Franc,Forex,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+NZD/JPY,New Zealand Dollar vs Japanese Yen,Forex,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+NZD/USD,New Zealand Dollar vs US Dollar,Forex,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+CHF/JPY,Swiss Franc vs Japanese Yen,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+USD/CAD,US Dollar vs Canadian Dollar,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+USD/CHF,US Dollar vs Swiss Franc,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+USD/JPY,US Dollar vs Japanese Yen,Forex,100000,1,1:100,1:30,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed

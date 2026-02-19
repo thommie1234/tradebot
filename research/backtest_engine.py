@@ -16,6 +16,7 @@ import threading
 import sys
 import os
 from mt5_bootstrap import initialize_mt5
+from xgboost import XGBClassifier
 
 # ============================================================================
 # CONFIGURATION
@@ -31,6 +32,8 @@ class BacktestConfig:
         'ETHUSD': {'type': 'crypto', 'contract_size': 1},
         'SOLUSD': {'type': 'crypto', 'contract_size': 100},
         # Stocks
+        'N25.cash': {'type': 'stock', 'contract_size': 1},
+        'GBP_JPY': {'type': 'stock', 'contract_size': 1},
         'MSFT': {'type': 'stock', 'contract_size': 1},
         'NVDA': {'type': 'stock', 'contract_size': 1},
         'AAPL': {'type': 'stock', 'contract_size': 1},
@@ -80,6 +83,14 @@ class BacktestConfig:
     THREADS_PER_TICKER = 2
     MAX_WORKERS = max(1, (os.cpu_count() or 1))
 
+    # ML gate defaults
+    USE_ML_GATE = True
+    META_THRESHOLD = 0.55
+    EMBARGO_BARS = 24
+    XGB_ESTIMATORS = 160
+    XGB_MAX_DEPTH = 4
+    XGB_LR = 0.05
+
 
 # ============================================================================
 # ATR CALCULATOR
@@ -122,8 +133,8 @@ def generate_signals(df):
     rs = gain / loss
     df['rsi'] = 100 - (100 / (1 + rs))
 
-    # Signals
-    df['signal'] = 0
+    # Raw signal at candle close.
+    df['signal_raw'] = 0
 
     # BUY: price crosses above SMA20, SMA20 > SMA50, RSI < 70
     buy_condition = (
@@ -141,10 +152,201 @@ def generate_signals(df):
         (df['rsi'] > 30)
     )
 
-    df.loc[buy_condition, 'signal'] = 1
-    df.loc[sell_condition, 'signal'] = -1
+    df.loc[buy_condition, 'signal_raw'] = 1
+    df.loc[sell_condition, 'signal_raw'] = -1
+
+    # Shift(1) discipline:
+    # a signal generated at t can only be acted on from t+1 onward.
+    df['signal'] = df['signal_raw'].shift(1).fillna(0).astype(int)
 
     return df
+
+
+def build_ml_features(df):
+    x = df.copy()
+    x["ret1_raw"] = np.log(x["close"]).diff()
+    x["ret3_raw"] = x["close"].pct_change(3)
+    x["ret12_raw"] = x["close"].pct_change(12)
+    x["vol20_raw"] = x["ret1_raw"].rolling(20).std()
+    q_low = x["vol20_raw"].quantile(0.01)
+    q_high = x["vol20_raw"].quantile(0.99)
+    if pd.notna(q_low) and pd.notna(q_high):
+        x["vol20_raw"] = x["vol20_raw"].clip(lower=q_low, upper=q_high)
+    ma20 = x["close"].rolling(20).mean()
+    sd20 = x["close"].rolling(20).std()
+    x["z20_raw"] = (x["close"] - ma20) / sd20
+    x["range_raw"] = (x["high"] - x["low"]) / x["close"]
+    x["vchg1_raw"] = x["tick_volume"].pct_change()
+    x["vratio20_raw"] = x["tick_volume"] / x["tick_volume"].rolling(20).mean()
+    hour = x.index.hour
+    x["hour_sin_raw"] = np.sin(2 * np.pi * hour / 24.0)
+    x["hour_cos_raw"] = np.cos(2 * np.pi * hour / 24.0)
+
+    # Shift(1) discipline for all predictor features.
+    for c in [
+        "ret1_raw",
+        "ret3_raw",
+        "ret12_raw",
+        "vol20_raw",
+        "z20_raw",
+        "range_raw",
+        "vchg1_raw",
+        "vratio20_raw",
+        "hour_sin_raw",
+        "hour_cos_raw",
+    ]:
+        x[c.replace("_raw", "")] = x[c].shift(1)
+    x["primary_side"] = np.where(x["z20"] > 1.5, -1, np.where(x["z20"] < -1.5, 1, 0))
+    return x
+
+
+def triple_barrier_arrays(close, vol_proxy, side, horizon, pt_mult, sl_mult):
+    n = len(close)
+    label = np.full(n, np.nan)
+    tb_ret = np.full(n, np.nan)
+    up = np.full(n, np.nan)
+    dn = np.full(n, np.nan)
+    idx = np.where((side != 0) & np.isfinite(vol_proxy))[0]
+    for i in idx:
+        end = min(i + horizon, n - 1)
+        if end <= i:
+            continue
+        epx = close[i]
+        pt = max(1e-12, pt_mult * vol_proxy[i])
+        sl = max(1e-12, sl_mult * vol_proxy[i])
+        up[i] = pt
+        dn[i] = sl
+        chosen_ret = side[i] * ((close[end] / epx) - 1.0)
+        chosen_lab = 1.0 if chosen_ret > 0 else 0.0
+        for j in range(i + 1, end + 1):
+            r = side[i] * ((close[j] / epx) - 1.0)
+            if r >= pt:
+                chosen_ret = r
+                chosen_lab = 1.0
+                break
+            if r <= -sl:
+                chosen_ret = r
+                chosen_lab = 0.0
+                break
+        label[i] = chosen_lab
+        tb_ret[i] = chosen_ret
+    return label, tb_ret, up, dn
+
+
+def generate_ml_gated_signals(df, costs, cfg):
+    d = build_ml_features(df)
+    label, tb_ret, up, dn = triple_barrier_arrays(
+        close=d["close"].to_numpy(),
+        vol_proxy=d["vol20"].to_numpy(),
+        side=d["primary_side"].to_numpy(),
+        horizon=24,
+        pt_mult=2.0,
+        sl_mult=1.5,
+    )
+    d["label"] = label
+    d["tb_ret"] = tb_ret
+    d["up"] = up
+    d["dn"] = dn
+
+    feat_cols = [
+        "ret1",
+        "ret3",
+        "ret12",
+        "vol20",
+        "z20",
+        "range",
+        "vchg1",
+        "vratio20",
+        "hour_sin",
+        "hour_cos",
+        "primary_side",
+    ]
+    m = d.dropna(subset=feat_cols + ["label", "tb_ret", "up", "dn"]).copy()
+    if len(m) < 400:
+        return generate_signals(df)
+
+    X = m[feat_cols].to_numpy()
+    y = m["label"].astype(int).to_numpy()
+    gross = m["tb_ret"].to_numpy()
+    upside = m["up"].to_numpy()
+    downside = m["dn"].to_numpy()
+
+    p_primary = np.full(len(m), np.nan)
+    p_meta = np.full(len(m), np.nan)
+    cost = costs["spread_pct"] + costs["slippage_pct"] + (2.0 * costs["commission_pct"])
+    n = len(m)
+    split_edges = np.linspace(0, n, 6, dtype=int)
+
+    for k in range(1, len(split_edges) - 1):
+        te_start = split_edges[k]
+        te_end = split_edges[k + 1]
+        tr_end = max(0, te_start - cfg.EMBARGO_BARS)
+        if tr_end < 200 or te_end <= te_start:
+            continue
+        tr = np.arange(0, tr_end)
+        te = np.arange(te_start, te_end)
+
+        ytr = y[tr]
+        if np.unique(ytr).size < 2:
+            p_primary[te] = float(np.unique(ytr)[0]) if len(ytr) else 0.0
+            p_meta[te] = 0.0
+            continue
+
+        pos = max(int(ytr.sum()), 1)
+        neg = max(int(len(ytr) - ytr.sum()), 1)
+        primary = XGBClassifier(
+            n_estimators=cfg.XGB_ESTIMATORS,
+            max_depth=cfg.XGB_MAX_DEPTH,
+            learning_rate=cfg.XGB_LR,
+            subsample=0.9,
+            colsample_bytree=0.9,
+            objective="binary:logistic",
+            eval_metric="logloss",
+            tree_method="hist",
+            n_jobs=1,
+            random_state=42,
+            scale_pos_weight=neg / pos,
+        )
+        primary.fit(X[tr], ytr)
+        p_tr = primary.predict_proba(X[tr])[:, 1]
+        p_te = primary.predict_proba(X[te])[:, 1]
+        p_primary[te] = p_te
+
+        y_meta = ((p_tr >= 0.5).astype(np.int8) == ytr.astype(np.int8)).astype(np.int8)
+        if np.unique(y_meta).size < 2:
+            p_meta[te] = float(np.unique(y_meta)[0])
+        else:
+            mpos = max(int(y_meta.sum()), 1)
+            mneg = max(int(len(y_meta) - y_meta.sum()), 1)
+            x_meta_tr = np.column_stack([X[tr], p_tr])
+            x_meta_te = np.column_stack([X[te], p_te])
+            meta = XGBClassifier(
+                n_estimators=max(80, cfg.XGB_ESTIMATORS // 2),
+                max_depth=max(3, cfg.XGB_MAX_DEPTH - 1),
+                learning_rate=max(0.03, cfg.XGB_LR),
+                subsample=0.9,
+                colsample_bytree=0.9,
+                objective="binary:logistic",
+                eval_metric="logloss",
+                tree_method="hist",
+                n_jobs=1,
+                random_state=43,
+                scale_pos_weight=mneg / mpos,
+            )
+            meta.fit(x_meta_tr, y_meta)
+            p_meta[te] = meta.predict_proba(x_meta_te)[:, 1]
+
+    m["p_primary"] = p_primary
+    m["p_meta"] = p_meta
+    m["ev"] = m["p_primary"] * upside - (1.0 - m["p_primary"]) * downside - cost
+    m["trade_ok"] = (m["ev"] > 0.0) & (m["p_meta"] >= cfg.META_THRESHOLD)
+    m["signal"] = np.where(m["trade_ok"], m["primary_side"], 0)
+
+    out = df.copy()
+    out["signal"] = 0
+    out.loc[m.index, "signal"] = m["signal"].astype(int)
+    out["signal"] = out["signal"].shift(1).fillna(0).astype(int)
+    return out
 
 
 # ============================================================================
@@ -198,8 +400,9 @@ class BacktestEngine:
 
     def calculate_costs(self, entry_price, exit_price, direction):
         """Calculate total trade costs"""
+        slippage_mult = float(os.getenv("BACKTEST_SLIPPAGE_MULT", "1.0"))
         spread_cost = entry_price * self.costs['spread_pct']
-        slippage_cost = entry_price * self.costs['slippage_pct']
+        slippage_cost = entry_price * self.costs['slippage_pct'] * slippage_mult
         commission_cost = (entry_price + exit_price) * self.costs['commission_pct']
 
         total_cost = spread_cost + slippage_cost + commission_cost
@@ -304,11 +507,14 @@ class BacktestEngine:
         if df is None:
             return None
 
-        # Calculate ATR
-        df['atr'] = calculate_atr(df, self.config.ATR_PERIOD)
+        # ATR is shifted by 1 bar to avoid using current bar info at entry.
+        df['atr'] = calculate_atr(df, self.config.ATR_PERIOD).shift(1)
 
         # Generate signals
-        df = generate_signals(df)
+        if self.config.USE_ML_GATE:
+            df = generate_ml_gated_signals(df, self.costs, self.config)
+        else:
+            df = generate_signals(df)
 
         # Drop NaN rows
         df = df.dropna()
@@ -322,11 +528,12 @@ class BacktestEngine:
 
             signal = row['signal']
             if signal == 0:
+                i += 1
                 continue
 
-            # Entry setup
+            # Entry setup (next actionable bar open after shifted signal).
             entry_time = df.index[i]
-            entry_price = row['close']
+            entry_price = row['open']
             atr = row['atr']
 
             sl_distance = atr * self.atr_mult

@@ -1,0 +1,19 @@
+# Position sizing and risk management
+
+kelly:
+  fraction: 0.5
+  floor: 0.001
+  min_trades: 20
+  cache_ttl: 3600
+
+daily:
+  budget: 0.035
+  loss_limit: -0.035
+  profit_lock: 0.03
+
+max_concurrent_positions: 8
+
+drawdown_recovery:
+  trigger_pct: 0.02
+  recovery_pct: 0.005
+  lot_multiplier: 0.5

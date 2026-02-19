@@ -1,0 +1,16 @@
+symbol,description,asset_class,contract_size,margin_percent,leverage,leverage_swing,commission,commission_type,timezone,mon_open,mon_close,tue_open,tue_close,wed_open,wed_close,thu_open,thu_close,fri_open,fri_close,sat_status,sun_status
+EUR/CZK,Euro vs Czech Republic Koruna,Forex Exotics,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+EUR/HUF,Euro vs Hungarian Forint,Forex Exotics,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+EUR/NOK,Euro vs Norwegian Krone,Forex Exotics,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+EUR/PLN,Euro vs Polish Zloty,Forex Exotics,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+USD/CNH,US Dollar vs Chinese Yuan,Forex Exotics,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+USD/CZK,US Dollar vs Czech Republic Koruna,Forex Exotics,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+USD/HKD,US Dollar vs Hong Kong Dollar,Forex Exotics,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+USD/HUF,US Dollar vs Hungarian Forint,Forex Exotics,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+USD/ILS,US Dollar vs Israeli New Sheqel,Forex Exotics,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+USD/MXN,US Dollar vs Mexican Peso,Forex Exotics,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+USD/NOK,US Dollar vs Norwegian Krone,Forex Exotics,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+USD/PLN,US Dollar vs Polish Zloty,Forex Exotics,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+USD/SGD,US Dollar vs Singapore Dollar,Forex Exotics,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+USD/ZAR,US Dollar vs South African Rand,Forex Exotics,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed
+USD/SEK,US Dollar vs Swedish Krona,Forex Exotics,100000,1.5,1:66.67,1:20,5,USD/LOT,GMT+2,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,00:05,23:55,trading is closed,trading is closed

@@ -21,9 +21,9 @@ Status: PRODUCTION READY
 """
 
 import MetaTrader5 as mt5
-# import pandas as pd
-# import numpy as np
-# import xgboost as xgb
+import pandas as pd
+import numpy as np
+import xgboost as xgb
 import sqlite3
 import time
 import json
@@ -32,6 +32,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 import threading
 import pickle
+from mt5_bootstrap import initialize_mt5
 
 # Discord notifications
 try:
@@ -347,11 +348,8 @@ class HeartbeatMonitor:
 # ============================================================================
 
 
-"""
-class SovereignFilter:
-...
-            return False, 0.0
-"""
+class SovereignMLFilter:
+    """XGBoost filter for trade signals"""
 
 class PositionSizingEngine:
     """Calculate lot size based on risk management"""
@@ -433,16 +431,18 @@ class ExecutionEngine:
                 print(f"WARNING: FTMO compliance init failed: {e}")
 
         # Initialize filters
-        # for symbol in Config.SYMBOLS.keys():
-        #     self.filters[symbol] = SovereignFilter(symbol, self.logger)
-        pass
+        for symbol in Config.SYMBOLS.keys():
+            self.filters[symbol] = SovereignMLFilter(symbol, self.logger)
 
     def initialize_mt5(self):
         """Initialize MT5 connection"""
-        if not mt5.initialize():
+        ok, mt5_error, mode = initialize_mt5()
+        if not ok:
             self.logger.log('CRITICAL', 'ExecutionEngine', 'MT5_INIT_FAILED',
-                            'Failed to initialize MT5')
+                            f'Failed to initialize MT5: {mt5_error}')
             return False
+        self.logger.log('INFO', 'ExecutionEngine', 'MT5_INIT_MODE',
+                        f'MT5 initialized via {mode}')
 
         account_info = mt5.account_info()
         if not account_info:
