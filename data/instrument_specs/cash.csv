@@ -1,0 +1,26 @@
+symbol,description,asset_class,contract_size,margin_percent,leverage,leverage_swing,commission,commission_type,timezone,mon_open,mon_close,tue_open,tue_close,wed_open,wed_close,thu_open,thu_close,fri_open,fri_close,sat_status,sun_status
+AUS200.cash,Australia 200 Index, Spot CFD,Cash CFD,1,2,1:50,1:15,0,NO_COMMISSION,GMT+2,00:55;08:15,07:30;22:55,00:55;08:15,07:30;22:55,00:55;08:15,07:30;22:55,00:55;08:15,07:30;22:55,00:55;08:15,07:30;22:55,trading is closed,trading is closed
+US30.cash,Dow Jones Industrial Average Index, Spot CFD,Cash CFD,1,2,1:50,1:15,0,NO_COMMISSION,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,trading is closed,trading is closed
+SPN35.cash,Spain 35 Index, Spot CFD,Cash CFD,1,3.33,1:30,1:9,0,NO_COMMISSION,GMT+2,10:05,21:00,10:05,21:00,10:05,21:00,10:05,21:00,10:05,21:00,trading is closed,trading is closed
+EU50.cash,Euro Stoxx 50 Index, Spot CFD,Cash CFD,1,2,1:50,1:15,0,NO_COMMISSION,GMT+2,09:05,22:55,09:05,22:55,09:05,22:55,09:05,22:55,09:05,22:55,trading is closed,trading is closed
+FRA40.cash,France 40 Index, Spot CFD,Cash CFD,1,2,1:50,1:15,0,NO_COMMISSION,GMT+2,09:05,22:55,09:05,22:55,09:05,22:55,09:05,22:55,09:05,22:55,trading is closed,trading is closed
+GER40.cash,German 40 Index, Spot CFD,Cash CFD,1,2,1:50,1:15,0,NO_COMMISSION,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,22:50,trading is closed,trading is closed
+HK50.cash,Hong Kong Index, Spot CFD,Cash CFD,1,3.33,1:30,1:9,0,NO_COMMISSION,GMT+2,03:20;07:05;11:20,06:00;10:30;21:00,03:20;07:05;11:20,06:00;10:30;21:00,03:20;07:05;11:20,06:00;10:30;21:00,03:20;07:05;11:20,06:00;10:30;21:00,03:20;07:05;11:20,06:00;10:30;21:00,trading is closed,trading is closed
+JP225.cash,Japan 225 Index, Spot CFD,Cash CFD,10,2,1:50,1:15,0,NO_COMMISSION,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,trading is closed,trading is closed
+N25.cash,Netherlands 25 Index, Spot CFD,Cash CFD,1,3.33,1:30,1:9,0,NO_COMMISSION,GMT+2,09:05,22:55,09:05,22:55,09:05,22:55,09:05,22:55,09:05,22:55,trading is closed,trading is closed
+US100.cash,NASDAQ 100 Index, Spot CFD,Cash CFD,1,2,1:50,1:15,0,NO_COMMISSION,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,trading is closed,trading is closed
+US500.cash,S&P 500 Index, Spot CFD,Cash CFD,1,2,1:50,1:15,0,NO_COMMISSION,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,trading is closed,trading is closed
+UK100.cash,FTSE 100 Index, Spot CFD,Cash CFD,1,2,1:50,1:15,0,NO_COMMISSION,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,22:55,trading is closed,trading is closed
+UKOIL.cash,Crude Oil Brent, Spot CFD,Cash CFD,100,3.33,1:30,1:9,0,NO_COMMISSION,GMT+2,03:05,23:50,03:05,23:50,03:05,23:50,03:05,23:50,03:05,23:50,trading is closed,trading is closed
+USOIL.cash,West Texas Intermediate Crude Oil, Spot CFD,Cash CFD,100,3.33,1:30,1:9,0,NO_COMMISSION,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,trading is closed,trading is closed
+NATGAS.cash,Natural Gas Instrument, Spot CFD,Cash CFD,1000,3.33,1:30,1:9,0.0014,PERCENT/VOLUME,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,trading is closed,trading is closed
+DXY.cash,Dollar Index, Spot CFD,Cash CFD,100,6,1:16.67,1:5,0.0014,PERCENT/VOLUME,GMT+2,03:05,23:50,03:05,23:50,03:05,23:50,03:05,23:50,03:05,23:50,trading is closed,trading is closed
+US2000.cash,Russell 2000 Index, Spot CFD,Cash CFD,1,3.33,1:30,1:9,0,NO_COMMISSION,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,trading is closed,trading is closed
+COCOA.c,Cocoa vs US Dollar, Spot CFD,Cash CFD,1,30,1:3.33,1:1,0,NO_COMMISSION,GMT+2,11:50,20:30,11:50,20:30,11:50,20:30,11:50,20:30,11:50,20:30,trading is closed,trading is closed
+COFFEE.c,Coffee vs US Dollar, Spot CFD,Cash CFD,1,30,1:3.33,1:1,0,NO_COMMISSION,GMT+2,11:20,20:30,11:20,20:30,11:20,20:30,11:20,20:30,11:20,20:30,trading is closed,trading is closed
+CORN.c,Corn vs US Dollar, Spot CFD,Cash CFD,1,30,1:3.33,1:1,0,NO_COMMISSION,GMT+2,03:05;16:35,15:45;21:20,03:05;16:35,15:45;21:20,03:05;16:35,15:45;21:20,03:05;16:35,15:45;21:20,03:05;16:35,15:45;21:20,trading is closed,trading is closed
+SOYBEAN.c,Soybean vs US Dollar, Spot CFD,Cash CFD,1,30,1:3.33,1:1,0,NO_COMMISSION,GMT+2,03:05;16:35,15:45;21:20,03:05;16:35,15:45;21:20,03:05;16:35,15:45;21:20,03:05;16:35,15:45;21:20,03:05;16:35,15:45;21:20,trading is closed,trading is closed
+WHEAT.c,Wheat, Spot CFD,Cash CFD,1,30,1:3.33,1:1,0,NO_COMMISSION,GMT+2,03:05;16:35,15:45;21:20,03:05;16:35,15:45;21:20,03:05;16:35,15:45;21:20,03:05;16:35,15:45;21:20,03:05;16:35,15:45;21:20,trading is closed,trading is closed
+HEATOIL.c,Heating Oil, Spot CFD,Cash CFD,100,3.33,1:30,1:9,0.0014,PERCENT/VOLUME,GMT+2,01:05,23:00,01:05,23:00,01:05,23:00,01:05,23:00,01:05,23:00,trading is closed,trading is closed
+COTTON.c,Cotton vs US Dollar, Spot CFD,Cash CFD,1,30,1:3.33,1:1,0,NO_COMMISSION,GMT+2,04:05,21:20,04:05,21:20,04:05,21:20,04:05,21:20,04:05,21:20,trading is closed,trading is closed
+SUGAR.c,Sugar vs US Dollar, Spot CFD,Cash CFD,1,30,1:3.33,1:1,0,NO_COMMISSION,GMT+2,10:35,20:00,10:35,20:00,10:35,20:00,10:35,20:00,10:35,20:00,trading is closed,trading is closed

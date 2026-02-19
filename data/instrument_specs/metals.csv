@@ -1,0 +1,10 @@
+symbol,description,asset_class,contract_size,margin_percent,leverage,leverage_swing,commission,commission_type,timezone,mon_open,mon_close,tue_open,tue_close,wed_open,wed_close,thu_open,thu_close,fri_open,fri_close,sat_status,sun_status
+XAG/USD,Silver vs US Dollar,Metals CFD,5000,3.33,1:30,1:9,0.0014,PERCENT/VOLUME,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,trading is closed,trading is closed
+XAG/EUR,Silver vs Euro,Metals CFD,5000,3.33,1:30,1:9,0.0014,PERCENT/VOLUME,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,trading is closed,trading is closed
+XAG/AUD,Silver vs Australian Dollar,Metals CFD,5000,3.33,1:30,1:9,0.0014,PERCENT/VOLUME,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,trading is closed,trading is closed
+XAU/USD,Gold vs US Dollar,Metals CFD,100,3.33,1:30,1:9,0.0014,PERCENT/VOLUME,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,trading is closed,trading is closed
+XAU/EUR,Gold vs Euro,Metals CFD,100,3.33,1:30,1:9,0.0014,PERCENT/VOLUME,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,trading is closed,trading is closed
+XAU/AUD,Gold vs Australian Dollar,Metals CFD,100,3.33,1:30,1:9,0.0014,PERCENT/VOLUME,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,trading is closed,trading is closed
+XPD/USD,Palladium vs United States Dollar,Metals CFD,100,3.33,1:30,1:9,0.0014,PERCENT/VOLUME,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,trading is closed,trading is closed
+XPT/USD,Platinum vs United States Dollar,Metals CFD,100,3.33,1:30,1:9,0.0014,PERCENT/VOLUME,GMT+2,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,01:05,23:50,trading is closed,trading is closed
+XCU/USD,Copper vs US Dollar,Metals CFD,100,3.33,1:30,1:9,0.0014,PERCENT/VOLUME,GMT+2,01:05,23:00,01:05,23:00,01:05,23:00,01:05,23:00,01:05,23:00,trading is closed,trading is closed

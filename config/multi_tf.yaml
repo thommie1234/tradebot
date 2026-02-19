@@ -1,0 +1,28 @@
+# Multi-timeframe symbol configuration
+# Maps symbols to their optimal timeframe based on Optuna real-cost results.
+#
+# Usage: Add symbols here after Optuna confirms positive EV with real costs.
+# The bot will scan each symbol on its assigned timeframe.
+#
+# Symbols NOT listed here default to H1 (the existing scan loop).
+# Format:
+#   SYMBOL:
+#     timeframe: M15 | M30 | H1 | H4
+#     optuna_ev: <best EV from Optuna>    (for reference)
+#     source: <which Optuna run>          (for traceability)
+
+# 2026-02-18: AAPL removed (weak EV 0.000273, underperformer)
+# JP225 moved to H4 (WFO validated: $23.5k, Sharpe 1.46)
+symbols:
+  AMZN:
+    timeframe: M30
+    optuna_ev: 0.001165
+    source: rolling_M30_20260218
+  JP225.cash:
+    timeframe: H4
+    optuna_ev: 0.001663
+    source: wfo_batch_20260218 (H4, Sharpe 1.46, DD 9.2%)
+  RACE:
+    timeframe: H4
+    optuna_ev: 0.00130
+    source: full_20260213_181734/entry_H4

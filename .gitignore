@@ -1,1 +1,45 @@
 __pycache__/
+*.pyc
+.aider*
+.venv/
+aider/
+
+# Data & models (too large for git)
+models/ml_boxes_*/
+models/sovereign_models/
+models/optuna_results/
+*.parquet
+*.db
+*.xlsx
+
+# Legacy/archive (frozen, not actively developed)
+archive/
+trading_prop/
+
+# Runtime artifacts
+audit/logs/
+prop/production/logs/
+prop/production/ml_boxes_*/
+prop/production/ml_outputs_*/
+prop/production/data_manifest/
+prop/production/symbol_splits/
+tmpwine_*/
+
+# Optuna runs
+optuna_*/
+optuna_*.log
+run_optuna_*.sh
+
+# Root-level data dumps
+/*.json
+/*.pdf
+wfv_v2_trainer.py
+
+# Secrets
+config/discord_config.json
+tools/discord_config.json
+api/api_config.yaml
+
+# Misc
+*.log
+.claude/

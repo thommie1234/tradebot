@@ -1,0 +1,5 @@
+If the market is open, you may trade the specific instrument. You can view tradable hours in the trading platform under the specification card of every instrument. In your Market Watch, right-click on the particular instrument and choose 'specification'. You will see the tradeable hours down in the dialogue window. Please note this information is not available in the MT4 mobile application by default as this function is not provided by the application developer.
+
+Also, please make sure you are aware of the latest trading updates and scheduled platform maintenance times, these are regularly being updated on this page: https://ftmo.com/en/trading-updates/
+
+If there is a market gap of up to two hours on any instrument, it is allowed to keep your positions open; i.e. you don't need to close your trades just because of this rollover. This restriction doesn't apply to FTMO Traders having the account type as FTMO Account Swing. Unlike the FTMO Account, the FTMO Account Swing does not have restrictions for news trading or holding trades over the weekend and is only obtainable through our 2-Step Evaluation Process.

@@ -1,0 +1,55 @@
+# Symbol configuration — loaded from sovereign_configs.json at runtime
+# This file defines asset classes and sector mappings
+# Per-symbol runtime configs remain in sovereign_configs.json
+
+asset_classes:
+  crypto:
+    risk_per_trade: 0.0005
+    atr_period: 14
+    atr_sl_mult: 2.0
+    atr_tp_mult: 6.0
+    max_spread_pct: 0.005
+  forex:
+    risk_per_trade: 0.0040
+    atr_period: 14
+    atr_sl_mult: 1.5
+    atr_tp_mult: 4.5
+    max_spread_pct: 0.0005
+  commodity:
+    risk_per_trade: 0.0035
+    atr_period: 14
+    atr_sl_mult: 1.5
+    atr_tp_mult: 4.5
+    max_spread_pct: 0.001
+  index:
+    risk_per_trade: 0.0030
+    atr_period: 14
+    atr_sl_mult: 1.5
+    atr_tp_mult: 4.5
+    max_spread_pct: 0.0005
+  equity:
+    risk_per_trade: 0.0025
+    atr_period: 14
+    atr_sl_mult: 1.2
+    atr_tp_mult: 3.6
+    max_spread_pct: 0.001
+
+sector_exposure_limits:
+  crypto: 0.020
+  jpy: 0.020
+  eur: 0.015
+  gbp: 0.015
+  usd: 0.015
+  aud: 0.010
+  nzd: 0.010
+  energy: 0.015
+  gold: 0.010
+  silver: 0.010
+  metals: 0.010
+  agri: 0.015
+  us_idx: 0.015
+  eu_idx: 0.010
+  uk_idx: 0.005
+  apac_idx: 0.010
+  us_equity: 0.015
+  eu_equity: 0.010

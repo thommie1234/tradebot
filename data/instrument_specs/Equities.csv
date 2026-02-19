@@ -1,0 +1,24 @@
+symbol,description,asset_class,contract_size,margin_percent,leverage,leverage_swing,commission,commission_type,timezone,mon_open,mon_close,tue_open,tue_close,wed_open,wed_close,thu_open,thu_close,fri_open,fri_close,sat_status,sun_status
+AAPL,Apple, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed
+AIRF,Air France KLM, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,10:05,18:30,10:05,18:30,10:05,18:30,10:05,18:30,10:05,18:30,trading is closed,trading is closed
+ALVG,Allianz, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,10:05,18:30,10:05,18:30,10:05,18:30,10:05,18:30,10:05,18:30,trading is closed,trading is closed
+AMZN,Amazon Com, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed
+BABA,Alibaba Group, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed
+BAC,Bank of America, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed
+BAYGn,Bayer, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,10:05,18:30,10:05,18:30,10:05,18:30,10:05,18:30,10:05,18:30,trading is closed,trading is closed
+DBKGn,Deutsche Bank, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,10:05,18:30,10:05,18:30,10:05,18:30,10:05,18:30,10:05,18:30,trading is closed,trading is closed
+META,Meta Platforms, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed
+GOOG,Alphabet Class C, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed
+IBE,Iberdrola, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,10:05,18:30,10:05,18:30,10:05,18:30,10:05,18:30,10:05,18:30,trading is closed,trading is closed
+LVMH,LVMH, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,10:05,18:30,10:05,18:30,10:05,18:30,10:05,18:30,10:05,18:30,trading is closed,trading is closed
+MSFT,Microsoft, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed
+NFLX,Netflix, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed
+NVDA,NVIDIA, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed
+PFE,Pfizer, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed
+RACE,Ferrari, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed
+T,AT&T, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed
+TSLA,Tesla, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed
+V,Visa, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed
+VOWG_p,Volkswagen, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,10:05,18:30,10:05,18:30,10:05,18:30,10:05,18:30,10:05,18:30,trading is closed,trading is closed
+WMT,Walmart, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed
+ZM,Zoom Video Communications, Spot CFD,Equities CFD,1,30,1:3.33,1:1,0.004,PERCENT/VOLUME,GMT+2,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,16:35,23:00,trading is closed,trading is closed

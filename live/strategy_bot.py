@@ -405,7 +405,7 @@ def select_active_drive(drive_priority, current_drive_index, threshold_gb):
 
 def run_downloader():
     """Main function to download historical tick data."""
-    SYMBOLS_FILE_PATH = os.getenv("SYMBOLS_FILE_PATH", "/home/tradebot/symbols.xlsx")
+    SYMBOLS_FILE_PATH = os.getenv("SYMBOLS_FILE_PATH", "/home/tradebot/tradebots/data/symbols.xlsx")
     DRIVE_PRIORITY = [
         '/home/tradebot/ssd_data_1',
         '/home/tradebot/ssd_data_2',
