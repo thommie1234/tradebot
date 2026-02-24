@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+HEATOIL.c,2026,1,2025-2025,2055,290,0.3482758620689655,-4.299586324803137,-14.019559097107418,-0.26420813791589837,0.5657510377811054,cuda

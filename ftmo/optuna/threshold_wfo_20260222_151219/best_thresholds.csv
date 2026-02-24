@@ -1,0 +1,2 @@
+symbol,threshold,status,cluster,timeframe,n_trades,total_return,max_dd,dd_pct,sharpe,calmar,profit_factor,win_rate,expectancy_pct,avg_bars_held,n_folds
+SOLUSD,0.54,ok,crypto,H4,117,-6607.62,11809.01,11.81,-1.56,-0.56,0.75,21.4,-0.3526,9.3,18

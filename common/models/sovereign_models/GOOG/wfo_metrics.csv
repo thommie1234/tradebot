@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+GOOG,H1,2026,1,2024-2025,219,87,0.5057471264367817,-1.1562185103478966,-1.7093911057299842,-0.21983332245681475,0.8355236350094859,cuda,5.150860788081521,5.0,13.15086078808152

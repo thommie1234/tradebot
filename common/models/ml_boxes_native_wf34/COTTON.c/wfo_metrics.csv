@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+COTTON.c,2026,1,2025-2025,1619,171,0.4853801169590643,-2.777821488150126,-10.91600720803791,-0.07469407385964666,0.6929621810221541,cuda

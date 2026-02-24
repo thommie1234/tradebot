@@ -1,0 +1,2 @@
+symbol,timeframe,status,cluster,data_source,n_signals,n_folds,rows,trials,best_ev,best_atr_sl_mult,best_atr_tp_mult,best_breakeven_atr,best_trail_activation_atr,best_trail_distance_atr,best_horizon,cost_bps,fee_bps,spread_bps,slippage_bps
+AAVUSD,H1,ok,crypto,bars,23299,145,44791,10,-0.0018033678204187247,2.1365986741831646,4.193668865811041,0.41058770807497513,4.821099380386666,2.4312640661491187,40,37.5,6.5,15.0,8.0

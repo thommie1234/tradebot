@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+BCHUSD,2026,1,2024-2025,686,209,0.4354066985645933,-0.7174169349636624,-1.7357314353681998,-0.1709966708290288,0.9033398335325014,cuda

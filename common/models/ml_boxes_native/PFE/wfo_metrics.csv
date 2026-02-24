@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+PFE,2026,1,2024-2025,1189,146,0.3287671232876712,-0.7471115435510642,-3.838416466449989,-0.13216945708540107,0.8470765276295787,cuda

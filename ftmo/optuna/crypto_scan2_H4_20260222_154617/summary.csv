@@ -1,0 +1,12 @@
+symbol,status,error,gpu,timeframe,best_ev,best_num_boost_round,best_max_depth,best_gamma,best_subsample,best_colsample_bytree,best_reg_alpha,best_reg_lambda,best_min_child_weight,best_eta,best_colsample_bylevel,trials,rows,device_used,cluster,calmar_score,fee_bps,spread_bps,slippage_bps,n_features,htf_enabled
+ADAUSD,ok,,0,H4,-177.69096514410992,580,5,0.054151581915333175,0.42301656428058443,0.44629281166616547,0.0030680468649538495,0.05306162528199664,1.9851638921472339,0.005002020473853043,0.8792030262982873,300,4930,cuda,crypto,-177.69096514410992,6.5,1776837.644610183,8.0,39,false
+DOGEUSD,error,"(sqlite3.OperationalError) table studies already exists
+[SQL: 
+CREATE TABLE studies (
+	study_id INTEGER NOT NULL, 
+	study_name VARCHAR(512) NOT NULL, 
+	PRIMARY KEY (study_id)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)",,,,,,,,,,,,,,,,,,,,,,,

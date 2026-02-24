@@ -1,0 +1,2 @@
+symbol,status,gpu,timeframe,best_ev,best_num_boost_round,best_max_depth,best_gamma,best_subsample,best_colsample_bytree,best_reg_alpha,best_reg_lambda,best_min_child_weight,best_eta,best_colsample_bylevel,trials,rows,device_used,cluster,calmar_score,fee_bps,spread_bps,slippage_bps,n_features,htf_enabled
+DOGEUSD,ok,0,H4,-209.79605442469668,56,3,0.2673399862841551,0.4042792072378356,0.6375985159072644,1.6321912116779391,0.0013254435623110297,4.340164542004308,0.005015608868628205,0.3659107359668247,300,4698,cuda,crypto,-209.79605442469668,6.5,2097904.840958191,8.0,39,false

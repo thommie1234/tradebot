@@ -1,0 +1,8 @@
+symbol,threshold,status,cluster,timeframe,n_trades,total_return,max_dd,dd_pct,sharpe,calmar,profit_factor,win_rate,expectancy_pct,avg_bars_held,n_folds
+BAC,0.52,ok,equity,H4,68,14256.19,8481.69,8.48,2.22,1.68,1.51,25.0,0.4891,5.7,8
+EU50.cash,0.61,ok,index,H4,19,6178.25,501.81,0.5,11.92,12.31,3.98,42.1,0.4152,3.7,26
+PFE,0.5,ok,equity,H4,49,23289.51,9039.84,9.04,3.88,2.58,2.27,40.8,0.9208,9.4,8
+RACE,0.58,ok,equity,H4,36,17172.72,1751.22,1.75,6.56,9.81,2.69,33.3,1.1467,5.2,8
+USOIL.cash,0.61,ok,commodity,H4,2,448.98,59.26,0.06,21.38,7.58,8.58,50.0,0.3427,3.0,34
+V,0.51,ok,equity,H4,76,44634.84,9053.39,9.05,4.27,4.93,2.15,21.1,0.6793,6.2,8
+XAG_AUD,0.51,ok,commodity,H4,331,10282.35,8297.17,8.3,1.15,1.24,1.23,15.1,0.0789,5.3,34

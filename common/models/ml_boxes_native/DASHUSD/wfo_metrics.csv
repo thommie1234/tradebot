@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+DASHUSD,2026,1,2024-2025,10170,2995,0.4013355592654424,-1.5912562401918742,-3.943328624386458,-0.898914571461926,0.7974792882880803,cuda

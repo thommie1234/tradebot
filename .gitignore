@@ -35,6 +35,9 @@ run_optuna_*.sh
 /*.pdf
 wfv_v2_trainer.py
 
+# Wine prefixes (large binaries)
+mt5/*/wineprefix/
+
 # Secrets
 config/discord_config.json
 tools/discord_config.json

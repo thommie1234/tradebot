@@ -1,0 +1,349 @@
+symbol,status,folds,parquet,error
+AUD_NZD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/AUD_NZD/wfo_metrics.parquet,
+AUD_JPY,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/AUD_JPY/wfo_metrics.parquet,
+ADAUSD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/ADAUSD/wfo_metrics.parquet,
+AUD_USD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/AUD_USD/wfo_metrics.parquet,
+BCHUSD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/BCHUSD/wfo_metrics.parquet,
+BTCUSD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/BTCUSD/wfo_metrics.parquet,
+CAD_CHF,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/CAD_CHF/wfo_metrics.parquet,
+COTTON.c,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/COTTON.c/wfo_metrics.parquet,
+DASHUSD,error,,,"xgboost_fit_failed: [14:35:23] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+CAD_JPY,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/CAD_JPY/wfo_metrics.parquet,
+CHF_JPY,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/CHF_JPY/wfo_metrics.parquet,
+DXY.cash,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/DXY.cash/wfo_metrics.parquet,
+DOTUSD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/DOTUSD/wfo_metrics.parquet,
+DOGEUSD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/DOGEUSD/wfo_metrics.parquet,
+ETHUSD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/ETHUSD/wfo_metrics.parquet,
+EUR_AUD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/EUR_AUD/wfo_metrics.parquet,
+EUR_CAD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/EUR_CAD/wfo_metrics.parquet,
+EUR_CZK,error,,,"xgboost_fit_failed: [14:36:33] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+EUR_HUF,error,,,"xgboost_fit_failed: [14:36:39] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+EUR_CHF,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/EUR_CHF/wfo_metrics.parquet,
+EUR_NOK,error,,,"xgboost_fit_failed: [14:36:54] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+EUR_GBP,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/EUR_GBP/wfo_metrics.parquet,
+EUR_PLN,error,,,"xgboost_fit_failed: [14:37:04] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+EUR_JPY,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/EUR_JPY/wfo_metrics.parquet,
+FRA40.cash,error,,,"xgboost_fit_failed: [14:37:13] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+EUR_NZD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/EUR_NZD/wfo_metrics.parquet,
+EUR_USD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/EUR_USD/wfo_metrics.parquet,
+GBP_AUD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/GBP_AUD/wfo_metrics.parquet,
+GBP_CAD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/GBP_CAD/wfo_metrics.parquet,
+GBP_CHF,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/GBP_CHF/wfo_metrics.parquet,
+GBP_JPY,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/GBP_JPY/wfo_metrics.parquet,
+GBP_NZD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/GBP_NZD/wfo_metrics.parquet,
+GOOG,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/GOOG/wfo_metrics.parquet,
+HEATOIL.c,error,,,"xgboost_fit_failed: [14:38:27] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+GBP_USD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/GBP_USD/wfo_metrics.parquet,
+IBE,error,,,"xgboost_fit_failed: [14:38:28] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+GER40.cash,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/GER40.cash/wfo_metrics.parquet,
+HK50.cash,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/HK50.cash/wfo_metrics.parquet,
+JP225.cash,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/JP225.cash/wfo_metrics.parquet,
+LVMH,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/LVMH/wfo_metrics.parquet,
+META,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/META/wfo_metrics.parquet,
+LTCUSD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/LTCUSD/wfo_metrics.parquet,
+NATGAS.cash,error,,,"xgboost_fit_failed: [14:39:06] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+NEOUSD,error,,,"xgboost_fit_failed: [14:39:10] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+MSFT,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/MSFT/wfo_metrics.parquet,
+NFLX,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/NFLX/wfo_metrics.parquet,
+N25.cash,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/N25.cash/wfo_metrics.parquet,
+NVDA,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/NVDA/wfo_metrics.parquet,
+NZD_CHF,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/NZD_CHF/wfo_metrics.parquet,
+NZD_CAD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/NZD_CAD/wfo_metrics.parquet,
+NZD_USD,error,,,"xgboost_fit_failed: [14:39:50] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+NZD_JPY,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/NZD_JPY/wfo_metrics.parquet,
+PFE,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/PFE/wfo_metrics.parquet,
+RACE,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/RACE/wfo_metrics.parquet,
+SUGAR.c,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/SUGAR.c/wfo_metrics.parquet,
+SPN35.cash,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/SPN35.cash/wfo_metrics.parquet,
+SOYBEAN.c,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/SOYBEAN.c/wfo_metrics.parquet,
+T,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/T/wfo_metrics.parquet,
+TSLA,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/TSLA/wfo_metrics.parquet,
+UKOIL.cash,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/UKOIL.cash/wfo_metrics.parquet,
+UK100.cash,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/UK100.cash/wfo_metrics.parquet,
+US100.cash,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/US100.cash/wfo_metrics.parquet,
+US2000.cash,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/US2000.cash/wfo_metrics.parquet,
+US30.cash,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/US30.cash/wfo_metrics.parquet,
+US500.cash,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/US500.cash/wfo_metrics.parquet,
+USD_CNH,error,,,"xgboost_fit_failed: [14:41:12] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+USD_CAD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/USD_CAD/wfo_metrics.parquet,
+USD_CHF,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/USD_CHF/wfo_metrics.parquet,
+USD_HKD,error,,,"xgboost_fit_failed: [14:41:24] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+USD_ILS,error,,,"xgboost_fit_failed: [14:41:30] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+USD_CZK,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/USD_CZK/wfo_metrics.parquet,
+USD_MXN,error,,,"xgboost_fit_failed: [14:41:48] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+USD_HUF,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/USD_HUF/wfo_metrics.parquet,
+USD_JPY,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/USD_JPY/wfo_metrics.parquet,
+USD_NOK,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/USD_NOK/wfo_metrics.parquet,
+USD_SGD,error,,,"xgboost_fit_failed: [14:42:18] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+USD_PLN,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/USD_PLN/wfo_metrics.parquet,
+USD_ZAR,error,,,"xgboost_fit_failed: [14:42:24] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+USD_SEK,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/USD_SEK/wfo_metrics.parquet,
+V,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/V/wfo_metrics.parquet,
+WHEAT.c,error,,,"xgboost_fit_failed: [14:42:34] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+VOWG_p,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/VOWG_p/wfo_metrics.parquet,
+WMT,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/WMT/wfo_metrics.parquet,
+USOIL.cash,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/USOIL.cash/wfo_metrics.parquet,
+XAG_AUD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/XAG_AUD/wfo_metrics.parquet,
+XAG_EUR,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/XAG_EUR/wfo_metrics.parquet,
+XAG_USD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/XAG_USD/wfo_metrics.parquet,
+XAU_AUD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/XAU_AUD/wfo_metrics.parquet,
+XAU_EUR,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/XAU_EUR/wfo_metrics.parquet,
+XAU_USD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/XAU_USD/wfo_metrics.parquet,
+XPD_USD,error,,,"xgboost_fit_failed: [14:43:48] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64eef7) [0x7f52fa44eef7]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (5) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (6) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (7) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+  [bt] (8) /usr/lib/python3.14/lib-dynload/_ctypes.cpython-314-x86_64-linux-gnu.so(+0x13910) [0x7f53b6953910]
+
+"
+XMRUSD,error,,,"xgboost_fit_failed: [14:43:49] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x62e5d1) [0x7f52fa42e5d1]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64e94d) [0x7f52fa44e94d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (5) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (6) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (7) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (8) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+
+"
+XPT_USD,error,,,"xgboost_fit_failed: [14:43:55] /workspace/src/data/gradient_index.h:100: Check failed: valid: Input data contains `inf` or a value too large, while `missing` is not set to `inf`
+Stack trace:
+  [bt] (0) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7f52fa0be09c]
+  [bt] (1) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x62e5d1) [0x7f52fa42e5d1]
+  [bt] (2) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64e94d) [0x7f52fa44e94d]
+  [bt] (3) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x64f73d) [0x7f52fa44f73d]
+  [bt] (4) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x5c6551) [0x7f52fa3c6551]
+  [bt] (5) /home/tradebot/backup_prop_20260202/venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(XGQuantileDMatrixCreateFromCallback+0x178) [0x7f52f9fcced8]
+  [bt] (6) /usr/lib/libffi.so.8(+0x82ee) [0x7f53b67de2ee]
+  [bt] (7) /usr/lib/libffi.so.8(+0x49f8) [0x7f53b67da9f8]
+  [bt] (8) /usr/lib/libffi.so.8(ffi_call+0x12e) [0x7f53b67dd6ce]
+
+"
+XCU_USD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/XCU_USD/wfo_metrics.parquet,
+ZM,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/ZM/wfo_metrics.parquet,
+XRPUSD,ok,5,/home/tradebot/tradebots/trading_prop/production/ml_boxes_native_wf34_tf_m1_h1/XRPUSD/wfo_metrics.parquet,

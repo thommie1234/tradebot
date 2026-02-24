@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+WHEAT.c,2026,1,2024-2025,162,48,0.3541666666666667,-2.2950096836482703,-9.207602782483459,-0.04357909871729526,0.7256195399639183,cuda

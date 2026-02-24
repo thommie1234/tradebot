@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+SPN35.cash,2026,1,2024-2025,486,54,0.5,1.160349939608837,3.2105306615986238,-0.03475136155545833,1.1745559159818386,cuda

@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+NEOUSD,2026,1,2024-2025,214,117,0.3504273504273504,-1.6649051790275018,-4.126922254499048,-0.4395770378384354,0.7932493323414297,cuda

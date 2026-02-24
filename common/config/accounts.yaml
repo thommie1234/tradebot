@@ -1,0 +1,78 @@
+# Multi-Account Configuration
+# Each account runs its own MT5 terminal + bridge proxy on a separate port.
+# Signals are shared (same ML models), but compliance, positions, and
+# risk management are completely isolated per account.
+
+accounts:
+  ftmo_100k:
+    name: "FTMO 100k"
+    enabled: true
+    bridge_port: 5056
+    account_size: 100000
+    config_path: "ftmo/config.json"
+    model_dir: "ftmo/models"
+    optuna_csv: "ftmo/optuna/ritual_combined_20260224_enriched.csv"
+
+    # Prop firm compliance limits
+    max_daily_loss_pct: 0.05       # 5% FTMO daily loss limit
+    max_total_dd_pct: 0.10         # 10% FTMO max drawdown
+    dd_type: "trailing"            # trailing = from high water mark
+    total_dd_warning_pct: 0.08     # Warning at 8%
+
+    # Profit targets
+    profit_target_step1_pct: 0.10  # 10% ($10,000) for Challenge
+    profit_target_step2_pct: 0.05  # 5% ($5,000) for Verification
+
+    # Our internal (stricter) limits
+    internal_daily_loss_pct: 0.035 # Stop trading at -3.5%
+    internal_profit_lock_pct: 0.03 # Lock profits at +3%
+    dd_recovery_threshold: 0.04    # Halve lots when DD >= 4%
+    dd_recovery_exit: 0.01         # Exit recovery when DD <= 1%
+
+    # Risk scaling
+    risk_scale: 1.0                # Multiplier on risk_per_trade from sovereign_configs.json
+    max_positions: 12              # Normal max concurrent positions
+    max_positions_alpha: 80        # High-confidence override
+
+    # Audit (separate DB per account)
+    audit_db: "ftmo/audit/sovereign_log.db"
+
+  bright_100k:
+    name: "BrightFunded 100k"
+    enabled: true
+    bridge_port: 5057
+    account_size: 100000
+    config_path: "bf/config.json"
+    model_dir: "bf/models"
+    optuna_csv: "bf/optuna/summary.csv"
+
+    # Prop firm compliance limits
+    max_daily_loss_pct: 0.05       # 5% BrightFunded daily loss limit
+    max_total_dd_pct: 0.10         # 10% max drawdown
+    dd_type: "trailing"            # EOD high-watermark trailing (BF specific)
+    total_dd_warning_pct: 0.08
+
+    # Profit targets
+    profit_target_step1_pct: 0.08  # 8% ($8,000) for Step 1
+    profit_target_step2_pct: 0.04  # 4% ($4,000) for Step 2
+
+    # Our internal (stricter) limits
+    internal_daily_loss_pct: 0.035
+    internal_profit_lock_pct: 0.03
+    dd_recovery_threshold: 0.04
+    dd_recovery_exit: 0.01
+
+    # Risk scaling — BF has wider spreads, reduce risk proportionally
+    risk_scale: 0.8
+    max_positions: 10
+    max_positions_alpha: 60
+
+    # BrightFunded specific rules
+    news_window_minutes: 5         # 5 min before/after (vs FTMO 2 min)
+    rollover_blackout_start: "23:30"  # CET — no orders 23:30-23:59
+    rollover_blackout_end: "23:59"
+    weekend_close_required: false  # BF allows weekend holding
+    monitor_interval: 2.0          # Slower trailing stop polling (avoid hyperactivity)
+
+    # Audit (separate DB per account)
+    audit_db: "bf/audit/sovereign_log.db"

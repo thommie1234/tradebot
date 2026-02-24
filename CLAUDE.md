@@ -8,24 +8,71 @@ TradeBots is a modular algorithmic trading platform for MetaTrader 5 (MT5) runni
 
 **Clean architecture principle**: code that makes money is NEVER mixed with code that learns.
 
+## Multi-Account Setup
+
+This system runs **two accounts simultaneously**: FTMO (port 5056) and BrightFunded (port 5057). They share ML models but have isolated compliance, positions, risk, and audit trails.
+
+**IMPORTANT**: When a task involves trading, deployment, configuration, risk, compliance, or account-specific operations, **ALWAYS ask which account** (FTMO or BrightFunded) the user is referring to before proceeding. Never assume — the accounts have different cost structures, compliance limits, and symbol configs.
+
+| | FTMO 100k | BrightFunded 100k |
+|---|---|---|
+| Account ID | `ftmo_100k` | `bright_100k` |
+| Service | `sovereign-bot-ftmo` | `sovereign-bot-bf` |
+| Bridge port | 5056 | 5057 |
+| GPU | `CUDA_VISIBLE_DEVICES=0` | `CUDA_VISIBLE_DEVICES=1` |
+| Config | `ftmo/config.json` | `bf/config.json` |
+| Models | `ftmo/models/` | `bf/models/` |
+| Optuna | `ftmo/optuna/` | `bf/optuna/` |
+| Audit DB | `ftmo/audit/sovereign_log.db` | `bf/audit/sovereign_log.db` |
+| Logs | `ftmo/logs/sovereign.log` | `bf/logs/sovereign.log` |
+| Commission | Per-instrument (CSV specs) | 0 (spread-only) |
+| Instrument specs | `common/data/instrument_specs/*.csv` | `common/data/instrument_specs/brightfunded.csv` |
+| Risk scale | 1.0 | 0.8 |
+
 ## Directory Structure
 
 ```
 tradebots/
-├── config/          ← YAML configs + loader.py (frozen dataclass singleton)
-├── data/            ← raw data refs, instrument specs, symbols.xlsx
-├── engine/          ← feature builder, inference, signal, labeling (knows NOTHING about money)
-├── risk/            ← position sizing, FTMO guard, drawdown, correlation (dictator)
-├── execution/       ← MT5 broker API, order router, spread filter, position manager
-├── audit/           ← SQLite WAL audit trail + feature logging (was: logging/)
-├── live/            ← orchestration: run_bot.py, healthcheck, emergency_kill, Wine scripts
-├── research/        ← training, optuna, WFA, backtesting (may be destroyed freely)
-├── models/          ← approved models + registry.yaml + optuna results
-├── tools/           ← data downloader, discord, sentiment, LLM advisor, MT5 bridge
-├── analysis/        ← post-trade forensics (never influences live)
-├── archive/         ← trading_prop/ + prop/ (legacy, frozen)
-└── .venv/           ← Python 3.14 virtualenv
+├── common/              ← All shared Python code
+│   ├── engine/          ← Feature builder, inference, signal, labeling
+│   ├── execution/       ← MT5 broker API, order router, spread filter
+│   ├── risk/            ← Position sizing, FTMO guard, drawdown, correlation
+│   ├── live/            ← run_bot.py, healthcheck, emergency_kill
+│   ├── research/        ← Training, optuna, WFA, backtesting
+│   ├── tools/           ← Data downloader, discord, sentiment, MT5 bridge
+│   ├── audit/           ← audit_logger.py, feature_logger.py
+│   ├── config/          ← YAML configs, loader.py, accounts.yaml, paths.yaml
+│   ├── models/          ← registry.yaml, legacy models
+│   ├── data/            ← Tick data refs, instrument specs
+│   ├── analysis/        ← Post-trade forensics
+│   ├── api/             ← FastAPI web dashboard
+│   └── tests/           ← Unit and integration tests
+│
+├── ftmo/                ← FTMO-specific data artifacts
+│   ├── config.json      ← Per-symbol configs
+│   ├── models/          ← XGBoost models
+│   ├── optuna/          ← Optuna results
+│   ├── audit/           ← Audit DB
+│   └── logs/            ← Service logs
+│
+├── bf/                  ← BrightFunded-specific data artifacts
+│   ├── config.json      ← Per-symbol configs
+│   ├── models/          ← XGBoost models
+│   ├── optuna/          ← Optuna results
+│   ├── audit/           ← Audit DB
+│   └── logs/            ← Service logs
+│
+├── config → common/config   ← Symlink for backward compat
+├── models → common/models   ← Symlink for backward compat
+├── data → common/data       ← Symlink for backward compat
+├── audit → common/audit     ← Symlink for backward compat
+├── archive/             ← Legacy, frozen
+└── .venv/               ← Python 3.14 virtualenv
 ```
+
+Python code lives in `common/`. Each account directory (`ftmo/`, `bf/`) contains ONLY data artifacts (configs, models, optuna, audit, logs). Symlinks at root level ensure `REPO_ROOT / "config"` etc. still resolve correctly.
+
+**Import resolution**: A `.pth` file (`.venv/lib/python3.14/site-packages/tradebots.pth`) adds `common/` to `sys.path`, so `from config.loader import cfg` works without any import changes.
 
 ## Common Commands
 
@@ -34,30 +81,34 @@ tradebots/
 source /home/tradebot/tradebots/.venv/bin/activate
 
 # Live trading — ALWAYS use systemctl, NEVER start manually (causes duplicates)
-systemctl --user restart sovereign-bot
-systemctl --user status sovereign-bot
-systemctl --user logs -f sovereign-bot      # follow logs
+# Each account has its own service:
+systemctl --user restart sovereign-bot-ftmo
+systemctl --user restart sovereign-bot-bf
+systemctl --user status sovereign-bot-ftmo
+systemctl --user status sovereign-bot-bf
+tail -f ftmo/logs/sovereign.log             # FTMO logs
+tail -f bf/logs/sovereign.log               # BF logs
 
 # Dry run (show plan, no trading)
-python3 live/run_bot.py --dry-run
+python3 common/live/run_bot.py --dry-run
 
 # Train models from tick data
-python3 live/run_bot.py --train
+python3 common/live/run_bot.py --train
 
 # Retrain with new Optuna params
-python3 live/run_bot.py --retrain
+python3 common/live/run_bot.py --retrain
 
 # Native ML training
-python3 research/train_ml_strategy.py --symbols EURUSD,GBPUSD --timeframes M15
+python3 common/research/train_ml_strategy.py --symbols EURUSD,GBPUSD --timeframes M15
 
 # Optuna hyperparameter optimization (multi-GPU)
-bash research/run_optuna_optimized.sh
+bash common/research/run_optuna_optimized.sh
 
 # Weekly reoptimization pipeline (Sunday 00:00 CET)
-bash live/sunday_ritual.sh
+bash common/live/sunday_ritual.sh
 
 # Download tick data
-bash tools/start_download_max.sh
+bash common/tools/start_download_max.sh
 
 # Bridge proxy
 systemctl --user restart mt5-bridge-proxy
@@ -66,13 +117,15 @@ systemctl --user restart mt5-bridge-proxy
 ### IMPORTANT: Bot Process Management
 
 **NEVER** start the bot manually with `nohup python3 run_bot.py &` — systemd manages it.
-The `sovereign-bot.service` has `Restart=always`, so killing the process will auto-restart it.
-Starting manually on top of that creates duplicate bots that execute trades twice.
+Each account runs as a separate service with `Restart=always`. Starting manually creates duplicates.
 
 Always use:
-- `systemctl --user restart sovereign-bot` to restart with new code
-- `systemctl --user stop sovereign-bot` to stop (temporarily, will restart on reboot)
-- `systemctl --user disable sovereign-bot && systemctl --user stop sovereign-bot` to fully stop
+- `systemctl --user restart sovereign-bot-ftmo` to restart FTMO
+- `systemctl --user restart sovereign-bot-bf` to restart BrightFunded
+- `systemctl --user stop sovereign-bot-ftmo` to stop FTMO (temporarily)
+- `systemctl --user disable sovereign-bot-ftmo && systemctl --user stop sovereign-bot-ftmo` to fully stop
+
+The old combined `sovereign-bot.service` is disabled. Do not use it.
 
 ## Architecture
 
@@ -80,22 +133,22 @@ Always use:
 
 | Package | Location | Purpose |
 |---------|----------|---------|
-| **Config** | `config/` | YAML configs loaded into frozen dataclass `cfg` singleton |
-| **Engine** | `engine/` | Feature building (28 leak-safe features), XGBoost inference, signal generation, model decay tracking |
-| **Risk** | `risk/` | Half-Kelly position sizing, FTMO guardrails, drawdown gates, sector correlation limits |
-| **Execution** | `execution/` | MT5 bridge wrapper, order routing with all guardrails, spread filter, trailing stop / breakeven management |
-| **Audit** | `audit/` | SQLite WAL + hash-chained audit logging, trade-time feature snapshots to parquet |
-| **Live** | `live/` | SovereignBot H1 loop orchestrator, heartbeat monitor, emergency kill |
-| **Research** | `research/` | WFO training, Optuna optimization, backtesting, integrated pipeline |
-| **Tools** | `tools/` | Data downloader, MT5 bridge proxy (Wine-side), Discord notifier, sentiment engine |
+| **Config** | `common/config/` | YAML configs loaded into frozen dataclass `cfg` singleton |
+| **Engine** | `common/engine/` | Feature building (28 leak-safe features), XGBoost inference, signal generation, model decay tracking |
+| **Risk** | `common/risk/` | Half-Kelly position sizing, FTMO guardrails, drawdown gates, sector correlation limits |
+| **Execution** | `common/execution/` | MT5 bridge wrapper, order routing with all guardrails, spread filter, trailing stop / breakeven management |
+| **Audit** | `common/audit/` | SQLite WAL + hash-chained audit logging, trade-time feature snapshots to parquet |
+| **Live** | `common/live/` | SovereignBot H1 loop orchestrator, heartbeat monitor, emergency kill |
+| **Research** | `common/research/` | WFO training, Optuna optimization, backtesting, integrated pipeline |
+| **Tools** | `common/tools/` | Data downloader, MT5 bridge proxy (Wine-side), Discord notifier, sentiment engine |
 
 ### ML Pipeline
 
-- **`engine/feature_builder.py`** — 28 leak-safe features using Polars with strict `shift(1)` discipline
-- **`engine/labeling.py`** — Dynamic triple-barrier labeling scaled by rolling volatility
-- **`engine/inference.py`** — SovereignMLFilter: model loading, training, predict(), should_trade()
-- **`research/train_ml_strategy.py`** — Walk-forward XGBoost with meta-labeling
-- **`research/integrated_pipeline.py`** — Polars lazy pipeline with fractional differentiation, purged WF-CV, Optuna objective
+- **`common/engine/feature_builder.py`** — 28 leak-safe features using Polars with strict `shift(1)` discipline
+- **`common/engine/labeling.py`** — Dynamic triple-barrier labeling scaled by rolling volatility
+- **`common/engine/inference.py`** — SovereignMLFilter: model loading, training, predict(), should_trade()
+- **`common/research/train_ml_strategy.py`** — Walk-forward XGBoost with meta-labeling
+- **`common/research/integrated_pipeline.py`** — Polars lazy pipeline with fractional differentiation, purged WF-CV, Optuna objective
 
 ### Communication Style
 
@@ -122,7 +175,7 @@ Live trading is disabled by default. Triple opt-in required:
 
 ## Data Roots
 
-Tick data is stored across multiple disks (configured in `config/paths.yaml`):
+Tick data is stored across multiple disks (configured in `common/config/paths.yaml`):
 ```
 /home/tradebot/ssd_data_1/tick_data   (NVMe, fast)
 /home/tradebot/ssd_data_2/tick_data
@@ -149,13 +202,15 @@ When the user asks to manually execute a trade "like the bot would", replicate t
 7. **Verify** the position via `positions_get()` after execution
 8. Use `magic=2000` (or per-symbol magic from config) so the bot recognizes and manages the position (trailing stop, breakeven)
 
-All per-symbol parameters (atr_sl_mult, atr_tp_mult, risk_per_trade, magic_number) come from `config/sovereign_configs.json`.
+All per-symbol parameters (atr_sl_mult, atr_tp_mult, risk_per_trade, magic_number) come from `ftmo/config.json` (FTMO) or `bf/config.json` (BrightFunded).
 
 ## Systemd Services
 
-| Service | ExecStart |
-|---------|-----------|
-| `sovereign-bot.service` | `live/run_bot.py --live` (Restart=always, MT5_BRIDGE_PORT=5056) |
-| `mt5-bridge-proxy.service` | `live/run_wine.sh mt5_bridge_proxy.py` |
-| `sunday-ritual.timer` | `live/sunday_ritual.sh` (Sunday 00:00) |
-| `sentiment-engine.service` | `tools/sentiment_engine.py` |
+| Service | ExecStart | Port | GPU | Logs |
+|---------|-----------|------|-----|------|
+| `sovereign-bot-ftmo.service` | `common/live/run_bot.py --live --account-id ftmo_100k` | 5056 | 0 | `ftmo/logs/sovereign.log` |
+| `sovereign-bot-bf.service` | `common/live/run_bot.py --live --account-id bright_100k` | 5057 | 1 | `bf/logs/sovereign.log` |
+| `mt5-bridge-proxy.service` | `common/live/run_wine.sh mt5_bridge_proxy.py` | — | — | — |
+| `sunday-ritual.timer` | `common/live/sunday_ritual.sh` (Sunday 00:00) | — | — | — |
+| `sentiment-engine.service` | `common/tools/sentiment_engine.py` | — | — | — |
+| ~~`sovereign-bot.service`~~ | **DISABLED** (old combined service) | — | — | — |

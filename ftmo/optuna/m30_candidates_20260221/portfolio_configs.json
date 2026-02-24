@@ -1,0 +1,24 @@
+{
+  "META": {
+    "asset_class": "equity",
+    "atr_period": 14,
+    "atr_sl_mult": 2.46,
+    "atr_timeframe": "H1",
+    "atr_tp_mult": 7.39,
+    "breakeven_atr": 1.42,
+    "exit_horizon": 36,
+    "exit_timeframe": "H4",
+    "magic_number": 2000,
+    "max_spread_pct": 0.001,
+    "risk_per_trade": 0.005,
+    "sector": "us_equity",
+    "trail_activation_atr": 1.57,
+    "trail_distance_atr": 1.68,
+    "wfo_calmar": 0.19,
+    "wfo_max_dd_pct": 3.05,
+    "wfo_n_trades": 69,
+    "wfo_profit_factor": 1.04,
+    "wfo_sharpe": 0.25,
+    "wfo_total_return": 565.48
+  }
+}

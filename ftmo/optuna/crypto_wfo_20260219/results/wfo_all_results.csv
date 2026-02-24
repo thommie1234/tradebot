@@ -1,0 +1,4 @@
+symbol,status,cluster,session,timeframe,sl,tp,rrr,be,trail_act,trail_dist,horizon,risk_pct,cost_bps,spread_bps,total_return,max_dd,dd_pct,sharpe,calmar,profit_factor,expectancy_pct,win_rate,n_trades,avg_bars_held,n_folds,avg_win_pct,avg_loss_pct,pct_sl,pct_tp,pct_be,pct_trail,pct_horizon,ftmo_ok,leak_free,warmup_trades,optimized_trades
+DASHUSD,ok,crypto,crypto,H4,1.5,6.0,4.0,1.0,3.0,1.0,30,1.0,31.6,9.1,19081.06,16413.34,16.41,0.49,1.16,1.11,0.2871,29.1,302,11.4,49,10.0263,3.7178,46.4,5.6,22.2,15.6,10.3,false,true,24,278
+FETUSD,ok,crypto,crypto,H1,1.5,6.0,4.0,1.0,3.0,1.0,30,1.0,25.4,2.9,-7191.01,19861.67,19.86,-0.39,-0.36,0.96,-0.0205,24.0,337,13.6,18,6.0151,1.9302,34.7,5.0,38.3,11.6,10.4,false,true,82,255
+ICPUSD,ok,crypto,crypto,H1,1.5,6.0,4.0,1.0,3.0,1.0,30,1.0,28.5,6.0,-46292.84,58840.4,58.84,-2.61,-0.79,0.75,-0.4739,24.2,327,13.2,18,4.9404,2.1987,42.8,3.4,31.5,12.5,9.8,false,true,96,231

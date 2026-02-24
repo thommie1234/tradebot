@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+GBP_JPY,2026,1,2024-2025,655,8,0.375,-9.325932818788878,-47.82516770591632,-0.010816849080315105,0.27644693156916444,cuda

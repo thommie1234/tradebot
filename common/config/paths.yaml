@@ -1,0 +1,19 @@
+# Data and model paths
+
+data_roots:
+  - /home/tradebot/ssd_data_1/tick_data
+  - /home/tradebot/ssd_data_2/tick_data
+  - /home/tradebot/data_1/tick_data
+  - /home/tradebot/data_2/tick_data
+
+# OHLCV bar data (downloaded from MT5)
+bar_roots:
+  - /home/tradebot/ssd_data_2/bars
+
+model_dir: ftmo/models
+db_path: ftmo/audit/sovereign_log.db
+trade_log_dir: audit/trade_logs
+config_path: ftmo/config.json
+wfo_log: config/wfo_all_h1_results.log
+optuna_csv: ftmo/optuna/ritual_combined_20260224_enriched.csv
+info_dir: data/instrument_specs

@@ -1,0 +1,14 @@
+[Unit]
+Description=TigerVNC Server for BrightFunded (display :2)
+
+[Service]
+Type=simple
+Environment=HOME=/home/tradebot
+ExecStartPre=/bin/sh -c 'rm -f /tmp/.X2-lock /tmp/.X11-unix/X2 2>/dev/null || true'
+ExecStart=/usr/bin/Xvnc :2 -auth /home/tradebot/.Xauthority -desktop brightfunded:2 -pn -rfbauth /home/tradebot/.config/tigervnc/passwd -rfbport 5902
+ExecStop=/bin/sh -c 'kill $MAINPID'
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

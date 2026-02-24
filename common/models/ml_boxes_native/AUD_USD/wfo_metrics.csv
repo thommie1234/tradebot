@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+AUD_USD,2026,1,2024-2025,681,10,0.4,-6.065852683073467,-29.77431003108927,-0.008541979057421933,0.44138185895970655,cuda

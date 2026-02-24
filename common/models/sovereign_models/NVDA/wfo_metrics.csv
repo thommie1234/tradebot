@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+NVDA,H1,2026,1,2024-2025,214,123,0.5284552845528455,1.1910704072858929,3.14968170466923,-0.23057083266642286,1.1744246005464354,cuda,5.6233481414831195,5.0,13.62334814148312

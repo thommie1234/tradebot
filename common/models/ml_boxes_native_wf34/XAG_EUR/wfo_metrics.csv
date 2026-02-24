@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+XAG_EUR,2026,1,2024-2025,3727,851,0.4112808460634548,-1.1655912669641968,-2.311456232173809,-0.44533613344181855,0.8335663370610897,cuda

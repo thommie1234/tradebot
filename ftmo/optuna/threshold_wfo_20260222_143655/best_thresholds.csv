@@ -1,0 +1,5 @@
+symbol,threshold,status,cluster,timeframe,n_trades,total_return,max_dd,dd_pct,sharpe,calmar,profit_factor,win_rate,expectancy_pct,avg_bars_held,n_folds
+JP225.cash,0.63,ok,index,H4,184,14571.49,4896.6,4.9,2.14,2.98,1.54,38.0,0.1881,10.8,35
+TSLA,0.5,ok,equity,H4,85,13551.34,5217.13,5.22,4.24,2.6,2.01,21.2,1.1403,5.1,8
+USOIL.cash,0.61,ok,commodity,H4,2,534.75,70.43,0.07,21.39,7.59,8.59,50.0,0.3429,3.0,35
+V,0.51,ok,equity,H4,76,31826.8,6477.7,6.48,4.26,4.91,2.15,21.1,0.6782,6.2,8

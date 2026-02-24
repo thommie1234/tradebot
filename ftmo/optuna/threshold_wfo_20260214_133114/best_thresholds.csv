@@ -1,0 +1,2 @@
+symbol,threshold,status,cluster,timeframe,n_trades,total_return,max_dd,dd_pct,sharpe,calmar,profit_factor,win_rate,expectancy_pct,avg_bars_held,n_folds
+LVMH,0.51,ok,equity,H1,344,55357.6,8634.89,8.63,6.12,6.41,1.62,37.8,0.292,6.2,11

@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+SUGAR.c,2026,1,2025-2025,1576,309,0.4045307443365696,-2.459675155739318,-7.959320277718339,-0.19354440949920437,0.7202874463715606,cuda

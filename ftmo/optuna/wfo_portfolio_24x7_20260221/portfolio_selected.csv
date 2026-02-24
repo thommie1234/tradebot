@@ -1,0 +1,2 @@
+symbol,status,cluster,session,timeframe,sl,tp,rrr,be,trail_act,trail_dist,horizon,risk_pct,cost_bps,spread_bps,total_return,max_dd,dd_pct,sharpe,calmar,profit_factor,expectancy_pct,win_rate,n_trades,avg_bars_held,n_folds,avg_win_pct,avg_loss_pct,pct_sl,pct_tp,pct_be,pct_trail,pct_horizon,ftmo_ok,leak_free,warmup_trades,optimized_trades
+TSLA,ok,equity,us_equity,M30,1.53,6.24,4.1,1.46,3.8,0.33,18,0.54,10.8,5.4,19869.99,5887.16,5.89,4.88,3.38,1.27,0.216,34.1,331,6.0,4,2.7073,1.0754,35.6,2.1,30.2,30.8,1.2,true,true,250,81

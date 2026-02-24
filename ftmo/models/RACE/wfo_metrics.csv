@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+RACE,H1,2026,1,2024-2025,221,92,0.40217391304347827,-5.447984676931166,-9.686348025466186,-0.4811617958421167,0.4543194745310618,cuda,21.11323309767512,5.0,29.11323309767512

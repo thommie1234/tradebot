@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+AAPL,H1,2026,1,2024-2025,217,87,0.47126436781609193,-1.2234433996847602,-2.9129379428421176,-0.21918204888080783,0.8475886986680723,cuda,4.301383611728602,5.0,12.301383611728603

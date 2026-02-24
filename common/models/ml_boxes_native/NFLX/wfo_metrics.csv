@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+NFLX,2026,1,2024-2025,1836,112,0.4017857142857143,-3.5434399209546266,-11.087386205004472,-0.08147258221622977,0.6039953702270271,cuda

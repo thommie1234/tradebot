@@ -1,0 +1,24 @@
+{
+  "TSLA": {
+    "asset_class": "equity",
+    "atr_period": 14,
+    "atr_sl_mult": 1.53,
+    "atr_timeframe": "H1",
+    "atr_tp_mult": 6.24,
+    "breakeven_atr": 1.46,
+    "exit_horizon": 18,
+    "exit_timeframe": "M30",
+    "magic_number": 2000,
+    "max_spread_pct": 0.001,
+    "risk_per_trade": 0.0054,
+    "sector": "us_equity",
+    "trail_activation_atr": 3.8,
+    "trail_distance_atr": 0.33,
+    "wfo_calmar": 3.38,
+    "wfo_max_dd_pct": 5.89,
+    "wfo_n_trades": 331,
+    "wfo_profit_factor": 1.27,
+    "wfo_sharpe": 4.88,
+    "wfo_total_return": 19869.99
+  }
+}

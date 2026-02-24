@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+XAG_AUD,2026,1,2024-2025,3571,854,0.4203747072599532,-1.5480173700769522,-2.443083932024544,-0.6560357094637148,0.7711921371475005,cuda

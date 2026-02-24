@@ -1,0 +1,3 @@
+symbol,status,cluster,session,timeframe,sl,tp,rrr,be,trail_act,trail_dist,horizon,risk_pct,cost_bps,spread_bps,total_return,max_dd,dd_pct,sharpe,calmar,profit_factor,expectancy_pct,win_rate,n_trades,avg_bars_held,n_folds,avg_win_pct,avg_loss_pct,pct_sl,pct_tp,pct_be,pct_trail,pct_horizon,ftmo_ok,leak_free,warmup_trades,optimized_trades
+AMZN,ok,equity,us_equity,H1,1.5,4.5,3.0,1.0,2.0,0.5,24,0.8,10.3,4.9,28972.02,6671.78,6.67,4.45,4.34,1.4,0.2198,36.5,203,7.2,7,2.322,0.9862,39.9,3.9,23.6,30.5,2.0,true,true,98,105
+NVDA,ok,equity,us_equity,H1,1.5,4.5,3.0,1.0,2.0,0.5,24,0.8,11.0,5.6,20362.02,9755.49,9.76,3.06,2.09,1.28,0.2193,34.6,211,6.5,7,2.9409,1.2204,37.0,2.4,24.6,33.6,2.4,true,true,101,110

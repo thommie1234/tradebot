@@ -1,0 +1,2 @@
+symbol,status,cluster,timeframe,n_signals,n_folds,trials,best_ev,best_atr_sl_mult,best_atr_tp_mult,best_breakeven_atr,best_trail_activation_atr,best_trail_distance_atr,best_horizon,fee_bps,spread_bps,slippage_bps
+SOLUSD,ok,crypto,H1,3423,1,10,0.005798453279841338,2.631373809760928,4.486373774747933,0.609102444252071,2.1419157844870185,1.1084844859190754,28,6.5,1.7426156661144916,8.0

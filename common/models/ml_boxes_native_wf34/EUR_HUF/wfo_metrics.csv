@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+EUR_HUF,2026,1,2024-2025,3345,19,0.3684210526315789,-3.7540646948185166,-13.39150274901402,-0.01194323002781894,0.6043897081775729,cuda

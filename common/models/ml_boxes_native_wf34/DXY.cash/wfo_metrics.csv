@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+DXY.cash,2026,1,2025-2025,2134,7,0.42857142857142855,-6.143052157104291,-152.62887856985785,-0.004089967390420446,0.42598621758869076,cuda

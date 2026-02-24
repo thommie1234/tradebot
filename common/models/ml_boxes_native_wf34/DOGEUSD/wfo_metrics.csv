@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+DOGEUSD,2026,1,2024-2025,4925,1784,0.3710762331838565,-1.0324464897699106,-1.3078471691813383,-0.8823151974623564,0.8064337627456928,cuda

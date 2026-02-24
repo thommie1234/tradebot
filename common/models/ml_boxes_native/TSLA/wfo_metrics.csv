@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+TSLA,2026,1,2024-2025,1056,172,0.4186046511627907,-2.585659824036672,-6.505180038178579,-0.1330456119036887,0.6983241658468329,cuda

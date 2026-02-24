@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+RACE,2026,1,2024-2025,855,100,0.48,-0.24412093472217916,-0.6448608618801067,-0.046200171316062466,0.9633238406895038,cuda
