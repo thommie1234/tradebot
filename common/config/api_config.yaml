@@ -1,0 +1,12 @@
+# API Configuration — Sovereign Bot Web Dashboard
+jwt_secret: "9276997ea05fb5a7dc5be1e3c12e959b99af0426a9f82cd4281a2e6573c04288"
+api_key: "sovereign-2026"
+jwt_expiry_days: 30
+
+# Default bridge (used as fallback)
+bridge_host: "127.0.0.1"
+bridge_port: 5056
+
+# Web server
+host: "0.0.0.0"
+port: 8080

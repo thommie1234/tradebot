@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+EUR_JPY,2026,1,2024-2025,3880,29,0.3793103448275862,-5.701107821340119,-24.171105252654936,-0.024693698284474652,0.4762117074542922,cuda

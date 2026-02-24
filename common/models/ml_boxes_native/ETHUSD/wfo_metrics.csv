@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+ETHUSD,2026,1,2024-2025,890,281,0.41637010676156583,-0.9836163331828273,-2.853378399831541,-0.2622357332509999,0.8728559529157072,cuda

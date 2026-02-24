@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+CHF_JPY,2026,1,2024-2025,688,11,0.2727272727272727,-12.182081496095122,-35.96814867464601,-0.015599914325426512,0.19644654170897918,cuda

@@ -1,0 +1,2 @@
+symbol,status,gpu,timeframe,best_ev,best_num_boost_round,best_max_depth,best_gamma,best_subsample,best_colsample_bytree,best_reg_alpha,best_reg_lambda,best_min_child_weight,best_eta,best_colsample_bylevel,trials,rows,device_used,cluster,calmar_score,fee_bps,spread_bps,slippage_bps,n_features,htf_enabled
+SOLUSD,ok,0,H1,-0.01730974870249689,1059,6,5.919154725318797,0.4706993516711305,0.7181146438396727,27.64271784972163,0.047957496844772365,124.14204210577647,0.013937085892713324,0.4157825347304106,400,3566,cuda,crypto,-0.01730974870249689,6.5,167.55777714043109,8.0,39,false

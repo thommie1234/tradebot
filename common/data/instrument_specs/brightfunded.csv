@@ -1,0 +1,55 @@
+symbol,description,asset_class,contract_size,margin_percent,leverage,leverage_swing,commission,commission_type,timezone
+BTC/USD,Bitcoin vs US Dollar,Crypto CFD,1,50,1:2,1:1,0,NO_COMMISSION,GMT+2
+ETH/USD,Ethereum vs US Dollar,Crypto CFD,1,50,1:2,1:1,0,NO_COMMISSION,GMT+2
+SOL/USD,Solana vs US Dollar,Crypto CFD,1,50,1:2,1:1,0,NO_COMMISSION,GMT+2
+UNI/USD,Uniswap vs US Dollar,Crypto CFD,1,50,1:2,1:1,0,NO_COMMISSION,GMT+2
+AAVE/USD,Aave vs US Dollar,Crypto CFD,1,50,1:2,1:1,0,NO_COMMISSION,GMT+2
+ADA/USD,Cardano vs US Dollar,Crypto CFD,1,50,1:2,1:1,0,NO_COMMISSION,GMT+2
+DOT/USD,Polkadot vs US Dollar,Crypto CFD,1,50,1:2,1:1,0,NO_COMMISSION,GMT+2
+XRP/USD,Ripple vs US Dollar,Crypto CFD,1,50,1:2,1:1,0,NO_COMMISSION,GMT+2
+LTC/USD,Litecoin vs US Dollar,Crypto CFD,1,50,1:2,1:1,0,NO_COMMISSION,GMT+2
+BNB/USD,Binance Coin vs US Dollar,Crypto CFD,1,50,1:2,1:1,0,NO_COMMISSION,GMT+2
+LINK/USD,Chainlink vs US Dollar,Crypto CFD,1,50,1:2,1:1,0,NO_COMMISSION,GMT+2
+DASH/USD,Dash vs US Dollar,Crypto CFD,1,50,1:2,1:1,0,NO_COMMISSION,GMT+2
+ALGO/USD,Algorand vs US Dollar,Crypto CFD,1,50,1:2,1:1,0,NO_COMMISSION,GMT+2
+XLM/USD,Stellar vs US Dollar,Crypto CFD,1,50,1:2,1:1,0,NO_COMMISSION,GMT+2
+NEO/USD,Neo vs US Dollar,Crypto CFD,1,50,1:2,1:1,0,NO_COMMISSION,GMT+2
+EU50.cash,Euro Stoxx 50 Index,Cash CFD,1,10,1:10,1:5,0,NO_COMMISSION,GMT+2
+US100.cash,Nasdaq 100 Index,Cash CFD,1,10,1:10,1:5,0,NO_COMMISSION,GMT+2
+US500.cash,S&P 500 Index,Cash CFD,1,10,1:10,1:5,0,NO_COMMISSION,GMT+2
+US30.cash,Dow Jones 30 Index,Cash CFD,1,10,1:10,1:5,0,NO_COMMISSION,GMT+2
+UK100.cash,FTSE 100 Index,Cash CFD,1,10,1:10,1:5,0,NO_COMMISSION,GMT+2
+FRA40.cash,CAC 40 Index,Cash CFD,1,10,1:10,1:5,0,NO_COMMISSION,GMT+2
+XAU/USD,Gold vs US Dollar,Metals,100,5,1:20,1:10,0,NO_COMMISSION,GMT+2
+XAG/USD,Silver vs US Dollar,Metals,5000,5,1:20,1:10,0,NO_COMMISSION,GMT+2
+XPD/USD,Palladium vs US Dollar,Metals,1,10,1:10,1:5,0,NO_COMMISSION,GMT+2
+XPT/USD,Platinum vs US Dollar,Metals,1,10,1:10,1:5,0,NO_COMMISSION,GMT+2
+EURUSD,Euro vs US Dollar,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+GBPUSD,British Pound vs US Dollar,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+USDJPY,US Dollar vs Japanese Yen,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+USDCHF,US Dollar vs Swiss Franc,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+AUDUSD,Australian Dollar vs US Dollar,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+NZDUSD,New Zealand Dollar vs US Dollar,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+USDCAD,US Dollar vs Canadian Dollar,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+EURJPY,Euro vs Japanese Yen,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+EURGBP,Euro vs British Pound,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+EURAUD,Euro vs Australian Dollar,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+EURCAD,Euro vs Canadian Dollar,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+EURCHF,Euro vs Swiss Franc,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+EURNZD,Euro vs New Zealand Dollar,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+GBPJPY,British Pound vs Japanese Yen,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+GBPAUD,British Pound vs Australian Dollar,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+GBPCAD,British Pound vs Canadian Dollar,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+GBPCHF,British Pound vs Swiss Franc,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+GBPNZD,British Pound vs New Zealand Dollar,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+AUDJPY,Australian Dollar vs Japanese Yen,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+AUDNZD,Australian Dollar vs New Zealand Dollar,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+AUDCAD,Australian Dollar vs Canadian Dollar,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+AUDCHF,Australian Dollar vs Swiss Franc,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+NZDJPY,New Zealand Dollar vs Japanese Yen,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+NZDCAD,New Zealand Dollar vs Canadian Dollar,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+NZDCHF,New Zealand Dollar vs Swiss Franc,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+CADJPY,Canadian Dollar vs Japanese Yen,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+CADCHF,Canadian Dollar vs Swiss Franc,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+CHFJPY,Swiss Franc vs Japanese Yen,Forex,100000,1,1:100,1:30,0,NO_COMMISSION,GMT+2
+USDSEK,US Dollar vs Swedish Krona,Forex Exotic,100000,2,1:50,1:15,0,NO_COMMISSION,GMT+2

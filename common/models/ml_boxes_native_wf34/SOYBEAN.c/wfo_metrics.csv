@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+SOYBEAN.c,2026,1,2024-2025,3156,529,0.3818525519848771,-3.588843159016454,-9.42884348710713,-0.3742419595876584,0.6038877971834143,cuda

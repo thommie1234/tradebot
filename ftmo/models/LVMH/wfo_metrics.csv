@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+LVMH,H1,2026,1,2024-2025,292,160,0.44375,-1.2406989044087116,-3.105033128621225,-0.36224148576706505,0.8021250334114587,cuda,2.436512243473066,5.0,10.436512243473066

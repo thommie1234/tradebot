@@ -1,0 +1,7 @@
+symbol,status,cluster,session,timeframe,sl,tp,rrr,be,trail_act,trail_dist,horizon,risk_pct,cost_bps,spread_bps,total_return,max_dd,dd_pct,sharpe,calmar,profit_factor,expectancy_pct,win_rate,n_trades,avg_bars_held,n_folds,avg_win_pct,avg_loss_pct,pct_sl,pct_tp,pct_be,pct_trail,pct_horizon,ftmo_ok,leak_free,warmup_trades,optimized_trades
+RACE,ok,equity,eu_equity,H4,0.87,7.82,9.0,1.16,3.54,1.33,16,1.0,26.4,21.0,21699.61,3475.57,3.48,5.13,6.24,2.02,0.6459,39.0,59,5.1,8,3.5617,1.217,23.7,5.1,32.2,23.7,15.3,true,true,21,38
+NVDA,ok,equity,us_equity,H4,0.5,6.14,12.3,0.54,2.0,0.58,23,0.7,11.0,5.6,18118.79,3492.96,3.49,5.54,5.19,2.1,1.2277,43.6,78,5.3,8,5.5786,2.1344,30.8,5.1,25.6,37.2,1.3,true,true,32,46
+PFE,ok,equity,us_equity,H4,0.52,6.56,12.5,1.2,3.73,1.6,35,1.0,19.3,13.9,20693.07,5449.35,5.45,3.7,3.8,1.71,0.4938,38.3,60,5.0,8,3.2188,1.2002,40.0,1.7,21.7,36.7,0.0,true,true,24,36
+LVMH,ok,equity,eu_equity,H1,0.99,7.32,7.4,0.93,2.86,0.41,30,0.39,7.8,2.4,13095.94,4560.61,4.56,2.65,2.87,1.21,0.1022,35.1,342,5.9,11,1.7117,0.7678,41.2,2.9,21.9,27.2,6.7,true,true,98,244
+JP225.cash,ok,index,apac_idx,H4,0.5,7.99,16.0,0.63,3.03,1.71,35,0.29,4.3,1.3,8532.95,3338.44,3.34,1.46,2.56,1.25,0.0601,30.3,323,4.4,34,1.4491,0.5449,31.6,1.2,36.5,26.6,4.0,true,true,21,302
+NZD_USD,ok,forex,forex,H4,2.21,7.8,3.5,1.42,4.0,1.82,33,1.0,4.9,1.4,3397.46,6087.27,6.09,0.44,0.56,1.09,0.0099,24.6,114,7.7,34,0.989,0.3089,28.1,3.5,43.9,18.4,6.1,true,true,10,104

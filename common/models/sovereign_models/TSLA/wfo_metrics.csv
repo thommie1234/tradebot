@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+TSLA,H1,2026,1,2024-2025,207,75,0.64,5.556220471477706,15.37949879813549,-0.19109032470933907,2.0868346434540372,cuda,5.4376034998386125,5.0,13.437603499838612

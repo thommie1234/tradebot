@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+ALVG,H4,2026,1,2024-2025,120,60,0.38333333333333336,-4.8322672216839635,-8.680872447733163,-0.2644752520884285,0.5039618229710746,cuda,4.979793530098847,5.0,12.979793530098847

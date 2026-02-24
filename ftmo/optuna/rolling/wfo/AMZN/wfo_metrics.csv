@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+AMZN,H1,2026,1,2024-2025,215,71,0.28169014084507044,-4.417841360581916,-15.68339359844987,-0.2892353798188978,0.5345644575049099,cuda,4.884872438218071,5.0,10.284872438218072

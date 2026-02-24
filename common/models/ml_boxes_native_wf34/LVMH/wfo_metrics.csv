@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+LVMH,2026,1,2024-2025,3564,519,0.3834296724470135,-2.601301436913945,-2.6113621025488385,-0.47827216646227666,0.5637605391837415,cuda

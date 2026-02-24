@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+USOIL.cash,2026,1,2024-2025,3900,726,0.39944903581267216,-2.433982546549827,-5.153426364110353,-0.44373095646423444,0.7113812993183,cuda

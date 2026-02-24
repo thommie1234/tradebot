@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+GBP_USD,2026,1,2024-2025,730,3,0.6666666666666666,4.550753008797839,0.0,0.0,1.9909843444584279,cuda

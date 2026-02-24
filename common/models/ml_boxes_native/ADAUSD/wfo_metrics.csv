@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+ADAUSD,2026,1,2024-2025,439,161,0.4409937888198758,0.9084473483225828,2.3930869127049346,-0.1411704400119268,1.1336707952805642,cuda

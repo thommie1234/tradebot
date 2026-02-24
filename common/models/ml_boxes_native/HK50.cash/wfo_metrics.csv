@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+HK50.cash,2026,1,2024-2025,1001,59,0.3389830508474576,-7.323293215555517,-24.14422630287764,-0.05605751193723996,0.3854983738206599,cuda

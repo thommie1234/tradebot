@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+USD_CAD,2026,1,2024-2025,3689,13,0.46153846153846156,-4.923067750242757,-5.718646445734459,-0.004229910455742725,0.4239434710485631,cuda

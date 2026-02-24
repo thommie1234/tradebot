@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+NZD_JPY,2026,1,2024-2025,737,11,0.09090909090909091,-22.21291441534602,-82.10281327439445,-0.018250827522163227,0.08959790528684912,cuda

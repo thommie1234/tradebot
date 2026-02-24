@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+XPD_USD,2026,1,2024-2025,2765,667,0.41529235382308843,-0.9516251816885277,-2.2196249598258304,-0.36150334410985396,0.8723782040154525,cuda

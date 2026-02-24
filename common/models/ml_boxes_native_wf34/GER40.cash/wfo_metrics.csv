@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+GER40.cash,2026,1,2024-2025,3574,95,0.45263157894736844,-4.137553450658181,-14.727731237776517,-0.05071297201003655,0.5746519963086645,cuda

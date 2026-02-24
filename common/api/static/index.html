@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sovereign Bot Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #0f1117;
+  --card: #1a1d27;
+  --border: #2a2d3a;
+  --text: #e1e4eb;
+  --dim: #6b7280;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #eab308;
+  --blue: #3b82f6;
+  --cyan: #06b6d4;
+  --orange: #f97316;
+  --purple: #a855f7;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'SF Mono','Fira Code','Cascadia Code',monospace; font-size:13px; }
+
+/* Header */
+.header {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:12px 20px; background:var(--card); border-bottom:1px solid var(--border);
+}
+.header h1 { font-size:16px; font-weight:600; letter-spacing:1px; }
+.status-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:5px; }
+.status-dot.on { background:var(--green); box-shadow:0 0 6px var(--green); }
+.status-dot.off { background:var(--red); box-shadow:0 0 6px var(--red); }
+.header-right { display:flex; align-items:center; gap:16px; font-size:12px; }
+
+/* Combined top bar */
+.combined-bar {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px;
+  padding:14px 20px; background:linear-gradient(135deg, #1a1d27 0%, #1f2233 100%);
+  border-bottom:1px solid var(--border);
+}
+.cmetric .label { color:var(--dim); font-size:10px; text-transform:uppercase; letter-spacing:0.5px; }
+.cmetric .value { font-size:20px; font-weight:700; margin-top:2px; }
+.cmetric .sub { color:var(--dim); font-size:10px; margin-top:1px; }
+
+/* Two-column layout */
+.dual {
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  padding:16px 20px;
+}
+@media(max-width:1000px) { .dual { grid-template-columns:1fr; } }
+
+/* Account panel */
+.acct-panel { display:flex; flex-direction:column; gap:12px; }
+.acct-header {
+  font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px;
+  padding:8px 12px; border-radius:6px 6px 0 0; border-bottom:2px solid;
+}
+.acct-header.ftmo { color:var(--blue); border-color:var(--blue); background:rgba(59,130,246,0.08); }
+.acct-header.bf { color:var(--orange); border-color:var(--orange); background:rgba(249,115,22,0.08); }
+
+.card { background:var(--card); border:1px solid var(--border); border-radius:6px; padding:14px; }
+.card h3 { font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--dim);
+  margin-bottom:10px; border-bottom:1px solid var(--border); padding-bottom:6px; }
+
+/* Metrics row inside account */
+.acct-metrics { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.am .label { color:var(--dim); font-size:10px; text-transform:uppercase; }
+.am .value { font-size:18px; font-weight:700; }
+.am .sub { color:var(--dim); font-size:10px; }
+
+/* Compliance bars */
+.compliance-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.compliance-row .lbl { color:var(--dim); font-size:11px; }
+.compliance-row .val { font-weight:600; font-size:12px; }
+.bar-wrap { width:100%; height:5px; background:var(--bg); border-radius:3px; margin-top:3px; }
+.bar-fill { height:100%; border-radius:3px; transition:width 0.3s; }
+.bar-ok { background:var(--green); }
+.bar-warn { background:var(--yellow); }
+.bar-danger { background:var(--red); }
+
+/* Tables */
+table { width:100%; border-collapse:collapse; }
+th { text-align:left; color:var(--dim); font-size:10px; text-transform:uppercase;
+  letter-spacing:0.5px; padding:5px 6px; border-bottom:1px solid var(--border); }
+td { padding:5px 6px; border-bottom:1px solid var(--border); font-size:11px; white-space:nowrap; }
+tr:last-child td { border-bottom:none; }
+
+.pos { color:var(--green); }
+.neg { color:var(--red); }
+.badge { display:inline-block; padding:2px 5px; border-radius:3px; font-size:9px; font-weight:600; }
+.badge-buy { background:#22c55e22; color:var(--green); }
+.badge-sell { background:#ef444422; color:var(--red); }
+.badge-filled { background:#3b82f622; color:var(--blue); }
+.badge-rejected { background:#ef444422; color:var(--red); }
+.badge-blocked { background:#eab30822; color:var(--yellow); }
+
+/* Charts section */
+.charts-section {
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  padding:0 20px 16px;
+}
+@media(max-width:1000px) { .charts-section { grid-template-columns:1fr; } }
+.chart-wrap { position:relative; height:180px; }
+.chart-wrap canvas { width:100%!important; height:100%!important; }
+
+/* Stats row */
+.stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(80px,1fr)); gap:6px; }
+.stat-item .lbl { color:var(--dim); font-size:10px; }
+.stat-item .val { font-size:14px; font-weight:700; }
+
+/* Events */
+.events-row { display:flex; gap:4px; align-items:baseline; padding:3px 0; border-bottom:1px solid var(--border); }
+.events-row:last-child { border-bottom:none; }
+.events-row .ts { color:var(--dim); font-size:10px; min-width:44px; }
+.events-row .lvl { font-size:9px; font-weight:700; min-width:50px; }
+.events-row .msg { font-size:10px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+/* Hardware bar */
+.hw-bar { display:flex; gap:24px; padding:10px 20px; border-top:1px solid var(--border); }
+.hw-item { display:flex; align-items:center; gap:5px; }
+.hw-item .lbl { color:var(--dim); font-size:11px; }
+.hw-item .val { font-weight:600; font-size:12px; }
+
+/* Footer */
+.footer { text-align:center; padding:10px; color:var(--dim); font-size:10px; }
+.refresh-indicator { display:inline-block; width:6px; height:6px; border-radius:50%;
+  background:var(--green); margin-right:5px; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* Bottom row */
+.bottom-section {
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  padding:0 20px 16px;
+}
+@media(max-width:1000px) { .bottom-section { grid-template-columns:1fr; } }
+
+#loading { display:flex; align-items:center; justify-content:center; height:60vh; color:var(--dim); font-size:16px; }
+#content { display:none; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>SOVEREIGN BOT</h1>
+  <div class="header-right" id="botStatus">
+    <span><span class="status-dot off"></span>Loading...</span>
+  </div>
+</div>
+
+<div id="loading">Connecting...</div>
+
+<div id="content">
+
+<!-- Combined totals -->
+<div class="combined-bar" id="combinedBar"></div>
+
+<!-- Two account columns -->
+<div class="dual">
+  <!-- FTMO panel -->
+  <div class="acct-panel">
+    <div class="acct-header ftmo" id="ftmoHeader">FTMO 100k</div>
+    <div class="card"><div class="acct-metrics" id="ftmoMetrics"></div></div>
+    <div class="card"><h3>Compliance</h3><div id="ftmoCompliance"></div></div>
+    <div class="card"><h3 id="ftmoPosHeader">Positions</h3>
+      <table><thead><tr><th>Symbol</th><th>Dir</th><th>Vol</th><th>P&L</th><th>SL</th><th>TP</th></tr></thead>
+      <tbody id="ftmoPosBody"></tbody></table>
+    </div>
+    <div class="card"><h3>Recent Trades</h3>
+      <table><thead><tr><th>Time</th><th>Symbol</th><th>Dir</th><th>P&L</th><th>Conf</th><th>Status</th></tr></thead>
+      <tbody id="ftmoTradesBody"></tbody></table>
+    </div>
+    <div class="card"><h3>Stats (7d)</h3><div class="stats-row" id="ftmoStats"></div></div>
+  </div>
+
+  <!-- BF panel -->
+  <div class="acct-panel">
+    <div class="acct-header bf" id="bfHeader">BrightFunded 100k</div>
+    <div class="card"><div class="acct-metrics" id="bfMetrics"></div></div>
+    <div class="card"><h3>Compliance</h3><div id="bfCompliance"></div></div>
+    <div class="card"><h3 id="bfPosHeader">Positions</h3>
+      <table><thead><tr><th>Symbol</th><th>Dir</th><th>Vol</th><th>P&L</th><th>SL</th><th>TP</th></tr></thead>
+      <tbody id="bfPosBody"></tbody></table>
+    </div>
+    <div class="card"><h3>Recent Trades</h3>
+      <table><thead><tr><th>Time</th><th>Symbol</th><th>Dir</th><th>P&L</th><th>Conf</th><th>Status</th></tr></thead>
+      <tbody id="bfTradesBody"></tbody></table>
+    </div>
+    <div class="card"><h3>Stats (7d)</h3><div class="stats-row" id="bfStats"></div></div>
+  </div>
+</div>
+
+<!-- Charts: equity + daily P&L -->
+<div class="charts-section">
+  <div class="card">
+    <h3>Equity Curves (7d)</h3>
+    <div class="chart-wrap"><canvas id="equityChart"></canvas></div>
+  </div>
+  <div class="card">
+    <h3>Daily P&L (30d)</h3>
+    <div class="chart-wrap"><canvas id="pnlChart"></canvas></div>
+  </div>
+</div>
+
+<!-- Events -->
+<div class="bottom-section">
+  <div class="card">
+    <h3>FTMO Events</h3>
+    <div id="ftmoEvents" style="max-height:200px;overflow-y:auto"></div>
+  </div>
+  <div class="card">
+    <h3>BrightFunded Events</h3>
+    <div id="bfEvents" style="max-height:200px;overflow-y:auto"></div>
+  </div>
+</div>
+
+<!-- Hardware -->
+<div class="hw-bar" id="hwBar"></div>
+
+</div><!-- /content -->
+
+<div class="footer">
+  <span class="refresh-indicator"></span>Live (SSE) | Updated <span id="lastUpdateTs">—</span> | Sovereign Bot Dashboard v1.0
+</div>
+
+<script>
+let equityChart = null;
+let pnlChart = null;
+let lastUpdate = 0;
+
+// ── Helpers ────────────────────────────────────────────
+function pnlClass(v) { return v >= 0 ? 'pos' : 'neg'; }
+function pnlSign(v) { return v >= 0 ? '+$' + v.toFixed(2) : '-$' + Math.abs(v).toFixed(2); }
+function pctFmt(v) { return (v * 100).toFixed(2) + '%'; }
+function dollarFmt(v) { return '$' + Math.round(v).toLocaleString('en-US'); }
+function timeFmt(ts) {
+  if (!ts) return '—';
+  const d = new Date(ts);
+  return d.toLocaleString('en-GB', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit', hour12:false });
+}
+function shortTime(ts) {
+  if (!ts) return '—';
+  return new Date(ts).toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', hour12:false });
+}
+function tempColor(v) {
+  if (v == null) return 'var(--dim)';
+  if (v >= 75) return 'var(--red)';
+  if (v >= 60) return 'var(--yellow)';
+  return 'var(--green)';
+}
+
+// MT5 error code translations
+const MT5_CODES = {
+  10004: 'Requote',
+  10006: 'Order rejected',
+  10007: 'Order cancelled',
+  10008: 'Order placed',
+  10009: 'Order filled',
+  10010: 'Partially filled',
+  10011: 'Processing error',
+  10012: 'Request cancelled (timeout)',
+  10013: 'Invalid request',
+  10014: 'Invalid volume',
+  10015: 'Invalid price',
+  10016: 'Invalid stops (SL/TP)',
+  10017: 'Trading disabled',
+  10018: 'Market closed',
+  10019: 'Not enough margin',
+  10020: 'Prices changed',
+  10021: 'No quotes available',
+  10022: 'Invalid expiration',
+  10023: 'Order state changed',
+  10024: 'Too many requests',
+  10025: 'No changes in request',
+  10026: 'Autotrading disabled',
+  10027: 'Modification blocked',
+  10028: 'Frozen order',
+  10029: 'Invalid fill type',
+  10030: 'No connection to server',
+  10031: 'Only for live accounts',
+  10032: 'Max orders reached',
+  10033: 'Max volume reached',
+  10034: 'Invalid order type',
+  10035: 'Position not found',
+  10036: 'Close order already exists',
+  10038: 'Max positions reached',
+  10039: 'Rejected by dealer',
+  10040: 'Only close allowed (FIFO)',
+  10041: 'Position not allowed (hedging)',
+  10042: 'Max volume per symbol',
+  10043: 'Opposite position on symbol',
+};
+
+function translateStatus(status) {
+  if (!status) return '—';
+  // Extract code from status like "REJECTED_10019" or "BLOCKED_10019"
+  const codeMatch = status.match(/(\d{5})/);
+  if (codeMatch) {
+    const code = parseInt(codeMatch[1]);
+    const desc = MT5_CODES[code];
+    if (desc) return desc;
+  }
+  return status;
+}
+
+function translateMessage(msg) {
+  if (!msg) return '';
+  return msg.replace(/\b(100\d{2})\b/g, (m, code) => {
+    const desc = MT5_CODES[parseInt(code)];
+    return desc ? `${code} (${desc})` : m;
+  });
+}
+
+// ── SSE Connection ────────────────────────────────────
+function connectSSE() {
+  const es = new EventSource('/api/stream');
+
+  es.onmessage = (event) => {
+    try {
+      const data = JSON.parse(event.data);
+      if (data.type === 'error') { console.error('SSE error:', data.message); return; }
+
+      // Hide loading on first message
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+
+      // Fast data: dashboard + positions
+      const ftmo = data.accounts?.ftmo_100k;
+      const bf = data.accounts?.bright_100k;
+
+      if (ftmo && bf) {
+        renderCombined(ftmo.dashboard, bf.dashboard, ftmo.positions, bf.positions);
+        renderAccountMetrics('ftmoMetrics', ftmo.dashboard);
+        renderAccountMetrics('bfMetrics', bf.dashboard);
+        renderCompliance('ftmoCompliance', ftmo.dashboard, ftmo.positions);
+        renderCompliance('bfCompliance', bf.dashboard, bf.positions);
+        renderPositions('ftmoPosHeader', 'ftmoPosBody', ftmo.positions);
+        renderPositions('bfPosHeader', 'bfPosBody', bf.positions);
+      }
+
+      // Slow data: charts, events, trades, stats, temps, bot status
+      if (data.type === 'full' && data.slow) {
+        const s = data.slow;
+        const sys = s._system || {};
+
+        if (s.ftmo_100k) {
+          renderEquityChart(s.ftmo_100k.equity, s.bright_100k?.equity);
+          renderPnlChart(s.ftmo_100k.daily_pnl, s.bright_100k?.daily_pnl);
+          renderTrades('ftmoTradesBody', s.ftmo_100k.trades);
+          renderStats('ftmoStats', s.ftmo_100k.stats);
+          renderEvents('ftmoEvents', s.ftmo_100k.events);
+        }
+        if (s.bright_100k) {
+          renderTrades('bfTradesBody', s.bright_100k.trades);
+          renderStats('bfStats', s.bright_100k.stats);
+          renderEvents('bfEvents', s.bright_100k.events);
+        }
+
+        renderBotStatus(sys);
+        renderHardware(sys.temps || {});
+      }
+
+      lastUpdate = Date.now();
+      updateTimestamp();
+    } catch (e) {
+      console.error('SSE parse error:', e);
+    }
+  };
+
+  es.onerror = () => {
+    console.warn('SSE disconnected, reconnecting in 3s...');
+    es.close();
+    setTimeout(connectSSE, 3000);
+  };
+}
+
+function updateTimestamp() {
+  const el = document.getElementById('lastUpdateTs');
+  if (el && lastUpdate) {
+    const ago = Math.round((Date.now() - lastUpdate) / 1000);
+    el.textContent = ago < 2 ? 'just now' : ago + 's ago';
+  }
+}
+setInterval(updateTimestamp, 1000);
+
+// ── Start ─────────────────────────────────────────────
+connectSSE();
+
+// ── Combined bar ──────────────────────────────────────
+function renderCombined(f, b, fPos, bPos) {
+  if (!f || !b) return;
+  const totalBal = f.balance + b.balance;
+  const totalEq = f.equity + b.equity;
+  const totalPnl = f.daily_pnl + b.daily_pnl;
+  const totalPnlPct = totalBal > 0 ? totalPnl / totalBal : 0;
+  const totalPos = (fPos?.logical_count || 0) + (bPos?.logical_count || 0);
+  const totalTrades = f.trades_today + b.trades_today;
+
+  document.getElementById('combinedBar').innerHTML = `
+    <div class="cmetric">
+      <div class="label">Combined Balance</div>
+      <div class="value">${dollarFmt(totalBal)}</div>
+    </div>
+    <div class="cmetric">
+      <div class="label">Combined Equity</div>
+      <div class="value">${dollarFmt(totalEq)}</div>
+    </div>
+    <div class="cmetric">
+      <div class="label">Combined Daily P&L</div>
+      <div class="value ${pnlClass(totalPnl)}">${pnlSign(totalPnl)}</div>
+      <div class="sub">${pctFmt(totalPnlPct)}</div>
+    </div>
+    <div class="cmetric">
+      <div class="label">Open Positions</div>
+      <div class="value">${totalPos}</div>
+    </div>
+    <div class="cmetric">
+      <div class="label">Trades Today</div>
+      <div class="value">${totalTrades}</div>
+    </div>
+    <div class="cmetric">
+      <div class="label">Floating P&L</div>
+      <div class="value ${pnlClass(f.profit + b.profit)}">${pnlSign(f.profit + b.profit)}</div>
+    </div>
+  `;
+}
+
+// ── Account metrics ───────────────────────────────────
+function renderAccountMetrics(id, d) {
+  if (!d) return;
+  document.getElementById(id).innerHTML = `
+    <div class="am"><div class="label">Balance</div><div class="value">${dollarFmt(d.balance)}</div></div>
+    <div class="am"><div class="label">Equity</div><div class="value">${dollarFmt(d.equity)}</div></div>
+    <div class="am">
+      <div class="label">Daily P&L</div>
+      <div class="value ${pnlClass(d.daily_pnl)}">${pnlSign(d.daily_pnl)}</div>
+      <div class="sub">${pctFmt(d.daily_pnl_pct)}</div>
+    </div>
+    <div class="am">
+      <div class="label">Margin Free</div>
+      <div class="value">${dollarFmt(d.margin_free)}</div>
+    </div>
+  `;
+}
+
+// ── Compliance ────────────────────────────────────────
+function renderCompliance(id, d, pos) {
+  if (!d) return;
+  const dailyPct = d.daily_dd_limit > 0 ? d.daily_dd_pct / d.daily_dd_limit * 100 : 0;
+  const totalPct = d.total_dd_limit > 0 ? d.total_dd_pct / d.total_dd_limit * 100 : 0;
+  const logicalPos = pos?.logical_count ?? d.open_positions ?? 0;
+  const dailyClass = dailyPct > 80 ? 'bar-danger' : dailyPct > 50 ? 'bar-warn' : 'bar-ok';
+  const totalClass = totalPct > 80 ? 'bar-danger' : totalPct > 50 ? 'bar-warn' : 'bar-ok';
+
+  // Profit target bars
+  const profitPct = d.total_profit_pct || 0;
+  const step1 = d.profit_target_step1 || 0;
+  const step2 = d.profit_target_step2 || 0;
+  const step1Progress = step1 > 0 ? Math.max(0, profitPct) / step1 * 100 : 0;
+  const step2Progress = step2 > 0 ? Math.max(0, profitPct) / step2 * 100 : 0;
+  const profitColor = profitPct >= 0 ? 'var(--green)' : 'var(--red)';
+
+  let targetHtml = '';
+  if (step1 > 0) {
+    targetHtml += `
+    <div class="compliance-row">
+      <div style="flex:1">
+        <div class="lbl">Step 1 Target</div>
+        <div class="bar-wrap"><div class="bar-fill bar-ok" style="width:${Math.min(100, Math.max(0, step1Progress))}%"></div></div>
+      </div>
+      <div class="val" style="margin-left:12px;color:${profitColor}">${pctFmt(Math.max(0, profitPct))} / ${pctFmt(step1)}</div>
+    </div>`;
+  }
+  if (step2 > 0) {
+    targetHtml += `
+    <div class="compliance-row">
+      <div style="flex:1">
+        <div class="lbl">Step 2 Target</div>
+        <div class="bar-wrap"><div class="bar-fill bar-ok" style="width:${Math.min(100, Math.max(0, step2Progress))}%"></div></div>
+      </div>
+      <div class="val" style="margin-left:12px;color:${profitColor}">${pctFmt(Math.max(0, profitPct))} / ${pctFmt(step2)}</div>
+    </div>`;
+  }
+
+  document.getElementById(id).innerHTML = `
+    ${targetHtml}
+    <div class="compliance-row">
+      <div style="flex:1">
+        <div class="lbl">Daily DD</div>
+        <div class="bar-wrap"><div class="bar-fill ${dailyClass}" style="width:${Math.min(100,dailyPct)}%"></div></div>
+      </div>
+      <div class="val" style="margin-left:12px">${pctFmt(d.daily_dd_pct)} / ${pctFmt(d.daily_dd_limit)}</div>
+    </div>
+    <div class="compliance-row">
+      <div style="flex:1">
+        <div class="lbl">Total DD</div>
+        <div class="bar-wrap"><div class="bar-fill ${totalClass}" style="width:${Math.min(100,totalPct)}%"></div></div>
+      </div>
+      <div class="val" style="margin-left:12px">${pctFmt(d.total_dd_pct)} / ${pctFmt(d.total_dd_limit)}</div>
+    </div>
+    <div class="compliance-row">
+      <div class="lbl">Profit Gate</div>
+      <div class="val" style="color:${d.profit_gate_active ? 'var(--yellow)' : 'var(--green)'}">
+        ${d.profit_gate_active ? 'ACTIVE' : 'OFF'}
+      </div>
+    </div>
+    <div class="compliance-row">
+      <div class="lbl">Positions</div>
+      <div class="val">${logicalPos}</div>
+    </div>
+    <div class="compliance-row">
+      <div class="lbl">Trades today</div>
+      <div class="val">${d.trades_today}</div>
+    </div>
+  `;
+}
+
+// ── Positions ─────────────────────────────────────────
+function renderPositions(hdrId, bodyId, data) {
+  if (!data) return;
+  document.getElementById(hdrId).textContent =
+    `Positions (${data.logical_count} pos${data.order_count !== data.logical_count ? ', ' + data.order_count + ' orders' : ''}, P&L: ${pnlSign(data.total_pnl)})`;
+
+  const body = document.getElementById(bodyId);
+  if (!data.positions.length) {
+    body.innerHTML = '<tr><td colspan="6" style="color:var(--dim);text-align:center;font-size:11px">No open positions</td></tr>';
+    return;
+  }
+  body.innerHTML = data.positions.map(p => `
+    <tr>
+      <td><strong>${p.symbol}</strong>${p.order_count > 1 ? ' <span style="color:var(--dim);font-size:9px">('+p.order_count+'x)</span>' : ''}</td>
+      <td><span class="badge badge-${p.direction.toLowerCase()}">${p.direction}</span></td>
+      <td>${p.volume}</td>
+      <td class="${pnlClass(p.pnl)}">${pnlSign(p.pnl)}</td>
+      <td style="color:var(--dim)">${p.sl || '—'}</td>
+      <td style="color:var(--dim)">${p.tp || '—'}</td>
+    </tr>
+  `).join('');
+}
+
+// ── Trades ────────────────────────────────────────────
+function renderTrades(bodyId, trades) {
+  const body = document.getElementById(bodyId);
+  if (!trades || !trades.length) {
+    body.innerHTML = '<tr><td colspan="6" style="color:var(--dim);font-size:11px">No trades</td></tr>';
+    return;
+  }
+  body.innerHTML = trades.map(t => {
+    const st = t.status || '';
+    let bc = 'badge-filled';
+    if (st.startsWith('REJECTED')) bc = 'badge-rejected';
+    else if (st.startsWith('BLOCKED')) bc = 'badge-blocked';
+    return `
+      <tr>
+        <td style="color:var(--dim)">${timeFmt(t.timestamp)}</td>
+        <td><strong>${t.symbol}</strong></td>
+        <td><span class="badge badge-${(t.direction||'').toLowerCase()}">${t.direction||'—'}</span></td>
+        <td class="${pnlClass(t.pnl||0)}">${t.pnl != null ? pnlSign(t.pnl) : '—'}</td>
+        <td>${t.ml_confidence ? (t.ml_confidence*100).toFixed(1)+'%' : '—'}</td>
+        <td><span class="badge ${bc}" title="${st}">${translateStatus(st)}</span></td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// ── Stats ─────────────────────────────────────────────
+function renderStats(id, s) {
+  if (!s) return;
+  document.getElementById(id).innerHTML = `
+    <div class="stat-item"><div class="lbl">P&L</div><div class="val ${pnlClass(s.total_pnl)}">${pnlSign(s.total_pnl)}</div></div>
+    <div class="stat-item"><div class="lbl">Trades</div><div class="val">${s.trade_count}</div></div>
+    <div class="stat-item"><div class="lbl">Win Rate</div><div class="val">${s.win_rate!=null?(s.win_rate*100).toFixed(0)+'%':'—'}</div></div>
+    <div class="stat-item"><div class="lbl">Avg Win</div><div class="val pos">${s.avg_win!=null?pnlSign(s.avg_win):'—'}</div></div>
+    <div class="stat-item"><div class="lbl">Avg Loss</div><div class="val neg">${s.avg_loss!=null?pnlSign(s.avg_loss):'—'}</div></div>
+    <div class="stat-item"><div class="lbl">W/L</div><div class="val">${s.win_count}/${s.loss_count}</div></div>
+  `;
+}
+
+// ── Bot status ────────────────────────────────────────
+function renderBotStatus(sys) {
+  if (!sys) return;
+  const el = document.getElementById('botStatus');
+  const running = sys.bot_running;
+  const ftmoBridge = sys.bridges?.ftmo_100k ?? false;
+  const bfBridge = sys.bridges?.bright_100k ?? false;
+  el.innerHTML = `
+    <span><span class="status-dot ${running?'on':'off'}"></span>Bot: ${running?'Running':'Stopped'}</span>
+    <span><span class="status-dot ${ftmoBridge?'on':'off'}"></span>FTMO Bridge</span>
+    <span><span class="status-dot ${bfBridge?'on':'off'}"></span>BF Bridge</span>
+  `;
+}
+
+// ── Equity Chart (both accounts) ──────────────────────
+function renderEquityChart(ftmoData, bfData) {
+  if (!ftmoData && !bfData) return;
+  const ctx = document.getElementById('equityChart').getContext('2d');
+
+  // Use FTMO timestamps as primary (typically more data)
+  const src = ftmoData?.length > 0 ? ftmoData : bfData;
+  const labels = (src || []).map(d => {
+    const dt = new Date(d.timestamp);
+    return dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short'}) + ' ' +
+           dt.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',hour12:false});
+  });
+
+  const ftmoValues = (ftmoData || []).map(d => d.equity);
+  const bfValues = (bfData || []).map(d => d.equity);
+
+  const datasets = [];
+  if (ftmoValues.length) datasets.push({
+    label: 'FTMO',
+    data: ftmoValues,
+    borderColor: '#3b82f6',
+    backgroundColor: 'rgba(59,130,246,0.08)',
+    fill: true, tension: 0.3, pointRadius: 0, borderWidth: 2,
+  });
+  if (bfValues.length) datasets.push({
+    label: 'BrightFunded',
+    data: bfValues,
+    borderColor: '#f97316',
+    backgroundColor: 'rgba(249,115,22,0.08)',
+    fill: true, tension: 0.3, pointRadius: 0, borderWidth: 2,
+  });
+
+  if (equityChart) {
+    equityChart.data.labels = labels;
+    equityChart.data.datasets = datasets;
+    equityChart.update('none');
+    return;
+  }
+
+  equityChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: true, labels: { color: '#6b7280', font: {size:10}, boxWidth: 12 } },
+      },
+      scales: {
+        x: { ticks: { maxTicksLimit: 6, color: '#6b7280', font:{size:9} }, grid: { color:'#2a2d3a' } },
+        y: { ticks: { color: '#6b7280', font:{size:9}, callback: v => '$'+v.toLocaleString() }, grid: { color:'#2a2d3a' } }
+      }
+    }
+  });
+}
+
+// ── P&L Chart (both accounts stacked) ─────────────────
+function renderPnlChart(ftmoData, bfData) {
+  if (!ftmoData && !bfData) return;
+  const ctx = document.getElementById('pnlChart').getContext('2d');
+
+  // Merge all dates
+  const dateSet = new Set();
+  (ftmoData || []).forEach(d => dateSet.add(d.date));
+  (bfData || []).forEach(d => dateSet.add(d.date));
+  const labels = [...dateSet].sort();
+
+  const ftmoMap = Object.fromEntries((ftmoData||[]).map(d => [d.date, d.pnl]));
+  const bfMap = Object.fromEntries((bfData||[]).map(d => [d.date, d.pnl]));
+
+  const ftmoValues = labels.map(d => ftmoMap[d] || 0);
+  const bfValues = labels.map(d => bfMap[d] || 0);
+
+  const datasets = [
+    {
+      label: 'FTMO',
+      data: ftmoValues,
+      backgroundColor: ftmoValues.map(v => v >= 0 ? 'rgba(59,130,246,0.7)' : 'rgba(59,130,246,0.4)'),
+      borderRadius: 2, stack: 'combined',
+    },
+    {
+      label: 'BrightFunded',
+      data: bfValues,
+      backgroundColor: bfValues.map(v => v >= 0 ? 'rgba(249,115,22,0.7)' : 'rgba(249,115,22,0.4)'),
+      borderRadius: 2, stack: 'combined',
+    }
+  ];
+
+  if (pnlChart) {
+    pnlChart.data.labels = labels;
+    pnlChart.data.datasets = datasets;
+    pnlChart.update('none');
+    return;
+  }
+
+  pnlChart = new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, labels: { color: '#6b7280', font:{size:10}, boxWidth: 12 } },
+      },
+      scales: {
+        x: { stacked: true, ticks: { maxTicksLimit: 10, color: '#6b7280', font:{size:9} }, grid: { display:false } },
+        y: { stacked: true, ticks: { color: '#6b7280', font:{size:9}, callback: v => '$'+v }, grid: { color:'#2a2d3a' } }
+      }
+    }
+  });
+}
+
+// ── Events ────────────────────────────────────────────
+function renderEvents(id, events) {
+  const body = document.getElementById(id);
+  if (!events || !events.length) {
+    body.innerHTML = '<div style="color:var(--dim);font-size:11px">No events</div>';
+    return;
+  }
+  body.innerHTML = events.map(e => {
+    const lvlColor = e.level==='WARNING'?'var(--yellow)':e.level==='CRITICAL'?'var(--red)':'var(--dim)';
+    return `<div class="events-row">
+      <span class="ts">${shortTime(e.timestamp)}</span>
+      <span class="lvl" style="color:${lvlColor}">${e.level}</span>
+      <span class="msg">${e.component}/${e.event_type}: ${translateMessage(e.message||'')}</span>
+    </div>`;
+  }).join('');
+}
+
+// ── Hardware ──────────────────────────────────────────
+function renderHardware(temps) {
+  if (!temps) return;
+  const el = document.getElementById('hwBar');
+  el.innerHTML = `
+    <div class="hw-item"><span class="lbl">CPU:</span><span class="val" style="color:${tempColor(temps.cpu)}">${temps.cpu!=null?temps.cpu+'°C':'—'}</span></div>
+    <div class="hw-item"><span class="lbl">GPU:</span><span class="val" style="color:${tempColor(temps.gpu)}">${temps.gpu!=null?temps.gpu+'°C':'—'}</span><span class="lbl" style="margin-left:4px">${temps.gpu_name||''}</span></div>
+    <div class="hw-item"><span class="lbl">NVMe:</span><span class="val" style="color:${tempColor(temps.nvme)}">${temps.nvme!=null?temps.nvme+'°C':'—'}</span></div>
+  `;
+}
+
+// (SSE init is above — connectSSE() already called)
+</script>
+</body>
+</html>

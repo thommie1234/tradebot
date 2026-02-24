@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+BTCUSD,2026,1,2024-2025,2816,244,0.3319672131147541,-5.807120196245183,-12.51748201614771,-0.27475585020178517,0.4451431341005496,cuda

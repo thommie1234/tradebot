@@ -1,0 +1,4 @@
+symbol,status,cluster,session,timeframe,sl,tp,rrr,be,trail_act,trail_dist,horizon,risk_pct,cost_bps,spread_bps,total_return,max_dd,dd_pct,sharpe,calmar,profit_factor,expectancy_pct,win_rate,n_trades,avg_bars_held,n_folds,avg_win_pct,avg_loss_pct,pct_sl,pct_tp,pct_be,pct_trail,pct_horizon,ftmo_ok,leak_free,warmup_trades,optimized_trades
+META,ok,equity,us_equity,H4,2.46,7.39,3.0,1.42,1.57,1.68,36,0.5,10.7,5.3,565.48,3052.51,3.05,0.25,0.19,1.04,0.1887,31.9,69,7.1,8,3.9483,1.5711,36.2,5.8,31.9,24.6,1.4,true,true,32,37
+BABA,ok,equity,us_equity,H4,1.49,5.18,3.5,1.47,1.54,1.25,25,0.5,13.5,8.1,-1072.72,7058.44,7.06,-0.35,-0.15,0.95,-0.0372,25.6,78,5.6,8,6.6771,2.3525,44.9,2.6,29.5,20.5,2.6,true,true,32,46
+BAC,ok,equity,us_equity,H4,1.44,7.68,5.3,0.43,1.85,1.8,36,0.5,24.4,19.0,-5180.93,8431.69,8.43,-1.53,-0.61,0.81,-0.2346,24.4,82,5.5,8,3.8077,1.5385,50.0,7.3,25.6,15.9,1.2,true,true,30,52

@@ -1,0 +1,4 @@
+symbol,timeframe,cluster,optuna_ev,best_atr_sl_mult,best_atr_tp_mult,best_breakeven_atr,best_trail_activation_atr,best_trail_distance_atr,best_horizon
+DASHUSD,H4,crypto,0.010005,1.5,6.0,1.0,3.0,1.0,30
+FETUSD,H1,crypto,0.001155,1.5,6.0,1.0,3.0,1.0,30
+ICPUSD,H1,crypto,0.000847,1.5,6.0,1.0,3.0,1.0,30

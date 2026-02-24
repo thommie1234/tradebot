@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+GBP_NZD,2026,1,2024-2025,3528,13,0.38461538461538464,-4.787801103448281,-27.48508046562786,-0.011673263122397803,0.5284770899323226,cuda

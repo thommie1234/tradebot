@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+USD_SGD,2026,1,2025-2025,1552,0,0.0,0.0,0.0,0.0,0.0,cuda

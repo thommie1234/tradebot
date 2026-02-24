@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+UKOIL.cash,2026,1,2024-2025,3785,806,0.3883374689826303,-2.401595883452432,-5.155304596604598,-0.499058565031708,0.6907634567722288,cuda

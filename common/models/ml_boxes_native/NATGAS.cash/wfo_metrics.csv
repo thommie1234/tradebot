@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+NATGAS.cash,2026,1,2024-2025,1307,411,0.39659367396593675,-0.5557630453589404,-1.213589199471613,-0.26317344544904475,0.9237669260984142,cuda

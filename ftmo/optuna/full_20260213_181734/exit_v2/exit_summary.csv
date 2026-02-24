@@ -1,0 +1,549 @@
+symbol,timeframe,status,rows,cluster,n_signals,n_folds,trials,best_ev,best_atr_sl_mult,best_atr_tp_mult,best_breakeven_atr,best_trail_activation_atr,best_trail_distance_atr,best_horizon,cost_bps,fee_bps,spread_bps,slippage_bps,error
+AAPL,H1,no_folds,3388,equity,,,,,,,,,,,,,,,
+AAPL,H4,no_folds,932,equity,,,,,,,,,,,,,,,
+AAPL,M15,ok,12709,equity,5557,6,200,0.0012480240372602501,2.440509232295464,7.406179083323708,1.3735508797401141,1.9612994968798398,0.9616691509250496,32,9.6,0.4,4.245710867090478,2.5,
+AAPL,M30,ok,6330,equity,2946,1,200,0.0014230706579852826,0.7572682050827644,7.003009836538202,1.4753701532160415,3.192180535688263,0.38229513528816983,17,9.6,0.4,4.245710867090478,2.5,
+AAVUSD,H1,ok,6474,crypto,3377,1,200,0.015071765499443304,1.9257033846192557,6.949832710988439,1.5649419308953743,3.22592632162916,0.5031584777942936,30,23.1,6.5,0.6320113762041969,8.0,
+AAVUSD,H4,no_folds,1606,crypto,,,,,,,,,,,,,,,
+AAVUSD,M15,ok,26027,crypto,13422,17,200,-0.0013206062212949728,1.187169550307907,9.674409891378179,1.9976895853507868,3.005853799306494,1.3814446218262175,43,23.1,6.5,0.6320113762041969,8.0,
+AAVUSD,M30,ok,12991,crypto,6725,6,200,2.3072219757076248e-6,1.022362773746037,7.883140218853684,1.4594669396741615,3.2528253367070095,2.265018824446051,31,23.1,6.5,0.6320113762041969,8.0,
+ADAUSD,H1,ok,16628,crypto,8651,9,200,-0.004217254242066539,2.591120362237369,8.881811300074617,0.3337685162979121,4.374428202720666,1.3305375729378541,9,61.8,6.5,39.25104757863509,8.0,
+ADAUSD,H4,ok,4202,crypto,2151,3,200,-0.00017009074600308756,0.9448153517215825,9.99535822572182,1.3316408701248907,3.2942832162305358,2.3835318850379252,34,61.8,6.5,39.25104757863509,8.0,
+ADAUSD,M15,ok,66627,crypto,33703,51,200,-0.005398495958968223,2.977654554699692,9.47423602635477,1.1025601906624107,2.9771804871987047,1.158611085796091,33,61.8,6.5,39.25104757863509,8.0,
+ADAUSD,M30,ok,33294,crypto,17048,23,200,-0.005155049198169058,1.0631428945389534,8.296351250583738,1.9498076655443324,3.5746296413287837,1.7352214847359364,19,61.8,6.5,39.25104757863509,8.0,
+AIRF,H1,no_folds,4436,equity,,,,,,,,,,,,,,,
+AIRF,H4,no_folds,1447,equity,,,,,,,,,,,,,,,
+AIRF,M15,ok,16880,equity,8792,10,200,-0.00396355223630288,1.8481722096071134,7.267482148136691,1.3669089336803777,1.595716044567402,0.32579671341040783,18,56.2,0.4,50.82592121982216,2.5,
+AIRF,M30,ok,8420,equity,4542,3,200,-0.002247701527430423,2.4614578060081307,7.804455412662902,1.4064786424471103,1.6371973527367158,0.36480367946423947,26,56.2,0.4,50.82592121982216,2.5,
+ALGUSD,H1,ok,6475,crypto,3418,1,200,0.0028766464001073956,2.567604294161754,9.52728605357876,0.8123393619856013,1.634011725928258,1.2277498607448676,21,38.0,6.5,15.548069448043261,8.0,
+ALGUSD,H4,no_folds,1606,crypto,,,,,,,,,,,,,,,
+ALGUSD,M15,ok,26025,crypto,13521,17,200,-0.002751594882636171,0.9133176242859423,9.600094997486663,1.9122371895688945,4.824175784901942,1.3345276769278847,39,38.0,6.5,15.548069448043261,8.0,
+ALGUSD,M30,ok,12993,crypto,6741,6,200,0.00042965224156882445,2.8951340810333592,8.075003134880811,1.793206464520343,3.651430379035163,2.0284651104972857,38,38.0,6.5,15.548069448043261,8.0,
+ALVG,H1,no_folds,4433,equity,,,,,,,,,,,,,,,
+ALVG,H4,no_folds,1446,equity,,,,,,,,,,,,,,,
+ALVG,M15,ok,16876,equity,8944,10,200,-0.00020196717972002266,2.2756729208817053,6.953231118695648,1.035485287342848,1.1466682619130208,0.3331606179151281,27,10.4,0.4,4.975981320931483,2.5,
+ALVG,M30,ok,8416,equity,4576,3,200,0.00009528309878059095,2.0096663682836797,6.643791691901528,0.3029355969588676,1.156903313456005,1.2566434806336213,16,10.4,0.4,4.975981320931483,2.5,
+AMZN,H1,no_folds,3388,equity,,,,,,,,,,,,,,,
+AMZN,H4,no_folds,932,equity,,,,,,,,,,,,,,,
+AMZN,M15,ok,12709,equity,6395,6,200,0.0026707403272229918,2.378163162541695,7.472775797105765,1.1917428526709712,1.9381220502150467,0.3623129862823947,36,10.3,0.4,4.884872438218071,2.5,
+AMZN,M30,ok,6330,equity,3382,1,200,0.004009809138468288,2.2730651014994736,6.935618845902627,0.7473603635845432,3.191197998047249,1.7955040029024638,34,10.3,0.4,4.884872438218071,2.5,
+AUDNZD,H1,ok,12201,index,6448,6,200,-0.0011210360515953577,2.112339509583464,6.76482435105868,1.2900065789634083,1.6336980340150042,0.3022651865181342,25,14.1,3.0,1.0823486966708575,5.0,
+AUDNZD,H4,ok,3014,index,1633,1,200,-0.0004254963941753394,2.2968937568022327,6.343985803464762,1.0861393946868059,1.9640471642588884,0.30032904141202893,23,14.1,3.0,1.0823486966708575,5.0,
+AUDNZD,M15,ok,48938,index,25178,36,200,-0.0013172721291964797,2.412417813263519,7.50214662001453,0.39917300503464453,1.0127297444665606,0.3612771089548468,30,14.1,3.0,1.0823486966708575,5.0,
+AUDNZD,M30,ok,24447,index,12847,16,200,-0.001290291523357218,1.5268330943260617,7.3769441696609945,1.4930310895698167,1.5294753677768294,0.3587903195161005,34,14.1,3.0,1.0823486966708575,5.0,
+AUD_CAD,H1,ok,12201,forex,6301,6,200,-0.00010581825618698913,2.3714993046720205,5.609563142979579,1.365166598129185,1.3790620424961915,0.3014047270250424,26,4.8,0.5,1.2668067831751302,1.5,
+AUD_CAD,H4,ok,3014,forex,1582,1,200,0.0005442643723138471,1.0289172703412224,7.738824079988765,0.9945469642957712,1.6866245641208062,1.822131305946014,32,4.8,0.5,1.2668067831751302,1.5,
+AUD_CAD,M15,ok,48940,forex,24917,36,200,-0.00034669931645402635,1.561893998034397,7.315125910375357,1.3730814636694755,3.3114062350984086,0.3002938468561159,31,4.8,0.5,1.2668067831751302,1.5,
+AUD_CAD,M30,ok,24448,forex,12654,16,200,-0.00028629451107867697,2.4941664795378156,7.999143988206957,0.3924343098183698,1.3020987844679153,1.7483143141809474,25,4.8,0.5,1.2668067831751302,1.5,
+AUD_CHF,H1,ok,12201,forex,6358,6,200,-0.00008754762026756235,2.0568445467537826,6.011768953604435,0.6887318654883188,3.643466944320247,1.7977770602296559,24,5.1,0.5,1.600697192555593,1.5,
+AUD_CHF,H4,ok,3014,forex,1583,1,200,0.0019418077868761266,2.499937361807599,3.1847950332749004,0.33293319802023635,2.6268724765455334,0.4332800575275487,24,5.1,0.5,1.600697192555593,1.5,
+AUD_CHF,M15,ok,48942,forex,25221,36,200,-0.000327864547666347,1.674147494876118,6.210490877905023,1.1728793775356336,1.204568685316352,0.3325217342979874,20,5.1,0.5,1.600697192555593,1.5,
+AUD_CHF,M30,ok,24449,forex,12634,16,200,-0.00029341733933978373,0.5006860305729129,6.594651199980804,0.7765698604356552,2.8931891600634905,0.38596641243738616,27,5.1,0.5,1.600697192555593,1.5,
+AUD_JPY,H1,ok,12201,forex,6468,6,200,-0.00003809227346144817,0.695409588162586,7.196054943569653,1.2687056124422287,3.6269972994614674,0.3460229039248197,35,4.7,0.5,1.235152438396819,1.5,
+AUD_JPY,H4,ok,3014,forex,1632,1,200,0.0036223021761246617,1.7583254097732228,7.1341722342118805,1.4071060375533821,3.7224379330639397,1.461969689018061,33,4.7,0.5,1.235152438396819,1.5,
+AUD_JPY,M15,ok,48940,forex,25185,36,200,-0.0002971196503850196,2.396302234419081,5.614408663112456,0.31918842301476474,1.001678501361533,0.3031923891638349,30,4.7,0.5,1.235152438396819,1.5,
+AUD_JPY,M30,ok,24448,forex,12532,16,200,-0.00022083158686967075,0.5301485938602306,6.442443075106936,0.8403147510463824,3.070824138620959,0.32497698330232855,28,4.7,0.5,1.235152438396819,1.5,
+AUD_NZD,H1,ok,12201,forex,6448,6,200,-0.00017103605159535747,2.112339509583464,6.76482435105868,1.2900065789634083,1.6336980340150042,0.3022651865181342,25,4.6,0.5,1.0823486966708575,1.5,
+AUD_NZD,H4,ok,3014,forex,1633,1,200,0.0010490072116493214,2.2968937568022327,6.343985803464762,1.0861393946868059,1.9640471642588884,0.30032904141202893,23,4.6,0.5,1.0823486966708575,1.5,
+AUD_NZD,M15,ok,48938,forex,25178,36,200,-0.0003672721291964795,2.412417813263519,7.50214662001453,0.39917300503464453,1.0127297444665606,0.3612771089548468,30,4.6,0.5,1.0823486966708575,1.5,
+AUD_NZD,M30,ok,24447,forex,12847,16,200,-0.000340291523357218,1.5268330943260617,7.3769441696609945,1.4930310895698167,1.5294753677768294,0.3587903195161005,34,4.6,0.5,1.0823486966708575,1.5,
+AUD_USD,H1,ok,12201,forex,6405,6,200,7.517541059882454e-6,2.499958757217998,5.490994013999715,1.3142702139680407,2.9803942017968197,1.9473097595824065,21,4.1,0.5,0.640717603716803,1.5,
+AUD_USD,H4,ok,3014,forex,1634,1,200,-0.0002986509189497376,0.5366243961810231,7.938207629784057,0.4498972816100806,2.332751808953969,0.4310963548612763,20,4.1,0.5,0.640717603716803,1.5,
+AUD_USD,M15,ok,48943,forex,25096,36,200,-0.00020972385339495552,2.493068813853622,7.0191797811044045,1.36499064268297,2.1732899962810808,0.3465204530852918,23,4.1,0.5,0.640717603716803,1.5,
+AUD_USD,M30,ok,24449,forex,12643,16,200,-0.00015433979975183418,1.639596835460873,7.9285779633118025,0.48248677482205293,3.9589614499851873,0.45800709584035154,33,4.1,0.5,0.640717603716803,1.5,
+AUS200.cash,H1,ok,11180,index,5883,5,200,0.00038816306179966507,2.42682267822233,7.2577827506749095,0.9409025340676573,1.1178513459719688,0.3992170206287906,17,4.6,0.0,1.5653974905465313,1.5,
+AUS200.cash,H4,no_folds,2943,index,,,,,,,,,,,,,,,
+AUS200.cash,M15,ok,43139,index,22661,31,200,-0.00023930951122368805,0.6621798753869013,6.881510100105451,1.0543091178411461,1.1150129046635344,0.3002263957752551,32,4.6,0.0,1.5653974905465313,1.5,
+AUS200.cash,M30,ok,21835,index,11625,14,200,-0.00006440659022720957,2.1212860265089994,5.312983472017098,0.9192419914710641,1.1070619886484119,0.30061902095366766,34,4.6,0.0,1.5653974905465313,1.5,
+AVAUSD,H1,ok,6473,crypto,3398,1,200,0.009712849918913734,2.2070094994194114,7.900751473177857,0.8508955485569875,2.1968690267617106,2.1135500410077017,46,32.4,6.5,9.892827699917936,8.0,
+AVAUSD,H4,no_folds,1606,crypto,,,,,,,,,,,,,,,
+AVAUSD,M15,ok,26025,crypto,13335,17,200,-0.0020890633756785624,1.0224591703154466,9.382340555015983,0.5997034384605864,4.939241665149281,2.343196985447795,32,32.4,6.5,9.892827699917936,8.0,
+AVAUSD,M30,ok,12990,crypto,6690,6,200,0.00271330720206488,2.783016399311667,8.356425239780265,1.678912068559093,3.820540258061916,0.6338203281709683,45,32.4,6.5,9.892827699917936,8.0,
+BABA,H1,no_folds,3388,equity,,,,,,,,,,,,,,,
+BABA,H4,no_folds,932,equity,,,,,,,,,,,,,,,
+BABA,M15,ok,12709,equity,6289,6,200,0.00289360255835495,2.436965705752357,5.597102604486502,1.1336254436393625,1.842864979463061,0.3017551166064738,36,13.3,0.4,7.91870133298169,2.5,
+BABA,M30,ok,6330,equity,3440,1,200,0.011390821362173151,1.9634258608542257,5.766496146826332,0.6132311049586394,2.8012220531108074,0.30219286377047655,13,13.3,0.4,7.91870133298169,2.5,
+BAC,H1,no_folds,3388,equity,,,,,,,,,,,,,,,
+BAC,H4,no_folds,932,equity,,,,,,,,,,,,,,,
+BAC,M15,ok,12709,equity,6585,6,200,-0.0010535066646634812,0.7950529708075718,7.3857971816838655,1.498358287112937,2.261064996201847,1.9193651184721374,25,24.4,0.4,18.96094046264722,2.5,
+BAC,M30,ok,6330,equity,3405,1,200,-0.00032540525717152037,2.4989988306356747,7.3047801904240455,0.5684964435767926,1.5803842702192041,1.7671915611335738,29,24.4,0.4,18.96094046264722,2.5,
+BARUSD,H1,ok,6474,crypto,3447,1,200,0.0076445493120145275,2.843857705593861,8.097048755927155,0.9429955329640315,2.0476326205397304,2.4355784491548427,48,27.4,6.5,4.890573419733265,8.0,
+BARUSD,H4,no_folds,1606,crypto,,,,,,,,,,,,,,,
+BARUSD,M15,ok,26026,crypto,13457,17,200,-0.0018399842545279127,2.9721026153948538,9.505486430320193,1.476753144367251,4.340221218642767,1.5285447666318293,47,27.4,6.5,4.890573419733265,8.0,
+BARUSD,M30,ok,12991,crypto,6837,6,200,0.0003037675615441941,1.0154228506048744,8.35368577723246,1.8174946003914099,4.928272455595058,1.1417838187980105,39,27.4,6.5,4.890573419733265,8.0,
+BAYGn,H1,no_folds,4433,equity,,,,,,,,,,,,,,,
+BAYGn,H4,no_folds,1446,equity,,,,,,,,,,,,,,,
+BAYGn,M15,ok,16876,equity,8635,10,200,-0.0009337602947245598,0.5435711567587056,7.625583372030223,0.39632306304590414,2.375055845302425,0.30758692095679674,15,20.3,0.4,14.886490509861982,2.5,
+BAYGn,M30,ok,8416,equity,4320,3,200,0.00002355971576698993,0.8766890205582418,7.82447559267577,1.2762763916258466,3.780538117742652,0.5329104148478778,19,20.3,0.4,14.886490509861982,2.5,
+BCHUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+BCHUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+BCHUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+BCHUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+BNBUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+BNBUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+BNBUSD,M15,ok,26026,crypto,13392,17,200,-0.0016182922420942226,0.9197408161021227,9.441155990645496,0.8475506987867969,4.279026884575411,1.4927254300644073,46,22.8,6.5,0.2932236025519174,8.0,
+BNBUSD,M30,ok,12991,crypto,6758,6,200,0.0002803595384228829,2.4158001463864633,8.593585936634092,1.9212853923716018,4.404332828540606,1.8113917766804553,42,22.8,6.5,0.2932236025519174,8.0,
+BTCUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+BTCUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+BTCUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+BTCUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CADCHF,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CADCHF,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CADCHF,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CADCHF,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CAD_CHF,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CAD_CHF,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CAD_CHF,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CAD_CHF,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CAD_JPY,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CAD_JPY,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CAD_JPY,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CAD_JPY,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CHF_JPY,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CHF_JPY,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CHF_JPY,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CHF_JPY,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+COCOA.c,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+COCOA.c,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+COCOA.c,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+COCOA.c,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+COFFEE.c,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+COFFEE.c,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+COFFEE.c,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+COFFEE.c,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CORN.c,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CORN.c,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CORN.c,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+CORN.c,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+COTTON.c,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+COTTON.c,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+COTTON.c,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+COTTON.c,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DASHUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DASHUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DASHUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DASHUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DBKGn,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DBKGn,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DBKGn,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DBKGn,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DOGEUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DOGEUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DOGEUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DOGEUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DOTUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DOTUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DOTUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DOTUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DXY.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DXY.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DXY.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+DXY.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ETCUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ETCUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ETCUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ETCUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ETHUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ETHUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ETHUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ETHUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EU50.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EU50.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EU50.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EU50.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_AUD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_AUD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_AUD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_AUD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_CAD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_CAD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_CAD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_CAD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_CHF,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_CHF,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_CHF,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_CHF,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_CZK,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_CZK,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_CZK,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_CZK,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_GBP,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_GBP,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_GBP,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_GBP,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_HUF,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_HUF,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_HUF,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_HUF,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_JPY,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_JPY,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_JPY,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_JPY,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_NOK,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_NOK,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_NOK,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_NOK,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_NZD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_NZD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_NZD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_NZD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_PLN,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_PLN,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_PLN,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_PLN,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_USD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_USD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_USD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+EUR_USD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+FETUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+FETUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+FETUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+FETUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+FRA40.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+FRA40.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+FRA40.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+FRA40.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GALUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GALUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GALUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GALUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBPJPY,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBPJPY,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBPJPY,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBPJPY,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_AUD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_AUD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_AUD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_AUD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_CAD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_CAD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_CAD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_CAD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_CHF,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_CHF,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_CHF,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_CHF,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_JPY,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_JPY,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_JPY,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_JPY,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_NZD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_NZD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_NZD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_NZD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_USD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_USD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_USD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GBP_USD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GER40.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GER40.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GER40.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GER40.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GOOG,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GOOG,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GOOG,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GOOG,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GRTUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GRTUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GRTUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+GRTUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+HEATOIL.c,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+HEATOIL.c,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+HEATOIL.c,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+HEATOIL.c,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+HK50.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+HK50.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+HK50.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+HK50.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+IBE,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+IBE,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+IBE,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+IBE,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ICPUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ICPUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ICPUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ICPUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+IMXUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+IMXUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+IMXUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+IMXUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+JP225.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+JP225.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+JP225.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+JP225.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+LNKUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+LNKUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+LNKUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+LNKUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+LTCUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+LTCUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+LTCUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+LTCUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+LVMH,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+LVMH,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+LVMH,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+LVMH,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+MANUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+MANUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+MANUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+MANUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+META,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+META,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+META,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+META,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+MSFT,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+MSFT,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+MSFT,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+MSFT,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+N25.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+N25.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+N25.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+N25.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NATGAS.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NATGAS.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NATGAS.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NATGAS.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NEOUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NEOUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NEOUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NEOUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NERUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NERUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NERUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NERUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NFLX,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NFLX,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NFLX,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NFLX,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NVDA,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NVDA,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NVDA,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NVDA,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZDUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZDUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZDUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZDUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_CAD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_CAD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_CAD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_CAD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_CHF,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_CHF,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_CHF,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_CHF,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_JPY,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_JPY,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_JPY,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_JPY,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_USD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_USD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_USD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+NZD_USD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+PFE,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+PFE,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+PFE,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+PFE,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+RACE,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+RACE,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+RACE,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+RACE,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SANUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SANUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SANUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SANUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SOLUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SOLUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SOLUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SOLUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SOYBEAN.c,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SOYBEAN.c,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SOYBEAN.c,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SOYBEAN.c,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SPN35.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SPN35.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SPN35.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SPN35.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SUGAR.c,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SUGAR.c,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SUGAR.c,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+SUGAR.c,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+T,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+T,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+T,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+T,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+TSLA,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+TSLA,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+TSLA,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+TSLA,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+UK100.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+UK100.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+UK100.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+UK100.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+UKOIL.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+UKOIL.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+UKOIL.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+UKOIL.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+UNIUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+UNIUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+UNIUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+UNIUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US100.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US100.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US100.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US100.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US2000.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US2000.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US2000.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US2000.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US30.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US30.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US30.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US30.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US500.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US500.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US500.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+US500.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USDCNH,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USDCNH,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USDCNH,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USDCNH,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USDZAR,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USDZAR,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USDZAR,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USDZAR,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CAD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CAD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CAD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CAD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CHF,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CHF,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CHF,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CHF,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CNH,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CNH,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CNH,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CNH,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CZK,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CZK,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CZK,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_CZK,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_HKD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_HKD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_HKD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_HKD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_HUF,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_HUF,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_HUF,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_HUF,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_ILS,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_ILS,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_ILS,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_ILS,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_JPY,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_JPY,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_JPY,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_JPY,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_MXN,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_MXN,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_MXN,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_MXN,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_NOK,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_NOK,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_NOK,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_NOK,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_PLN,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_PLN,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_PLN,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_PLN,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_SEK,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_SEK,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_SEK,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_SEK,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_SGD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_SGD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_SGD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_SGD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_ZAR,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_ZAR,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_ZAR,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USD_ZAR,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USOIL.cash,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USOIL.cash,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USOIL.cash,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+USOIL.cash,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+V,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+V,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+V,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+V,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+VECUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+VECUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+VECUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+VECUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+VOWG_p,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+VOWG_p,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+VOWG_p,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+VOWG_p,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+WHEAT.c,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+WHEAT.c,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+WHEAT.c,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+WHEAT.c,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+WMT,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+WMT,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+WMT,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+WMT,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAG_AUD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAG_AUD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAG_AUD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAG_AUD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAG_EUR,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAG_EUR,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAG_EUR,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAG_EUR,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAG_USD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAG_USD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAG_USD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAG_USD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAU_AUD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAU_AUD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAU_AUD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAU_AUD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAU_EUR,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAU_EUR,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAU_EUR,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAU_EUR,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAU_USD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAU_USD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAU_USD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XAU_USD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XCU_USD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XCU_USD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XCU_USD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XCU_USD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XLMUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XLMUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XLMUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XLMUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XMRUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XMRUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XMRUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XMRUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XPD_USD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XPD_USD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XPD_USD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XPD_USD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XPT_USD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XPT_USD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XPT_USD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XPT_USD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XRPUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XRPUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XRPUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XRPUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XTZUSD,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XTZUSD,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XTZUSD,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+XTZUSD,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ZM,H1,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ZM,H4,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ZM,M15,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.
+ZM,M30,error,,,,,,,,,,,,,,,,,A process in the process pool was terminated abruptly while the future was running or pending.

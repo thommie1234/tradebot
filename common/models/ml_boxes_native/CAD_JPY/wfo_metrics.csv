@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+CAD_JPY,2026,1,2024-2025,731,4,0.25,-10.790241484198347,-19.303466893837584,-0.004992807281081646,0.19412315651267154,cuda

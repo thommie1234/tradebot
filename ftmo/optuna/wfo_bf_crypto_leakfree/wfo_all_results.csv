@@ -1,0 +1,6 @@
+symbol,status,cluster,session,timeframe,sl,tp,rrr,be,trail_act,trail_dist,horizon,risk_pct,cost_bps,spread_bps,total_return,max_dd,dd_pct,sharpe,calmar,profit_factor,expectancy_pct,win_rate,n_trades,avg_bars_held,n_folds,avg_win_pct,avg_loss_pct,pct_sl,pct_tp,pct_be,pct_trail,pct_horizon,ftmo_ok,leak_free,warmup_trades,optimized_trades
+ADA_USD,ok,index,unknown,H1,1.5,6.0,4.0,1.0,3.0,1.0,30,0.3,7.3,4.3,7442.8,4191.43,4.19,1.87,1.78,1.16,0.1179,35.0,294,7.3,10,2.7415,1.297,41.8,4.1,21.4,29.6,3.1,true,true,91,203
+AAVE_USD,ok,index,unknown,H1,1.5,6.0,4.0,1.0,3.0,1.0,30,0.3,8.1,5.1,5526.73,5889.55,5.89,1.8,0.94,1.16,0.1391,29.0,245,8.0,9,3.4499,1.2119,38.4,5.3,30.6,19.2,6.5,true,true,97,148
+BNB_USD,ok,index,unknown,H1,1.5,6.0,4.0,1.0,3.0,1.0,30,0.3,5.3,2.3,-2443.24,9135.27,9.14,-0.66,-0.27,0.95,-0.005,31.4,287,7.7,10,1.6559,0.7638,40.1,1.0,28.6,19.9,10.5,true,true,95,192
+ALGO_USD,ok,index,unknown,H1,1.5,6.0,4.0,1.0,3.0,1.0,30,0.3,12.4,9.4,-4505.89,12640.1,12.64,-0.85,-0.36,0.94,-0.0116,20.7,343,5.8,10,3.2369,0.8596,51.9,1.5,27.4,17.2,2.0,false,true,96,247
+BTC_USD,ok,index,unknown,H1,1.5,6.0,4.0,1.0,3.0,1.0,30,0.3,5.0,2.0,-8238.67,16439.16,16.44,-1.78,-0.5,0.87,-0.0238,25.8,333,5.9,10,1.5753,0.5806,47.4,1.5,24.9,18.6,7.5,false,true,92,241

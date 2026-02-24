@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+IBE,2026,1,2024-2025,3443,267,0.38202247191011235,-5.816119125209575,-15.22510836907512,-0.21839138133930425,0.4584849278692022,cuda

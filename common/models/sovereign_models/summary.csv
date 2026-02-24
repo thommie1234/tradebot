@@ -1,0 +1,10 @@
+symbol,status,folds,parquet
+PFE,ok,1,models/sovereign_models/PFE/wfo_metrics.parquet
+LVMH,ok,1,models/sovereign_models/LVMH/wfo_metrics.parquet
+RACE,ok,1,models/sovereign_models/RACE/wfo_metrics.parquet
+GOOG,ok,1,models/sovereign_models/GOOG/wfo_metrics.parquet
+AMZN,ok,1,models/sovereign_models/AMZN/wfo_metrics.parquet
+NVDA,ok,1,models/sovereign_models/NVDA/wfo_metrics.parquet
+AAPL,ok,1,models/sovereign_models/AAPL/wfo_metrics.parquet
+V,ok,1,models/sovereign_models/V/wfo_metrics.parquet
+TSLA,ok,1,models/sovereign_models/TSLA/wfo_metrics.parquet

@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+JP225.cash,2026,1,2024-2025,4140,291,0.3951890034364261,-4.925661372242008,-13.37934983176821,-0.21009228207910224,0.505644932317778,cuda

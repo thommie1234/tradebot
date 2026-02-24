@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+DBKGn,H4,2026,1,2024-2025,120,62,0.3387096774193548,-3.9218588197518005,-18.346823030692246,-0.2974493092084234,0.5844257103018109,cuda,9.965122072745768,5.0,17.965122072745768

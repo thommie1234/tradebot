@@ -1,0 +1,4 @@
+symbol,status,cluster,session,timeframe,sl,tp,rrr,be,trail_act,trail_dist,horizon,risk_pct,cost_bps,spread_bps,total_return,max_dd,dd_pct,sharpe,calmar,profit_factor,expectancy_pct,win_rate,n_trades,avg_bars_held,n_folds,avg_win_pct,avg_loss_pct,pct_sl,pct_tp,pct_be,pct_trail,pct_horizon,ftmo_ok,leak_free,warmup_trades,optimized_trades
+DOT_USD,ok,index,unknown,H1,1.5,6.0,4.0,1.0,3.0,1.0,30,0.3,12.4,9.4,-4638.69,11908.87,11.91,-1.05,-0.39,0.91,-0.0678,24.6,301,7.1,10,2.9299,1.045,43.5,1.7,30.2,19.3,5.3,false,true,87,214
+ETH_USD,ok,index,unknown,H1,1.5,6.0,4.0,1.0,3.0,1.0,30,0.3,6.2,3.2,-3154.31,7323.87,7.32,-0.94,-0.43,0.92,0.0019,30.5,279,7.3,10,2.2271,0.973,36.9,3.9,30.5,21.1,7.5,true,true,90,189
+DASH_USD,ok,index,unknown,H1,1.5,6.0,4.0,1.0,3.0,1.0,30,0.3,25.2,22.2,-21305.76,24206.38,24.21,-4.54,-0.88,0.71,-0.4035,14.4,397,4.3,10,6.391,1.5425,47.4,3.3,38.0,10.6,0.8,false,true,99,298

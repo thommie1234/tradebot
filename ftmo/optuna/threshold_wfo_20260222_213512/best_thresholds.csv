@@ -1,0 +1,4 @@
+symbol,threshold,status,cluster,timeframe,n_trades,total_return,max_dd,dd_pct,sharpe,calmar,profit_factor,win_rate,expectancy_pct,avg_bars_held,n_folds
+DOGEUSD,0.75,ok,crypto,H4,229,-969.9,7737.59,7.74,-0.12,-0.13,0.98,27.5,0.2608,9.5,50
+SOLUSD,0.54,ok,crypto,H4,117,-6607.62,11809.01,11.81,-1.56,-0.56,0.75,21.4,-0.3526,9.3,18
+UNIUSD,0.74,ok,crypto,H4,91,12607.69,2624.66,2.62,3.64,4.8,1.91,46.2,1.7513,8.6,18

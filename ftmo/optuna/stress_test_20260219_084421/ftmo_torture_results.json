@@ -1,0 +1,86 @@
+{
+  "daily_loss_limit_36pct": {
+    "test": "equity -3.6% of balance",
+    "expected": "BLOCKED",
+    "actual": "BLOCKED",
+    "pass": true,
+    "reason": "daily PnL -3.60% hit -3.5% limit"
+  },
+  "daily_loss_limit_34pct": {
+    "test": "equity -3.4% of balance (should pass)",
+    "expected": "ALLOWED",
+    "actual": "ALLOWED",
+    "pass": true,
+    "reason": ""
+  },
+  "profit_lock_31pct": {
+    "test": "equity +3.1% \u2014 should lock profits",
+    "expected": "BLOCKED",
+    "actual": "BLOCKED",
+    "pass": true,
+    "reason": "daily PnL 3.10% hit +3% \u2014 locking profits"
+  },
+  "dd_recovery_mode_45pct": {
+    "test": "DD 4.5% \u2014 should enter recovery (halve lots)",
+    "expected": true,
+    "actual": true,
+    "pass": true
+  },
+  "dd_recovery_exit": {
+    "test": "DD 0.5% after recovery \u2014 should exit recovery",
+    "expected": false,
+    "actual": false,
+    "pass": true
+  },
+  "null_account": {
+    "test": "None account_info \u2014 should allow",
+    "expected": "ALLOWED",
+    "actual": "ALLOWED",
+    "pass": true
+  },
+  "lot_calc_amzn": {
+    "test": "AMZN lot calc: equity=100k risk=0.25% SL=3.0",
+    "expected_lot": 83,
+    "actual_lot": 83.0,
+    "pass": true
+  },
+  "lot_calc_zero_sl": {
+    "test": "SL distance = 0 \u2014 should return 0",
+    "expected": 0.0,
+    "actual": 0.0,
+    "pass": true
+  },
+  "kelly_no_mt5": {
+    "test": "Kelly without MT5 \u2014 should return fallback 0.3%",
+    "expected": 0.003,
+    "actual": 0.003,
+    "pass": true
+  },
+  "kelly_zero_wr": {
+    "test": "fractional_kelly(WR=0.0, PF=1.5, frac=0.5)",
+    "result": 0.0,
+    "pass": true
+  },
+  "kelly_perfect_wr": {
+    "test": "fractional_kelly(WR=1.0, PF=2.0, frac=0.5)",
+    "result": 0.0,
+    "pass": true
+  },
+  "kelly_bad_pf": {
+    "test": "fractional_kelly(WR=0.5, PF=0.0, frac=0.5)",
+    "result": 0.0,
+    "pass": true
+  },
+  "kelly_normal": {
+    "test": "fractional_kelly(WR=0.55, PF=1.8, frac=0.5)",
+    "result": 0.17272727272727278,
+    "pass": true
+  },
+  "rl_adjust_no_sizer": {
+    "test": "RL adjust without RL sizer \u2014 should return base risk",
+    "base_risk": 0.003,
+    "adjusted_risk": 0.00375,
+    "arm": 4,
+    "pass": false
+  }
+}

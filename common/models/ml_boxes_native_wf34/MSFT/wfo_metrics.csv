@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+MSFT,2026,1,2024-2025,3598,225,0.3244444444444444,-6.425209809252955,-16.296616320019034,-0.22078412525264057,0.4214779995525944,cuda

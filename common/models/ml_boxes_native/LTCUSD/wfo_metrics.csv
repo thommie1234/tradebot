@@ -1,0 +1,2 @@
+symbol,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device
+LTCUSD,2026,1,2024-2025,534,229,0.4192139737991266,-0.5686285828444765,-1.1344806145273132,-0.19464312829670138,0.9213775664361971,cuda
