@@ -6,6 +6,7 @@ Extracted from execute_trade() order building logic in sovereign_bot.py.
 from __future__ import annotations
 
 import os
+import time
 
 from config.loader import cfg
 from execution.spread_filter import check_spread
@@ -20,7 +21,7 @@ class OrderRouter:
     def __init__(self, logger, mt5, position_sizer, trading_schedule,
                  discord=None, ftmo=None, drawdown_guard=None,
                  correlation_guard=None, account_name: str = "default",
-                 account_symbols: dict | None = None):
+                 account_symbols: dict | None = None, risk_scale: float = 1.0):
         self.logger = logger
         self.mt5 = mt5
         self.position_sizer = position_sizer
@@ -28,6 +29,7 @@ class OrderRouter:
         self.discord = discord
         self.ftmo = ftmo
         self.account_name = account_name
+        self.risk_scale = risk_scale
         self.safe_mode = False
         self.emergency_stop = False
         self.drawdown_guard = drawdown_guard or DrawdownGuard(logger, discord)
@@ -35,6 +37,8 @@ class OrderRouter:
         self._cached_sentiment: dict[str, float] = {}
         self.portfolio_optimizer = None  # F5: set by SovereignBot
         self._account_symbols = account_symbols  # Per-account symbol configs (overrides cfg.SYMBOLS)
+        self._margin_leverage: dict | None = None  # Set from account context if available
+        self._h4_cache: dict[str, tuple[int, float]] = {}  # symbol → (primary_side, timestamp)
 
     @staticmethod
     def _group_split_orders(positions) -> list[list]:
@@ -59,6 +63,44 @@ class OrderRouter:
             if result is not None:
                 return result
         return cfg.SYMBOLS.get(symbol, {})
+
+    def _get_h4_primary_side(self, symbol: str, mt5) -> int | None:
+        """Get H4 trend direction via primary_side on H4 bars.
+
+        Returns +1 (bullish), -1 (bearish), or None if unavailable.
+        Result is cached for 5 minutes (one H4 bar = 4 hours, so this is safe).
+        """
+        cached = self._h4_cache.get(symbol)
+        if cached and time.time() - cached[1] < 300:
+            return cached[0]
+        try:
+            from engine.inference import _ensure_ml_imports, pl, build_bar_features
+            from datetime import datetime, timezone
+            _ensure_ml_imports()
+
+            broker_sym = cfg.SYMBOLS.get(symbol, {}).get("broker_symbol", symbol)
+            rates = mt5.copy_rates_from_pos(broker_sym, mt5.TIMEFRAME_H4, 0, 50)
+            if rates is None or len(rates) < 30:
+                return None
+
+            bars = pl.DataFrame({
+                "time":   [datetime.fromtimestamp(int(r['time']), tz=timezone.utc) for r in rates],
+                "open":   [float(r['open'])        for r in rates],
+                "high":   [float(r['high'])        for r in rates],
+                "low":    [float(r['low'])         for r in rates],
+                "close":  [float(r['close'])       for r in rates],
+                "volume": [float(r['tick_volume']) for r in rates],
+            }).with_columns(pl.col("time").cast(pl.Datetime("us", "UTC")))
+
+            feat = build_bar_features(bars, z_threshold=0.0)
+            if feat.height < 2:
+                return None
+
+            side = int(feat.tail(1)["primary_side"][0])
+            self._h4_cache[symbol] = (side, time.time())
+            return side
+        except Exception:
+            return None
 
     def execute_trade(self, symbol: str, direction: str, ml_confidence: float,
                       gpu_trading_pause: bool = False, features_dict: dict | None = None,
@@ -146,6 +188,29 @@ class OrderRouter:
                                         f'(proba={ml_confidence:.3f} < {FLIP_THRESHOLD})')
                         self.last_reject_reason = 'hedge blocked (tegengestelde positie open)'
                         return False
+
+        # H4 alignment check — block H1 signals that fight the H4 trend,
+        # and boost confidence when H1 and H4 agree.
+        # Skipped for: crypto (24/7 market), per-symbol h4_alignment=false, or if H4 data unavailable
+        H4_CONF_BOOST = 0.03   # confidence bonus when H1 and H4 aligned
+        sym_cfg_h4 = self._sym_cfg(symbol)
+        asset_class = sym_cfg_h4.get('asset_class', 'forex')
+        h4_alignment_enabled = sym_cfg_h4.get('h4_alignment', asset_class != 'crypto')
+        if h4_alignment_enabled:
+            h4_side = self._get_h4_primary_side(symbol, mt5)
+            if h4_side is not None and h4_side != 0:
+                h4_dir = 'BUY' if h4_side > 0 else 'SELL'
+                if h4_dir != direction:
+                    self.logger.log('INFO', 'OrderRouter', 'H4_MISALIGN',
+                                    f'Blocked {symbol} {direction}: H4 trend={h4_dir} '
+                                    f'(conf={ml_confidence:.3f}) — H1 vs H4 conflict')
+                    self.last_reject_reason = f'H4 misalignment (H4={h4_dir})'
+                    return False
+                else:
+                    ml_confidence = min(0.999, ml_confidence + H4_CONF_BOOST)
+                    self.logger.log('DEBUG', 'OrderRouter', 'H4_ALIGNED',
+                                    f'{symbol} {direction}: H4 aligned, '
+                                    f'conf +{H4_CONF_BOOST:.2f} → {ml_confidence:.3f}')
 
         # Ultra-high confidence: bypass slot limit
         logical_groups = self._group_split_orders(our_positions)
@@ -309,19 +374,24 @@ class OrderRouter:
             point = sym_info_full.point
             swap_pts = (sym_info_full.swap_long if direction == 'BUY'
                         else sym_info_full.swap_short)
+
+            # Calculate total swap nights across the expected hold period.
+            # Triple-swap night is Wednesday (weekday=2) for most brokers.
+            # Instead of using today's multiplier, sum actual nightly multipliers
+            # across the hold period starting from tonight.
+            from datetime import datetime, timezone
+            wd = datetime.now(timezone.utc).weekday()
+            hold_nights = max(1, int(round(estimated_hold_nights)))
+            total_swap_nights = 0.0
+            for n in range(hold_nights):
+                night_wd = (wd + n) % 7
+                total_swap_nights += 3.0 if night_wd == 2 else (0.0 if night_wd in (5, 6) else 1.0)
+
             if swap_pts < 0:
-                # Wednesday (weekday=2) or Thursday (weekday=3) → broker charges 3× swap
-                from datetime import datetime, timezone
-                wd = datetime.now(timezone.utc).weekday()
-                swap_mult = 3.0 if wd in (2, 3) else 1.0
-                swap_cost_price = abs(swap_pts * point) * swap_mult * estimated_hold_nights
+                swap_cost_price = abs(swap_pts * point) * total_swap_nights
             # F6: positive swap → reduce effective cost (floor at spread so costs never negative)
-            swap_benefit_price = 0.0
             if swap_pts > 0:
-                from datetime import datetime, timezone
-                wd = datetime.now(timezone.utc).weekday()
-                swap_mult = 3.0 if wd in (2, 3) else 1.0
-                swap_benefit_price = swap_pts * point * swap_mult * estimated_hold_nights
+                swap_benefit_price = swap_pts * point * total_swap_nights
 
         # 3) Commission estimate (round-trip: entry + exit)
         asset_class = sym_cfg.get('asset_class', 'forex')
@@ -363,7 +433,8 @@ class OrderRouter:
         # ─────────────────────────────────────────────────────────────
 
         # Position sizing — Kelly with config risk as absolute floor
-        config_risk = sym_cfg.get('risk_per_trade', 0.003)
+        # risk_scale < 1.0 reduces position size account-wide (e.g. BF=0.8)
+        config_risk = sym_cfg.get('risk_per_trade', 0.003) * self.risk_scale
         risk_pct = max(self.position_sizer.kelly_risk_pct(symbol), config_risk)
 
         # ── F4: Confidence-scaled sizing ─────────────────────────────
@@ -638,6 +709,7 @@ class OrderRouter:
 
                 # Close all chunks of this logical position
                 closed = 0
+                total_chunks = len(replace_group)
                 for p in replace_group:
                     request = {
                         "action": mt5.TRADE_ACTION_DEAL,
@@ -656,7 +728,14 @@ class OrderRouter:
                     if result and result.retcode == mt5.TRADE_RETCODE_DONE:
                         closed += 1
 
-                if closed > 0:
+                if closed > 0 and closed < total_chunks:
+                    # Partial close — some chunks remain as orphans
+                    self.logger.log('WARNING', 'OrderRouter', 'PARTIAL_REPLACE_CLOSE',
+                                    f'{rep.symbol}: only {closed}/{total_chunks} chunks closed. '
+                                    f'Aborting replacement — orphan chunks remain.')
+                    return False
+
+                if closed == total_chunks:
                     chunks_info = f" ({closed} chunks)" if len(replace_group) > 1 else ""
                     self.logger.log('INFO', 'OrderRouter', 'POSITION_REPLACED',
                                     f'Closed {rep.symbol} {r_dir}{chunks_info} '
@@ -809,5 +888,5 @@ class OrderRouter:
         # Fallback: conservative leverage per asset class from config
         defaults = {"equity": 3.5, "forex": 30, "index": 10,
                     "commodity": 10, "crypto": 2}
-        leverage_map = self._sym_cfg("margin_leverage") or defaults
+        leverage_map = self._margin_leverage or defaults
         return leverage_map.get(asset_class, 3.5)

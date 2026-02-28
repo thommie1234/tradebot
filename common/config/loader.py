@@ -78,7 +78,10 @@ class SovereignConfig:
         """Load symbol configs from JSON."""
         if os.path.exists(self.CONFIG_PATH):
             with open(self.CONFIG_PATH) as f:
-                self.SYMBOLS = json.load(f)
+                raw = json.load(f)
+            # margin_leverage is stored alongside symbols but is NOT a symbol
+            self.MARGIN_LEVERAGE = raw.pop("margin_leverage", {})
+            self.SYMBOLS = raw
             print(f"[CONFIG] Loaded {len(self.SYMBOLS)} symbols from {self.CONFIG_PATH}")
         else:
             print(f"[CONFIG] WARNING: {self.CONFIG_PATH} not found — run with --build-plan first")
@@ -99,7 +102,7 @@ class SovereignConfig:
         ok = df.filter(pl.col("status") == "ok")
 
         for row in ok.iter_rows(named=True):
-            sym = row["symbol"]
+            sym = row["symbol"].replace("/", "").replace("_", "")  # ADA_USD → ADAUSD
             # Use Optuna-optimized eta/colsample_bylevel if available, else defaults
             eta = float(row["best_eta"]) if row.get("best_eta") else 0.03
             colsample_bylevel = float(row["best_colsample_bylevel"]) if row.get("best_colsample_bylevel") else 0.75
