@@ -60,6 +60,7 @@ class AccountContext:
 
         # Per-account symbol configs (keyed by broker symbol name)
         self.symbols: dict = {}
+        self.margin_leverage: dict = {}  # Stored separately from symbols
         self._internal_to_broker: dict[str, str] = {}  # e.g. UNIUSD → UNI/USD
         self._broker_to_internal: dict[str, str] = {}  # e.g. UNI/USD → UNIUSD
         self._load_symbols(account_cfg.get("config_path"))
@@ -96,7 +97,7 @@ class AccountContext:
             raw = json.load(f)
         for sym, sym_cfg in raw.items():
             if sym == "margin_leverage":
-                self.symbols[sym] = sym_cfg
+                self.margin_leverage = sym_cfg  # Store separately, NOT in symbols
                 continue
             broker_sym = sym_cfg.get("broker_symbol", sym)
             self.symbols[broker_sym] = sym_cfg
@@ -144,8 +145,6 @@ class AccountContext:
         from engine.inference import SovereignMLFilter
         os.makedirs(self.model_dir, exist_ok=True)
         for broker_sym, sym_cfg in self.symbols.items():
-            if broker_sym == "margin_leverage":
-                continue
             internal_sym = self._broker_to_internal.get(broker_sym, broker_sym)
             filt = SovereignMLFilter(internal_sym, logger, model_dir=self.model_dir)
             filt.load_model()
@@ -158,6 +157,29 @@ class AccountContext:
     def get_broker_symbol(self, internal_symbol: str) -> str:
         """Translate internal symbol name to broker symbol name."""
         return self._internal_to_broker.get(internal_symbol, internal_symbol)
+
+    @staticmethod
+    def _query_day_start_balance(audit_db: str) -> float | None:
+        """Query the audit DB for today's first heartbeat balance.
+
+        This survives bot restarts — the heartbeats table always has the
+        real balance at day start, even if the bot was restarted mid-day.
+        """
+        import sqlite3
+        from datetime import date
+        try:
+            conn = sqlite3.connect(audit_db)
+            row = conn.execute(
+                "SELECT account_balance FROM heartbeats "
+                "WHERE timestamp >= ? ORDER BY id ASC LIMIT 1",
+                (date.today().isoformat() + 'T00:00:00',)
+            ).fetchone()
+            conn.close()
+            if row:
+                return row[0]
+        except Exception:
+            pass
+        return None
 
     def initialize(self, trading_schedule, on_safe_mode=None) -> bool:
         """Initialize all per-account instances. Returns True on success."""
@@ -187,9 +209,18 @@ class AccountContext:
         else:
             initial_balance = self.account_size
 
+        # Restore real day-start balance from audit DB (survives restarts)
+        day_start = self._query_day_start_balance(audit_db)
+        if day_start is not None and day_start != initial_balance:
+            self.logger.log('INFO', 'AccountContext', 'DAY_START_RESTORED',
+                            f'[{self.name}] Day-start balance from DB: ${day_start:,.2f} '
+                            f'(current: ${initial_balance:,.2f}, '
+                            f'day delta: ${initial_balance - day_start:+,.2f})')
+        daily_start = day_start if day_start is not None else initial_balance
+
         # 3. Compliance (parameterized per account)
         self.ftmo = FTMOCompliance(
-            initial_balance=initial_balance,
+            initial_balance=daily_start,
             logger=self.logger,
             discord=self.discord,
             account_name=self.name,
@@ -200,7 +231,7 @@ class AccountContext:
         )
         self.ftmo.load_last_trade_time(audit_db)
 
-        # 4. Drawdown guard (parameterized per account)
+        # 4. Drawdown guard (parameterized per account, with persisted day-start)
         self.drawdown_guard = DrawdownGuard(
             self.logger, self.discord,
             account_name=self.name,
@@ -208,6 +239,9 @@ class AccountContext:
             profit_lock_pct=acfg.get("internal_profit_lock_pct", 0.03),
             dd_recovery_threshold=acfg.get("dd_recovery_threshold", 0.04),
             dd_recovery_exit=acfg.get("dd_recovery_exit", 0.01),
+            profit_gate_pct=acfg.get("profit_gate_pct", 0.015),
+            profit_gate_min_conf=acfg.get("profit_gate_min_conf", 0.80),
+            daily_start_balance=daily_start,
         )
 
         # 5. Correlation guard (per account — checks this account's positions)
@@ -224,7 +258,9 @@ class AccountContext:
             correlation_guard=self.correlation_guard,
             account_name=self.name,
             account_symbols=self.symbols or None,
+            risk_scale=self.risk_scale,
         )
+        self.order_router._margin_leverage = self.margin_leverage or None
 
         # 8. Position manager (per account — manages this account's positions)
         monitor_interval = acfg.get("monitor_interval", 0.5)
@@ -235,6 +271,23 @@ class AccountContext:
         )
         self.position_manager._trading_schedule = trading_schedule
         self.position_manager._ftmo = self.ftmo
+
+        # Floating profit close — wired into the monitor loop
+        from live.emergency_kill import profit_close_all
+        self.position_manager._profit_close_pct  = acfg.get("floating_profit_close_pct", 0)
+        self.position_manager._profit_hard_pct   = acfg.get("floating_profit_hard_pct", 0)
+        self.position_manager._profit_tighten_pct = acfg.get("floating_profit_tighten_pct", 0)
+        self.position_manager._account_size      = self.account_size
+
+        def _on_profit_close(floating: float, hard: bool):
+            profit_close_all(self.logger, self.mt5, floating,
+                             self.account_size, self.name, self.discord)
+            if hard and on_safe_mode:
+                on_safe_mode(self.account_id,
+                             f'floating profit hard stop +{floating/self.account_size:.1%}')
+
+        self.position_manager._on_profit_close = _on_profit_close
+
         self.position_manager.start_monitor(interval=monitor_interval)
 
         # 9. Heartbeat monitor (per account — monitors this MT5 connection)
@@ -249,6 +302,12 @@ class AccountContext:
             on_disconnect=_enter_safe_mode,
             discord=self.discord,
         )
+        # Pre-seed day-start balance BEFORE thread starts to prevent
+        # the monitor loop from overwriting with current (wrong) balance
+        from datetime import datetime
+        self.heartbeat.initial_balance = initial_balance
+        self.heartbeat.daily_start_balance = daily_start
+        self.heartbeat.last_reset_date = datetime.now().date()
         self.heartbeat.start()
 
         self.logger.log('INFO', 'AccountContext', 'ACCOUNT_READY',

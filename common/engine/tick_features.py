@@ -77,7 +77,10 @@ def build_tick_features(ticks: pl.DataFrame, bars: pl.DataFrame) -> pl.DataFrame
         bar_start = bar_times[i - 1]
         bar_end = bar_times[i]
 
-        mask = (tick_times >= np.datetime64(bar_start)) & (tick_times < np.datetime64(bar_end))
+        # Convert to naive datetime to avoid np.datetime64 timezone warnings
+        bs = bar_start.replace(tzinfo=None) if hasattr(bar_start, 'replace') else bar_start
+        be = bar_end.replace(tzinfo=None) if hasattr(bar_end, 'replace') else bar_end
+        mask = (tick_times >= np.datetime64(bs)) & (tick_times < np.datetime64(be))
         idx = np.where(mask)[0]
 
         if len(idx) < 2:
@@ -92,7 +95,7 @@ def build_tick_features(ticks: pl.DataFrame, bars: pl.DataFrame) -> pl.DataFrame
         n_ticks = len(prices)
 
         # Duration in minutes
-        dt_seconds = (np.datetime64(bar_end) - np.datetime64(bar_start)) / np.timedelta64(1, 's')
+        dt_seconds = (np.datetime64(be) - np.datetime64(bs)) / np.timedelta64(1, 's')
         dt_minutes = max(dt_seconds / 60.0, 1.0)
 
         # 1. Tick intensity: ticks per minute (normalized)

@@ -18,11 +18,13 @@ class TradingSchedule:
     GMT2_OFFSET = timedelta(hours=2)
     FRIDAY_CLOSE_BUFFER_MIN = 10
 
-    def __init__(self, info_dir=None):
+    def __init__(self, info_dir=None, override_csv=None):
         self.info_dir = info_dir or cfg.INFO_DIR
         self.schedule = {}
         self.crypto_symbols = set()
         self._load_all()
+        if override_csv:
+            self._load_override_csv(override_csv)
 
     @staticmethod
     def _normalize_symbol(csv_sym):
@@ -115,6 +117,41 @@ class TradingSchedule:
         print(f"[SCHEDULE] Loaded trading hours for {len(self.schedule)} instruments "
               f"({len(self.crypto_symbols)} crypto)")
 
+    def _load_override_csv(self, path):
+        """Load a simple session CSV (bf_sessions.csv format) and override schedule."""
+        if not os.path.exists(path):
+            return
+        with open(path, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            count = 0
+            for row in reader:
+                sym = row.get("symbol", "").strip()
+                if not sym:
+                    continue
+                day_map = {}
+                day_cols = [
+                    ("mon_open", "mon_close", 0),
+                    ("tue_open", "tue_close", 1),
+                    ("wed_open", "wed_close", 2),
+                    ("thu_open", "thu_close", 3),
+                    ("fri_open", "fri_close", 4),
+                ]
+                for open_col, close_col, day_idx in day_cols:
+                    o_str = row.get(open_col, "").strip()
+                    c_str = row.get(close_col, "").strip()
+                    if not o_str or not c_str or "closed" in o_str.lower():
+                        continue
+                    o_parts = o_str.split(":")
+                    c_parts = c_str.split(":")
+                    if len(o_parts) == 2 and len(c_parts) == 2:
+                        o_min = int(o_parts[0]) * 60 + int(o_parts[1])
+                        c_min = int(c_parts[0]) * 60 + int(c_parts[1])
+                        day_map[day_idx] = [(o_min, c_min)]
+                if day_map:
+                    self.schedule[sym] = day_map
+                    count += 1
+        print(f"[SCHEDULE] Override: {count} symbols from {os.path.basename(path)}")
+
     def _now_gmt2(self):
         return datetime.now(timezone.utc) + self.GMT2_OFFSET
 
@@ -135,7 +172,7 @@ class TradingSchedule:
             return False, None
 
         for open_min, close_min in sessions:
-            if open_min <= current_min <= close_min:
+            if open_min <= current_min < close_min:
                 return True, close_min - current_min
 
         return False, None

@@ -52,7 +52,7 @@ from execution.account_context import AccountContext, load_accounts
 
 # Live
 from live.healthcheck import HeartbeatMonitor
-from live.emergency_kill import emergency_close_all, friday_auto_close, friday_progressive_close
+from live.emergency_kill import emergency_close_all, friday_auto_close, friday_progressive_close, profit_close_all, profit_lock_breakeven
 
 # Position sizing constants and plan building
 from risk.position_sizing import (
@@ -94,10 +94,25 @@ class SovereignBot:
         # Initialize config
         load_config()
 
+        # Override DB path BEFORE BlackoutLogger so each account uses its own audit DB
+        if account_id:
+            import yaml as _yaml
+            _accts_path = Path(__file__).resolve().parent.parent / "config" / "accounts.yaml"
+            if _accts_path.exists():
+                with open(_accts_path) as _f:
+                    _accts = _yaml.safe_load(_f).get("accounts", {})
+                _audit_db = _accts.get(account_id, {}).get("audit_db")
+                if _audit_db:
+                    cfg.DB_PATH = str(REPO_ROOT / _audit_db)
+
         # Core components
         self.logger = BlackoutLogger()
         self.feature_logger = FeatureLogger()
-        self.trading_schedule = TradingSchedule()
+        # Load BF session override if this is a BrightFunded account
+        _bf_sessions = os.path.join(os.path.dirname(__file__), "..", "data",
+                                     "instrument_specs", "bf_sessions.csv")
+        _override = _bf_sessions if "bright" in (self._account_id or '') else None
+        self.trading_schedule = TradingSchedule(override_csv=_override)
         self.position_sizer = PositionSizingEngine(self.logger, mt5)
         self.decay_tracker = ModelDecayTracker(self.logger)
         self.position_manager = PositionManager(self.logger, mt5)
@@ -214,8 +229,6 @@ class SovereignBot:
             if not acct.enabled or not acct.symbols:
                 continue
             for broker_sym, sym_cfg in acct.symbols.items():
-                if broker_sym == "margin_leverage":
-                    continue
                 internal_sym = acct.get_internal_symbol(broker_sym)
                 if internal_sym not in cfg.SYMBOLS:
                     cfg.SYMBOLS[internal_sym] = sym_cfg
@@ -393,7 +406,7 @@ class SovereignBot:
 
     @staticmethod
     def seconds_until_next_h1() -> float:
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
         next_hour = now.replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
         wait = (next_hour - now).total_seconds() + 5
         return max(wait, 1.0)
@@ -424,7 +437,8 @@ class SovereignBot:
             closed_tickets = set(self._tracked_tickets.keys()) - current_tickets
             for ticket in closed_tickets:
                 info = self._tracked_tickets.pop(ticket)
-                pnl = self._get_deal_pnl(ticket)
+                close_info = self._get_deal_close_info(ticket)
+                pnl = close_info['pnl'] if close_info else None
                 if pnl is not None:
                     self.decay_tracker.record_trade(
                         info['symbol'], pnl, info['direction'], info['confidence']
@@ -432,6 +446,14 @@ class SovereignBot:
                     self.logger.log('INFO', 'SovereignBot', 'TRADE_CLOSED',
                                     f'{info["symbol"]} {info["direction"]} '
                                     f'ticket={ticket} PnL={pnl:+.2f}')
+
+                    # Update trades table with exit info
+                    self.logger.close_trade(
+                        ticket=ticket,
+                        exit_price=close_info.get('exit_price', 0),
+                        pnl=pnl,
+                        exit_timestamp=close_info.get('exit_time', ''),
+                    )
 
                     # F3: Update RL sizer with trade result
                     rl_arm = info.get('rl_arm')
@@ -538,6 +560,11 @@ class SovereignBot:
             self.logger.log('WARNING', 'SovereignBot', 'SENTIMENT_REFRESH_ERROR', str(e))
 
     def _get_deal_pnl(self, ticket: int) -> float | None:
+        info = self._get_deal_close_info(ticket)
+        return info['pnl'] if info else None
+
+    def _get_deal_close_info(self, ticket: int) -> dict | None:
+        """Get PnL, exit price, and exit time from MT5 deal history."""
         try:
             now = datetime.now(timezone.utc)
             start = now - timedelta(days=7)
@@ -548,7 +575,17 @@ class SovereignBot:
             if not pos_deals:
                 return None
             total_pnl = sum(d.profit + d.commission + d.swap for d in pos_deals)
-            return total_pnl
+
+            # Find closing deal (DEAL_ENTRY_OUT = 1) for exit price/time
+            exit_price = 0.0
+            exit_time = now.isoformat()
+            for d in pos_deals:
+                if hasattr(d, 'entry') and d.entry == 1:
+                    exit_price = d.price
+                    exit_time = datetime.fromtimestamp(d.time, tz=timezone.utc).isoformat()
+                    break
+
+            return {'pnl': total_pnl, 'exit_price': exit_price, 'exit_time': exit_time}
         except Exception:
             return None
 
@@ -950,6 +987,16 @@ class SovereignBot:
 
         try:
             if scan_once:
+                # Multi-TF symbols first (H4, M15, etc.)
+                mtf_found, mtf_executed = 0, 0
+                if getattr(self, 'multi_tf', None) and self.multi_tf._tf_groups:
+                    self.logger.log('INFO', 'SovereignBot', 'MTF_FORCE_SCAN',
+                                    'Force-scanning all multi-TF symbols...')
+                    mtf_found, mtf_executed = self.multi_tf.force_scan(mt5)
+                    self.logger.log('INFO', 'SovereignBot', 'MTF_FORCE_RESULT',
+                                    f'Multi-TF signals: {mtf_found}, Executed: {mtf_executed}')
+
+                # H1 symbols
                 self.logger.log('INFO', 'SovereignBot', 'H1_CHECK',
                                 f'Checking {h1_only_count} H1 symbols (scan-now)...')
                 found, executed, scanned = check_signals(
@@ -959,8 +1006,14 @@ class SovereignBot:
                 )
                 self.logger.log('INFO', 'SovereignBot', 'H1_RESULT',
                                 f'Signals: {found}, Executed: {executed}, Scanned: {scanned}')
-                if scanned == 0 and self.discord:
-                    # Only alarm if H1-only markets should be open (skip weekends/off-hours)
+
+                total_found = found + mtf_found
+                total_exec = executed + mtf_executed
+                if total_found > 0 or total_exec > 0:
+                    self.logger.log('INFO', 'SovereignBot', 'SCAN_NOW_TOTAL',
+                                    f'Total signals: {total_found}, Executed: {total_exec}')
+
+                if scanned == 0 and mtf_found == 0 and self.discord:
                     h1_syms = [s for s in cfg.SYMBOLS if s not in mtf_syms
                                and s in self.filters and self.filters[s].model is not None]
                     any_open = any(self.trading_schedule.is_trading_open(s)[0] for s in h1_syms)
@@ -1025,7 +1078,7 @@ class SovereignBot:
                         if self.ftmo:
                             self.ftmo.check_inactivity()
 
-                        # Multi-account: DD checks for all accounts
+                        # Multi-account: DD + floating profit checks for all accounts
                         for ma in self._active_accounts:
                             try:
                                 if ma.check_total_dd():
@@ -1035,6 +1088,7 @@ class SovereignBot:
                                     self._account_safe_mode(ma.account_id, 'total DD hard stop')
                                 if ma.ftmo:
                                     ma.ftmo.check_inactivity()
+                                # Floating profit close is handled by position_manager monitor loop
                             except Exception as e:
                                 self.logger.log('ERROR', 'SovereignBot', 'ACCT_DD_CHECK_ERROR',
                                                 f'[{ma.name}] {e}')
@@ -1221,6 +1275,15 @@ if __name__ == "__main__":
     if args.train:
         cfg.load()
         bot = SovereignBot(account_id=args.account_id)
+        # Apply account-specific path overrides (model_dir, config_path, etc.)
+        if bot._account_id and bot._account_id in bot.accounts:
+            acfg = bot.accounts[bot._account_id].account_cfg
+            if acfg.get("config_path"):
+                cfg.CONFIG_PATH = str(REPO_ROOT / acfg["config_path"])
+            if acfg.get("model_dir"):
+                cfg.MODEL_DIR = str(REPO_ROOT / acfg["model_dir"])
+            cfg.load()
+        bot._merge_account_symbols()
         bot.init_filters()
         bot.train_models(force=True)
         print("\nModel training complete.")

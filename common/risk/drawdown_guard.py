@@ -5,6 +5,8 @@ Extracted from guardrails in execute_trade() (Gebod 43, 48, 54).
 """
 from __future__ import annotations
 
+from datetime import datetime, timezone
+
 from config.loader import cfg
 
 
@@ -12,12 +14,15 @@ class DrawdownGuard:
     """Enforces daily loss limit, profit lock, and drawdown recovery.
 
     Supports parameterized thresholds for multi-account setups.
+    Uses daily_start_balance (persisted across restarts via audit DB)
+    to track true daily P&L including realized losses.
     """
 
     def __init__(self, logger, discord=None, account_name: str = "default",
                  daily_loss_pct: float = 0.035, profit_lock_pct: float = 0.03,
                  dd_recovery_threshold: float = 0.04, dd_recovery_exit: float = 0.01,
-                 profit_gate_pct: float = 0.015, profit_gate_min_conf: float = 0.90):
+                 profit_gate_pct: float = 0.015, profit_gate_min_conf: float = 0.90,
+                 daily_start_balance: float = 0):
         self.logger = logger
         self.discord = discord
         self.account_name = account_name
@@ -27,18 +32,40 @@ class DrawdownGuard:
         self.dd_recovery_exit = dd_recovery_exit
         self.profit_gate_pct = profit_gate_pct
         self.profit_gate_min_conf = profit_gate_min_conf
+        self.daily_start_balance = daily_start_balance
+        self._last_reset_date = datetime.now(timezone.utc).date()
         self._dd_recovery_mode = False
         self._daily_loss_warned = False
         self._profit_lock_warned = False
         self._profit_gate_warned = False
 
+    def _check_daily_reset(self, account_info):
+        """Reset daily tracking at UTC midnight."""
+        today = datetime.now(timezone.utc).date()
+        if today > self._last_reset_date:
+            self.daily_start_balance = account_info.balance
+            self._last_reset_date = today
+            self.reset_daily_flags()
+            self.logger.log('INFO', 'DrawdownGuard', 'DAILY_RESET',
+                            f'[{self.account_name}] Daily start balance reset to '
+                            f'${account_info.balance:,.2f}')
+
     def check_daily_limits(self, account_info) -> tuple[bool, str]:
-        """Check daily PnL limits. Returns (allowed, reason)."""
+        """Check daily PnL limits. Returns (allowed, reason).
+
+        Uses daily_start_balance (real day-start, survives restarts) instead
+        of current balance, so realized losses are correctly tracked.
+        """
         if account_info is None:
             return True, ""
 
-        base = account_info.balance if account_info.balance > 0 else cfg.ACCOUNT_SIZE
-        daily_pnl_pct = (account_info.equity - account_info.balance) / base
+        self._check_daily_reset(account_info)
+
+        # Use day-start balance for true daily P&L (realized + unrealized)
+        base = self.daily_start_balance if self.daily_start_balance > 0 else account_info.balance
+        if base <= 0:
+            return True, ""  # No valid balance — allow trading, don't crash
+        daily_pnl_pct = (account_info.equity - base) / base
         if daily_pnl_pct <= -self.daily_loss_pct:
             if self.discord and not self._daily_loss_warned:
                 self.discord.send(f"[{self.account_name}] DAILY LOSS LIMIT",
@@ -66,8 +93,10 @@ class DrawdownGuard:
         if account_info is None or self.profit_gate_pct <= 0:
             return True, ""
 
-        base = account_info.balance if account_info.balance > 0 else cfg.ACCOUNT_SIZE
-        daily_pnl_pct = (account_info.equity - account_info.balance) / base
+        base = self.daily_start_balance if self.daily_start_balance > 0 else account_info.balance
+        if base <= 0:
+            return True, ""
+        daily_pnl_pct = (account_info.equity - base) / base
 
         if daily_pnl_pct >= self.profit_gate_pct and ml_confidence < self.profit_gate_min_conf:
             if self.discord and not self._profit_gate_warned:
@@ -88,6 +117,8 @@ class DrawdownGuard:
             return False
 
         base = account_info.balance if account_info.balance > 0 else cfg.ACCOUNT_SIZE
+        if base <= 0:
+            return False
         dd_pct = (base - account_info.equity) / base
         if dd_pct >= self.dd_recovery_threshold:
             self._dd_recovery_mode = True
