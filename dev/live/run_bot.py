@@ -1190,9 +1190,10 @@ class SovereignBot:
             if scan_once:
                 self.logger.log('INFO', 'SovereignBot', 'FORCE_SCAN',
                                 'Force-scanning all symbols across all TFs...')
-                found, executed = self.multi_tf.force_scan(mt5)
+                force_signals = self.multi_tf.force_scan(mt5)
+                found = len(force_signals)
                 self.logger.log('INFO', 'SovereignBot', 'FORCE_SCAN_RESULT',
-                                f'Signals: {found}, Executed: {executed}')
+                                f'Signals: {found}')
 
                 if found == 0 and self.discord:
                     all_syms = list(self.multi_tf.symbols.keys())
@@ -1247,10 +1248,16 @@ class SovereignBot:
 
                         executed = 0
                         for acct_id, specs in order_specs.items():
+                            if self.emergency_stop:
+                                self.logger.log('WARNING', 'MasterGen', 'EMERGENCY_STOP',
+                                                'Aborting spec execution — emergency stop')
+                                break
                             acct = self.accounts.get(acct_id)
                             if not acct or not acct.order_router:
                                 continue
                             for spec in specs:
+                                if self.emergency_stop:
+                                    break
                                 if spec.dry_run:
                                     self.logger.log('INFO', 'MasterGen', 'DRY_RUN',
                                                     f'[{acct_id}] {spec.symbol} {spec.direction} '
@@ -1260,6 +1267,17 @@ class SovereignBot:
                                         ok = acct.order_router.execute_order_spec(spec)
                                         if ok:
                                             executed += 1
+                                            # Store RL context (F3) for trade closure feedback
+                                            if spec.features_dict:
+                                                if not hasattr(self, '_last_trade_context'):
+                                                    self._last_trade_context = {}
+                                                self._last_trade_context[spec.symbol] = {
+                                                    'rl_arm': getattr(acct.order_router, '_last_rl_arm', None),
+                                                    'risk_pct': getattr(acct.order_router, '_last_risk_pct', 0.003),
+                                                    'regime': int(spec.features_dict.get('regime', 0)),
+                                                    'volatility': float(spec.features_dict.get('vol20', 0.0)),
+                                                    'confidence': spec.ml_confidence,
+                                                }
                                     except Exception as e:
                                         self.logger.log('ERROR', 'MasterGen', 'EXEC_ERROR',
                                                         f'[{acct_id}] {spec.symbol}: {e}')

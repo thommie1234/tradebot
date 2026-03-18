@@ -703,12 +703,17 @@ class OrderRouter:
                             f'MT5 error for {spec.symbol}: {e}')
             return False
 
+        # GPU overheat guard — read from HeartbeatMonitor class variable
+        from live.healthcheck import HeartbeatMonitor
+        gpu_pause = HeartbeatMonitor.GPU_TRADING_PAUSE
+
         # Delegate to the full execute_trade() — it handles ALL order building,
         # position sizing, SL/TP, splitting, and sending. Strategy unchanged.
         return self.execute_trade(
             symbol=spec.symbol,
             direction=spec.direction,
             ml_confidence=spec.ml_confidence,
+            gpu_trading_pause=gpu_pause,
             features_dict=spec.features_dict,
             margin_budget=spec.margin_budget,
         )

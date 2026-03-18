@@ -277,9 +277,9 @@ class MasterOrderGenerator:
                 symbol, direction, our_positions, mt5):
             return 'USD correlatie limiet'
 
-        # Live trading env
-        if os.getenv("ENABLE_LIVE_TRADING", "0") != "1":
-            return 'live trading disabled'
+        # NOTE: ENABLE_LIVE_TRADING check is NOT done here — OrderSpec.dry_run
+        # handles the live/paper distinction. Pre-screening must generate specs
+        # for both live and paper/dry-run modes.
 
         # Trading hours
         is_open, mins_left = router.trading_schedule.is_trading_open(symbol)
