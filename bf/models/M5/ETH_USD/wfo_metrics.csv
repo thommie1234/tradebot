@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-ETH_USD,M5,2026,1,2025-2026,3066,516,0.4883720930232558,-2.3878799802788206,-4.197981083314689,-0.43332266757855287,0.6961441032737925,cuda,3.1695000274447054,3.0,9.169500027444705

@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-XLM_USD,M30,2026,1,2025-2026,547,244,0.4057377049180328,-2.725616006727249,-4.864991089813598,-0.5584382276907405,0.669406264750203,cuda,8.12237714904623,3.0,14.12237714904623

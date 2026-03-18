@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-EU50.cash,M30,2026,1,2024-2025,1234,219,0.4748858447488584,-2.423836288997391,-5.286293433950769,-0.15528140841545068,0.7128633597556702,cuda,3.0466131816796995,4.0,10.0466131816797

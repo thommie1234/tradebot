@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-EURNOK,M30,2026,1,2025-2026,156,59,0.5254237288135594,-2.0401299914682225,-4.5935532707188464,-0.052325667751892735,0.7435604163813027,cuda,0.0,5.0,8.0

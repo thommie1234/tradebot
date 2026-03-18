@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-USDCAD,H4,2026,1,2024-2025,198,47,0.40425531914893614,-7.88427906135571,-25.89528070881332,-0.0750554688161944,0.3470021872108855,cuda,0.44057715607408293,5.0,8.440577156074083

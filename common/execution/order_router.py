@@ -646,6 +646,20 @@ class OrderRouter:
                     account=self.account_name,
                 )
 
+            # Write copy signal for trade copier
+            try:
+                from tools.trade_copier import write_signal
+                write_signal(
+                    account_id=self.account_name,
+                    symbol=symbol, direction=direction,
+                    entry_price=fill_price, lot_size=chunk_vol,
+                    sl_price=sl_price, tp_price=tp_price,
+                    ticket=result.order, magic=magic,
+                    confidence=ml_confidence, atr=atr,
+                )
+            except Exception:
+                pass  # Don't let copier errors break trading
+
         if filled_count == 0:
             return False
 

@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-NZDUSD,H1,2026,1,2024-2025,878,134,0.40298507462686567,-7.152627104330603,-16.83007924699902,-0.16797585028034667,0.3747999099952146,cuda,1.3724716498819503,5.0,9.37247164988195

@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-EURCHF,H4,2026,1,2024-2025,185,33,0.3939393939393939,-8.927281495749877,-34.506169164369986,-0.03948793856557342,0.29810629201788735,cuda,0.96137925877696,5.0,8.96137925877696

@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-NZDJPY,M15,2026,1,2024-2025,3515,29,0.41379310344827586,-6.4289038831304435,-15.71457760720109,-0.03233230202852466,0.4125966153065981,cuda,1.5279839343398887,5.0,9.52798393433989

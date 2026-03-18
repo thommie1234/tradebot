@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-AUDCHF,M15,2026,1,2024-2025,3479,26,0.3076923076923077,-14.689668010531667,-26.141044272513213,-0.054921877093021765,0.10996488839785284,cuda,1.5879037024607827,5.0,9.587903702460782

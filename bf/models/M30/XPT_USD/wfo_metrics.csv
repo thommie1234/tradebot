@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-XPT_USD,M30,2026,1,2024-2025,1628,415,0.4771084337349398,-1.9234016661514814,-4.139613860000891,-0.6752173918450427,0.7492451477715583,cuda,27.277707216216875,3.0,33.277707216216875

@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-AUDJPY,M30,2026,1,2024-2025,1737,135,0.43703703703703706,-6.437822304420294,-16.549269574550244,-0.13876446767719108,0.4157097893971772,cuda,1.2257530720436831,5.0,9.225753072043684

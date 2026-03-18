@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-XAU_USD,M30,2026,1,2024-2025,1676,214,0.514018691588785,-0.05856891766778906,-0.11703129067804936,-0.09207094425058149,0.9913119989588394,cuda,0.8031979635849144,3.0,6.803197963584914

@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-AUDUSD,H4,2026,1,2024-2025,193,104,0.36538461538461536,-4.369210593406519,-12.228339929620292,-0.183862849967245,0.5598443838965623,cuda,0.6281209760988817,5.0,8.62812097609888

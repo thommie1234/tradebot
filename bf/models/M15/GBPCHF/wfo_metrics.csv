@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-GBPCHF,M15,2026,1,2024-2025,3408,7,0.2857142857142857,-10.977018175464858,-20.1940876849017,-0.010971392657067924,0.19359168264967244,cuda,1.2606252701342475,5.0,9.260625270134248

@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-USDSEK,M15,2026,1,2024-2025,3423,9,0.2222222222222222,-12.157468029296767,-24.98020240453653,-0.013379700324249844,0.1941258953521576,cuda,5.287807479819089,5.0,13.28780747981909

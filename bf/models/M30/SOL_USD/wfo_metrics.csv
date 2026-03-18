@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-SOL_USD,M30,2026,1,2025-2026,525,268,0.44029850746268656,-2.3199703456814205,-3.2673854822582413,-0.559795042030261,0.6907178272587665,cuda,3.6318879764332204,3.0,9.63188797643322

@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-GBPNZD,M15,2026,1,2024-2025,3495,21,0.38095238095238093,-10.297088343824965,-22.73314783410447,-0.02068965551327917,0.22916801769682202,cuda,1.0217018766790271,5.0,9.021701876679028

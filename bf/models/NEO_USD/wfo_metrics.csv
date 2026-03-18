@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-NEO_USD,H1,2026,1,2025-2026,252,62,0.6129032258064516,2.0057419114560875,5.487357687182655,-0.18032658584795802,1.3132110661664274,cuda,47.6190476190466,3.0,53.6190476190466

@@ -56,10 +56,45 @@ common/tools/telegram_session.*
 # Backups
 common_backup_*/
 
+# Dev copy
+dev/
+
+# Build artifacts
+build/
+dist/
+*.spec
+
+# ML Models (IP)
+bf/models/
+ftmo/models/
+ttp/models/
+**/models/*.json
+**/models/*.zip
+**/models/**/*.csv
+
+# Optuna results (IP)
+bf/optuna/
+ftmo/optuna/
+ttp/optuna/
+
+# Trade configs with strategy params (IP)
+bf/config.json
+ftmo/config.json
+ttp/config.json
+*.config.json.bak*
+
+# Telegram API credentials
+common/tools/telegram_signals.py
+common/tools/telegram_backtest.py
+
 # DB artifacts
 *.db-shm
 *.db-wal
 *.db.bak*
+*.db-journal
+
+# Trade signals
+trade_signals/
 
 # Misc
 *.log

@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-DASH_USD,H1,2026,1,2025-2026,262,135,0.3333333333333333,-6.622206721890494,-14.703970197743589,-0.8963623241482535,0.41054892566364265,cuda,22.164758034725626,3.0,28.164758034725626

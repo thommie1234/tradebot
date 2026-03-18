@@ -28,13 +28,22 @@ start "BF Paper" cmd /k "cd /d C:\tradebots && call .venv\Scripts\activate.bat &
 echo [6/7] Starting FTMO Paper Bot...
 start "FTMO Paper" cmd /k "cd /d C:\tradebots && call .venv\Scripts\activate.bat && set "PYTHONUNBUFFERED=1" && set "MT5_MODULE=MetaTrader5_FTMO" && python -u common\live\paper_bot.py --account-id ftmo_100k"
 
-echo [7/7] Starting PredMarket Scheduler...
+echo [7/8] Starting PredMarket Scheduler...
 start "PredMarket" cmd /k "cd /d C:\predmarket && call .venv\Scripts\activate.bat && set PYTHONUNBUFFERED=1 && python scheduler.py"
+
+echo [8/10] Starting Telegram Signal Scraper (FTMO)...
+start "Telegram Signals" cmd /k "cd /d C:\tradebots && call .venv\Scripts\activate.bat && set "PYTHONUNBUFFERED=1" && set "MT5_MODULE=MetaTrader5_FTMO" && python -u common\tools\telegram_signals.py"
+
+echo [9/10] Starting Trade Copier (BF - copies FTMO trades)...
+start "Copier BF" cmd /k "cd /d C:\tradebots && call .venv\Scripts\activate.bat && set "PYTHONUNBUFFERED=1" && python -u common\tools\trade_copier.py --account bright_100k"
+
+echo [10/10] Starting Trade Copier (FTMO - copies BF trades)...
+start "Copier FTMO" cmd /k "cd /d C:\tradebots && call .venv\Scripts\activate.bat && set "PYTHONUNBUFFERED=1" && set "MT5_MODULE=MetaTrader5_FTMO" && python -u common\tools\trade_copier.py --account ftmo_100k"
 
 echo.
 echo ============================================
 echo   All systems started!
-echo   2 MT5 Terminals + 4 Bots + PredMarket
+echo   2 MT5 Terminals + 4 Bots + PredMarket + Telegram + 2 Copiers
 echo ============================================
 echo.
 pause

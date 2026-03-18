@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-CHFJPY,M30,2026,1,2024-2025,1736,21,0.3333333333333333,-5.7619556242919625,-13.191942016411444,-0.029696010374002046,0.4542802758956584,cuda,1.1206761806179324,5.0,9.120676180617933

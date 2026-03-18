@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-XAG_USD,M30,2026,1,2024-2025,1636,395,0.49873417721518987,0.6318218785646265,1.2739453053288836,-0.34251071334088923,1.1038284338085111,cuda,5.597188967318848,3.0,11.597188967318848

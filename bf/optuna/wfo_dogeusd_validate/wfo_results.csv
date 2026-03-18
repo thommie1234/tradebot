@@ -1,2 +1,0 @@
-symbol,status,cluster,session,timeframe,prob_threshold,n_folds,n_trades,total_return,max_dd,dd_pct,sharpe,calmar,profit_factor,win_rate,wins,losses,avg_bars_held,ftmo_ok,risk_pct,fee_bps,spread_bps,slippage_bps,cost_pct,sl,tp,be,trail_act,trail_dist,horizon,pct_sl,pct_tp,pct_be,pct_trail,pct_horizon,account_id
-DOGEUSD,ok,crypto,crypto,H4,0.55,24,112,3930.54,9589.23,9.59,0.29,0.41,1.07,31.2,35,77,18.8,true,0.89,3.0,24.01,3.0,0.3301,2.748268600745841,9.385290196400852,1.6890735849870233,4.116342931416326,2.218075984152086,47,45.5,4.5,21.4,17.0,11.6,bright_100k

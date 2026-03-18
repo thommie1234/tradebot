@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-USDCAD,M30,2026,1,2024-2025,1735,16,0.5,-6.556270642373414,-44.0708877122036,-0.022866602014370185,0.3940881721287419,cuda,0.44057715607408293,5.0,8.440577156074083

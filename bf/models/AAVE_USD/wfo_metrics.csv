@@ -1,2 +1,0 @@
-symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
-AAVE_USD,H1,2026,1,2025-2026,237,156,0.3974358974358974,-2.1777946052145403,-5.752299734845958,-0.5593761150201866,0.7407418041328345,cuda,5.141279524363123,3.0,11.141279524363123
