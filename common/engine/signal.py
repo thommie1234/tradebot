@@ -5,14 +5,71 @@ Extracted from SovereignBot.get_h1_features() + check_signals().
 """
 from __future__ import annotations
 
+import json
 import os
 import time
 from datetime import datetime, timezone
+from pathlib import Path
 
 import numpy as np
 
 from config.loader import cfg
 from engine.inference import _ensure_ml_imports
+
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+CROSS_SYNC_DIR = REPO_ROOT / "common" / "config" / "cross_sync"
+CROSS_SYNC_MAX_AGE_SEC = 3900  # 65 min — signals expire after one H1 window
+
+
+# ---------------------------------------------------------------------------
+# Cross-account signal sync (file-based IPC)
+# ---------------------------------------------------------------------------
+
+def _write_cross_sync_signal(account_id: str, symbol: str, sig: dict) -> None:
+    """Write a signal file so the other account's process can pick it up."""
+    CROSS_SYNC_DIR.mkdir(parents=True, exist_ok=True)
+    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+    path = CROSS_SYNC_DIR / f"{account_id}_{symbol}_{ts}.json"
+    payload = {
+        "source_account": account_id,
+        "symbol": symbol,
+        "direction": sig["direction"],
+        "confidence": sig["confidence"],
+        "features_dict": sig.get("features_dict", {}),
+        "primary_side": sig.get("primary_side", 0),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+    }
+    path.write_text(json.dumps(payload))
+
+
+def _read_cross_sync_signals(my_account_id: str) -> list[dict]:
+    """Read signal files from OTHER accounts, return list of signals."""
+    if not CROSS_SYNC_DIR.exists():
+        return []
+    now = time.time()
+    signals = []
+    for path in CROSS_SYNC_DIR.glob("*.json"):
+        try:
+            age = now - path.stat().st_mtime
+            if age > CROSS_SYNC_MAX_AGE_SEC:
+                path.unlink(missing_ok=True)  # expired
+                continue
+            data = json.loads(path.read_text())
+            if data.get("source_account") == my_account_id:
+                continue  # our own signal, skip
+            data["_path"] = str(path)
+            signals.append(data)
+        except Exception:
+            continue
+    return signals
+
+
+def _cleanup_cross_sync_signal(path_str: str) -> None:
+    """Remove a processed signal file."""
+    try:
+        Path(path_str).unlink(missing_ok=True)
+    except Exception:
+        pass
 
 
 # ---------------------------------------------------------------------------
@@ -20,11 +77,12 @@ from engine.inference import _ensure_ml_imports
 # ---------------------------------------------------------------------------
 
 class ScanCache:
-    """Pre-loads tick parquets and lead-lag data so the :00 scan is fast."""
+    """Pre-loads tick parquets, lead-lag data, and bars so the :00 scan is fast."""
 
     def __init__(self):
         self.tick_data: dict = {}      # symbol → DataFrame | None
         self.lead_lag: dict = {}       # symbol → {leader_ret1, leader_ret3, leader_momentum}
+        self.bars: dict = {}           # (symbol, tf) → list[dict] (raw rates from MT5)
         self.timestamp: float = 0      # epoch when cache was filled
         self._loading: bool = False
 
@@ -32,13 +90,19 @@ class ScanCache:
         """True if cache was filled within *max_age_seconds*."""
         return (time.time() - self.timestamp) < max_age_seconds
 
-    def preload(self, symbols: list[str], mt5, logger) -> None:
-        """Load tick data + lead-lag for all *symbols*.  ~6-8 s one-off."""
+    def preload(self, symbols: list[str], mt5, logger,
+                tf_map: dict[str, str] | None = None) -> None:
+        """Load tick data + lead-lag + bars for all *symbols*.
+
+        tf_map: optional {symbol: timeframe_name} to preload bars on correct TF.
+        """
         self._loading = True
         t0 = time.time()
 
         # 1) Tick data from disk (the most expensive operation)
         for sym in symbols:
+            if sym in self.tick_data:
+                continue
             try:
                 self.tick_data[sym] = _load_recent_ticks(sym, logger)
             except Exception:
@@ -47,16 +111,44 @@ class ScanCache:
         # 2) Lead-lag features (many MT5 bridge calls)
         from engine.lead_lag import build_lead_lag_features
         for sym in symbols:
+            if sym in self.lead_lag:
+                continue
             try:
                 self.lead_lag[sym] = build_lead_lag_features(sym, mt5, logger) or {}
             except Exception:
                 self.lead_lag[sym] = {}
 
+        # 3) Pre-fetch bars from MT5 so scan only needs 1 fresh bar
+        if tf_map:
+            TF_MINUTES = {"M5": 5, "M15": 15, "M30": 30, "H1": 60, "H4": 240}
+            TF_ATTRS = {"M5": "TIMEFRAME_M5", "M15": "TIMEFRAME_M15",
+                        "M30": "TIMEFRAME_M30", "H1": "TIMEFRAME_H1", "H4": "TIMEFRAME_H4"}
+            for sym in symbols:
+                tf_name = tf_map.get(sym)
+                if not tf_name or tf_name not in TF_ATTRS:
+                    continue
+                key = (sym, tf_name)
+                if key in self.bars:
+                    continue
+                mt5_tf = getattr(mt5, TF_ATTRS[tf_name], None)
+                if mt5_tf is None:
+                    continue
+                minutes = TF_MINUTES[tf_name]
+                bars_needed = max(200, int(200 * 60 / minutes))
+                broker_sym = cfg.SYMBOLS.get(sym, {}).get("broker_symbol", sym)
+                try:
+                    rates = mt5.copy_rates_from_pos(broker_sym, mt5_tf, 0, bars_needed)
+                    if rates and len(rates) >= 100:
+                        self.bars[key] = rates
+                except Exception:
+                    pass
+
         self.timestamp = time.time()
         self._loading = False
         ms = (time.time() - t0) * 1000
+        bars_count = sum(1 for k in self.bars if k[0] in symbols)
         logger.log('INFO', 'ScanCache', 'PRELOADED',
-                    f'{len(symbols)} symbols in {ms:.0f}ms')
+                    f'{len(symbols)} symbols in {ms:.0f}ms (bars: {bars_count})')
 
     def clear(self) -> None:
         self.tick_data.clear()
@@ -98,11 +190,16 @@ def _load_recent_ticks(symbol: str, logger):
     return None
 
 
-def get_h1_features(symbol: str, mt5, logger, cache: ScanCache | None = None):
+def get_h1_features(symbol: str, mt5, logger, cache: ScanCache | None = None,
+                    broker_symbol: str | None = None):
     """Fetch H1 bars from MT5 and build features.
 
     When *cache* is warm, tick data and lead-lag features are read from it
     instead of hitting disk / MT5 again (preloaded at :58).
+
+    Args:
+        broker_symbol: Override broker symbol resolution (for paper-only symbols
+                       not in cfg.SYMBOLS).
 
     Returns (features_np, primary_side) or (None, None).
     """
@@ -112,8 +209,11 @@ def get_h1_features(symbol: str, mt5, logger, cache: ScanCache | None = None):
     _ensure_ml_imports()
     from engine.inference import pl, build_bar_features, FEATURE_COLUMNS  # noqa: F811
 
+    # Resolve broker symbol (e.g. BTC_USD → BTC/USD)
+    broker_sym = broker_symbol or cfg.SYMBOLS.get(symbol, {}).get("broker_symbol", symbol)
+
     # Need 200 bars for rolling windows (vol20, ret48, etc.)
-    rates = mt5.copy_rates_from_pos(symbol, mt5.TIMEFRAME_H1, 0, 200)
+    rates = mt5.copy_rates_from_pos(broker_sym, mt5.TIMEFRAME_H1, 0, 200)
     if rates is None or len(rates) < 100:
         logger.log('WARNING', 'Signal', 'INSUFFICIENT_BARS',
                     f'{symbol}: only got {len(rates) if rates is not None else 0} bars')
@@ -177,6 +277,61 @@ def get_h1_features(symbol: str, mt5, logger, cache: ScanCache | None = None):
     if not np.all(np.isfinite(features_np)):
         logger.log('WARNING', 'Signal', 'NAN_FEATURES',
                     f'{symbol}: features contain NaN/Inf')
+        return None, None
+
+    primary_side = int(last_row["primary_side"][0])
+    return features_np, primary_side
+
+
+_TF_ATTR = {
+    "M1": "TIMEFRAME_M1", "M5": "TIMEFRAME_M5", "M15": "TIMEFRAME_M15",
+    "M30": "TIMEFRAME_M30", "H1": "TIMEFRAME_H1", "H4": "TIMEFRAME_H4",
+}
+
+
+def get_tf_features(symbol: str, mt5, logger, timeframe: str = "H1",
+                    broker_symbol: str | None = None):
+    """Fetch bars for any timeframe from MT5 and build features.
+
+    Same as get_h1_features() but for arbitrary timeframes.
+    Returns (features_np, primary_side) or (None, None).
+    """
+    if mt5 is None:
+        return None, None
+
+    _ensure_ml_imports()
+    from engine.inference import pl, build_bar_features, FEATURE_COLUMNS
+
+    broker_sym = broker_symbol or cfg.SYMBOLS.get(symbol, {}).get("broker_symbol", symbol)
+    mt5_tf = getattr(mt5, _TF_ATTR.get(timeframe, "TIMEFRAME_H1"))
+
+    rates = mt5.copy_rates_from_pos(broker_sym, mt5_tf, 0, 200)
+    if rates is None or len(rates) < 100:
+        return None, None
+
+    bars = pl.DataFrame({
+        "time": [datetime.fromtimestamp(int(r['time']), tz=timezone.utc) for r in rates],
+        "open": [float(r['open']) for r in rates],
+        "high": [float(r['high']) for r in rates],
+        "low": [float(r['low']) for r in rates],
+        "close": [float(r['close']) for r in rates],
+        "volume": [float(r['tick_volume']) for r in rates],
+    }).with_columns(
+        pl.col("time").cast(pl.Datetime("us", "UTC"))
+    )
+
+    try:
+        feat = build_bar_features(bars, z_threshold=0.0)
+    except Exception:
+        return None, None
+
+    if feat.height < 2:
+        return None, None
+
+    last_row = feat.tail(1)
+    features_np = last_row.select(FEATURE_COLUMNS).to_numpy()
+
+    if not np.all(np.isfinite(features_np)):
         return None, None
 
     primary_side = int(last_row["primary_side"][0])
@@ -329,6 +484,14 @@ def check_signals(engine, filters, decay_tracker, trading_schedule,
                 should_trade, confidence, direction, features_dict, sent_boost = \
                     _run_inference(symbol, filt, features_np, primary_side)
 
+                # Paper trackers: feed EVERY signal (even blocked ones)
+                for pt in getattr(engine, 'paper_trackers', []):
+                    try:
+                        pt.on_signal(symbol, direction, confidence, features_dict, mt5)
+                    except Exception as _pt_err:
+                        engine.logger.log('ERROR', 'PaperTracker', 'SIGNAL_ERROR',
+                                          f'{symbol}: {_pt_err}')
+
                 if not should_trade or direction is None:
                     sent_info = f" sent={sent_boost:+.3f}" if sent_boost != 0 else ""
                     engine.logger.log('DEBUG', 'Signal', 'NO_SIGNAL',
@@ -377,6 +540,8 @@ def check_signals(engine, filters, decay_tracker, trading_schedule,
                             feature_logger.log_trade_features(
                                 sig['symbol'], sig['direction'], sig['confidence'],
                                 sig['features_dict'], status="EXECUTED")
+                            # Write cross-sync signal file for other accounts
+                            _write_cross_sync_signal(acct.account_id, sig['symbol'], sig)
                         scan_results.append({
                             "symbol": sig['symbol'], "proba": sig['confidence'],
                             "side": sig['primary_side'],
@@ -387,6 +552,61 @@ def check_signals(engine, filters, decay_tracker, trading_schedule,
                             "rsi14": sig['features_dict'].get("rsi14", 0),
                             "vol20": sig['features_dict'].get("vol20", 0),
                         })
+        # --- Cross-account sync (file-based IPC) ---
+        # Each bot runs as a separate process with one account.
+        # Check for signal files written by other accounts and execute them.
+        for acct in active_accounts:
+            pending = _read_cross_sync_signals(acct.account_id)
+            if not pending:
+                continue
+            for sig_data in pending:
+                symbol = sig_data.get("symbol", "")
+                direction = sig_data.get("direction", "")
+                confidence = sig_data.get("confidence", 0)
+                source = sig_data.get("source_account", "?")
+
+                # Only sync symbols in this account's portfolio
+                if symbol not in acct._internal_to_broker:
+                    _cleanup_cross_sync_signal(sig_data["_path"])
+                    continue
+
+                # Skip if we already have a position in this symbol
+                existing = acct.mt5.positions_get() if acct.mt5 else []
+                broker_sym = acct._internal_to_broker[symbol]
+                if existing and any(p.symbol == broker_sym for p in existing):
+                    engine.logger.log('DEBUG', 'Signal', 'CROSS_SYNC_SKIP',
+                        f'[{acct.name}] {symbol} already in market, skip sync from {source}')
+                    _cleanup_cross_sync_signal(sig_data["_path"])
+                    continue
+
+                engine.logger.log('INFO', 'Signal', 'CROSS_SYNC',
+                    f'[{acct.name}] Syncing {symbol} {direction} '
+                    f'from {source} (conf={confidence:.3f})')
+
+                acct_info = acct.mt5.account_info() if acct.mt5 else None
+                budget = acct_info.margin_free * 0.45 if acct_info else None
+
+                success = acct.execute_trade(
+                    symbol, direction, confidence,
+                    features_dict=sig_data.get("features_dict"),
+                    margin_budget=budget,
+                )
+                if success:
+                    signals_executed += 1
+                    engine.logger.log('INFO', 'Signal', 'CROSS_SYNC_OK',
+                        f'[{acct.name}] {symbol} {direction} synced from {source}')
+                    scan_results.append({
+                        "symbol": symbol, "proba": confidence,
+                        "side": sig_data.get("primary_side", 0),
+                        "direction": direction,
+                        "status": "EXECUTED",
+                        "reason": f"[{acct.name}] cross-sync from {source}",
+                    })
+                else:
+                    engine.logger.log('INFO', 'Signal', 'CROSS_SYNC_BLOCKED',
+                        f'[{acct.name}] {symbol} sync blocked by guardrails')
+                _cleanup_cross_sync_signal(sig_data["_path"])
+
     else:
         # --- Fallback: shared filters (backwards compat / single-account) ---
         actionable_signals = []
@@ -396,6 +616,14 @@ def check_signals(engine, filters, decay_tracker, trading_schedule,
             sym_threshold = cfg.SYMBOLS.get(symbol, {}).get("prob_threshold", cfg.ML_THRESHOLD)
             should_trade, confidence, direction, features_dict, sent_boost = \
                 _run_inference(symbol, filt, features_np, primary_side)
+
+            # Paper trackers: feed EVERY signal (even blocked ones)
+            for pt in getattr(engine, 'paper_trackers', []):
+                try:
+                    pt.on_signal(symbol, direction, confidence, features_dict, mt5)
+                except Exception as _pt_err:
+                    engine.logger.log('ERROR', 'PaperTracker', 'SIGNAL_ERROR',
+                                      f'{symbol}: {_pt_err}')
 
             if not should_trade or direction is None:
                 sent_info = f" sent={sent_boost:+.3f}" if sent_boost != 0 else ""

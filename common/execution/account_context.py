@@ -39,7 +39,7 @@ from risk.correlation_guard import CorrelationGuard
 from risk.drawdown_guard import DrawdownGuard
 from risk.position_sizing import PositionSizingEngine
 from tools.ftmo_compliance import FTMOCompliance
-from tools.mt5_bridge import MT5BridgeClient, get_mt5_bridge, initialize_mt5
+from tools.mt5_bridge import mt5 as _mt5, initialize_mt5
 
 
 class AccountContext:
@@ -50,7 +50,8 @@ class AccountContext:
         self.account_cfg = account_cfg
         self.name = account_cfg.get("name", account_id)
         self.enabled = account_cfg.get("enabled", False)
-        self.bridge_port = account_cfg.get("bridge_port", 5055)
+        self.bridge_port = account_cfg.get("bridge_port", 5055)  # Legacy, unused
+        self.terminal_path = account_cfg.get("terminal_path")
         self.account_size = account_cfg.get("account_size", 100000)
         self.risk_scale = account_cfg.get("risk_scale", 1.0)
         self.max_positions = account_cfg.get("max_positions", 12)
@@ -61,18 +62,18 @@ class AccountContext:
         # Per-account symbol configs (keyed by broker symbol name)
         self.symbols: dict = {}
         self.margin_leverage: dict = {}  # Stored separately from symbols
-        self._internal_to_broker: dict[str, str] = {}  # e.g. UNIUSD → UNI/USD
-        self._broker_to_internal: dict[str, str] = {}  # e.g. UNI/USD → UNIUSD
+        self._internal_to_broker: dict[str, str] = {}  # e.g. UNIUSD -> UNI/USD
+        self._broker_to_internal: dict[str, str] = {}  # e.g. UNI/USD -> UNIUSD
         self._load_symbols(account_cfg.get("config_path"))
 
         # Per-account ML models + Optuna params
         self.model_dir: str = str(REPO_ROOT / account_cfg.get("model_dir", "models/sovereign_models"))
         self.optuna_csv: str = str(REPO_ROOT / account_cfg.get("optuna_csv", ""))
         self.optuna_params: dict = {}
-        self.filters: dict = {}  # symbol → SovereignMLFilter
+        self.filters: dict = {}  # symbol -> SovereignMLFilter
 
         # These are initialized in initialize()
-        self.mt5: MT5BridgeClient | None = None
+        self.mt5 = None  # Set to MetaTrader5 module after init
         self.logger: BlackoutLogger | None = None
         self.ftmo: FTMOCompliance | None = None
         self.drawdown_guard: DrawdownGuard | None = None
@@ -99,6 +100,10 @@ class AccountContext:
             if sym == "margin_leverage":
                 self.margin_leverage = sym_cfg  # Store separately, NOT in symbols
                 continue
+            if not isinstance(sym_cfg, dict):
+                continue  # Skip non-symbol entries (_comment, etc.)
+            if not sym_cfg.get("enabled", True):
+                continue  # Skip disabled symbols
             broker_sym = sym_cfg.get("broker_symbol", sym)
             self.symbols[broker_sym] = sym_cfg
             self._internal_to_broker[sym] = broker_sym
@@ -189,14 +194,26 @@ class AccountContext:
         audit_db = os.path.join(str(REPO_ROOT), acfg.get("audit_db", f"audit/{self.account_id}.db"))
         self.logger = BlackoutLogger(db_path=audit_db)
 
-        # 2. MT5 bridge connection
-        self.mt5 = get_mt5_bridge(port=self.bridge_port, name=self.account_id)
-
-        ok, mt5_error, mode = initialize_mt5(self.mt5)
+        # 2. MT5 connection (native API — singleton per process)
+        # Check if MT5 is already connected (e.g. from run_bot.py first init)
+        import time as _time
+        ok = False
+        if _mt5.terminal_info() is not None:
+            ok = True  # Already connected, skip re-init
+        else:
+            _max_retries = 12  # 12 x 10s = 2 minutes max wait
+            for _attempt in range(1, _max_retries + 1):
+                ok, mt5_error, mode = initialize_mt5(terminal_path=self.terminal_path)
+                if ok:
+                    break
+                self.logger.log('WARN', 'AccountContext', 'MT5_INIT_RETRY',
+                                f'[{self.name}] MT5 init attempt {_attempt}/{_max_retries} failed: {mt5_error} — retrying in 10s')
+                _time.sleep(10)
         if not ok:
             self.logger.log('ERROR', 'AccountContext', 'MT5_INIT_FAILED',
-                            f'[{self.name}] MT5 init failed on port {self.bridge_port}: {mt5_error}')
+                            f'[{self.name}] MT5 init failed (terminal: {self.terminal_path})')
             return False
+        self.mt5 = _mt5  # Native MetaTrader5 module
 
         account_info = self.mt5.account_info()
         if account_info:
@@ -204,7 +221,7 @@ class AccountContext:
                             f'[{self.name}] Account {account_info.login} | '
                             f'Balance ${account_info.balance:,.2f} | '
                             f'Equity ${account_info.equity:,.2f} | '
-                            f'Port {self.bridge_port}')
+                            f'Terminal: {self.terminal_path or "default"}')
             initial_balance = account_info.balance
         else:
             initial_balance = self.account_size
@@ -228,6 +245,7 @@ class AccountContext:
             max_total_dd_pct=acfg.get("max_total_dd_pct", 0.10),
             total_dd_warning_pct=acfg.get("total_dd_warning_pct", 0.08),
             dd_type=acfg.get("dd_type", "trailing"),
+            news_blackout_enabled=acfg.get("news_blackout_enabled", True),
         )
         self.ftmo.load_last_trade_time(audit_db)
 
@@ -239,9 +257,11 @@ class AccountContext:
             profit_lock_pct=acfg.get("internal_profit_lock_pct", 0.03),
             dd_recovery_threshold=acfg.get("dd_recovery_threshold", 0.04),
             dd_recovery_exit=acfg.get("dd_recovery_exit", 0.01),
-            profit_gate_pct=acfg.get("profit_gate_pct", 0.015),
+            profit_gate_pct=acfg.get("profit_gate_pct", 0.02),
             profit_gate_min_conf=acfg.get("profit_gate_min_conf", 0.80),
             daily_start_balance=daily_start,
+            profit_trail_activate_pct=acfg.get("profit_trail_activate_pct", 0.0205),
+            profit_trail_buffer_pct=acfg.get("profit_trail_buffer_pct", 0.0005),
         )
 
         # 5. Correlation guard (per account — checks this account's positions)
@@ -278,6 +298,7 @@ class AccountContext:
         self.position_manager._profit_hard_pct   = acfg.get("floating_profit_hard_pct", 0)
         self.position_manager._profit_tighten_pct = acfg.get("floating_profit_tighten_pct", 0)
         self.position_manager._account_size      = self.account_size
+        self.position_manager._drawdown_guard    = self.drawdown_guard
 
         def _on_profit_close(floating: float, hard: bool):
             profit_close_all(self.logger, self.mt5, floating,
@@ -312,7 +333,7 @@ class AccountContext:
 
         self.logger.log('INFO', 'AccountContext', 'ACCOUNT_READY',
                         f'[{self.name}] All components initialized | '
-                        f'Port {self.bridge_port} | Risk scale {self.risk_scale}x')
+                        f'Terminal: {self.terminal_path or "default"} | Risk scale {self.risk_scale}x')
         return True
 
     def execute_trade(self, symbol: str, direction: str, ml_confidence: float,
@@ -375,13 +396,13 @@ class AccountContext:
 
     def __repr__(self):
         status = "enabled" if self.enabled else "disabled"
-        return f"AccountContext({self.name}, port={self.bridge_port}, {status})"
+        return f"AccountContext({self.name}, terminal={self.terminal_path or 'default'}, {status})"
 
 
 def load_accounts(discord=None) -> dict[str, AccountContext]:
     """Load account configurations from config/accounts.yaml.
 
-    Returns dict of account_id → AccountContext (not yet initialized).
+    Returns dict of account_id -> AccountContext (not yet initialized).
     Falls back to a single default account from ftmo.yaml if accounts.yaml doesn't exist.
     """
     import yaml
@@ -408,6 +429,7 @@ def load_accounts(discord=None) -> dict[str, AccountContext]:
         "name": "FTMO (default)",
         "enabled": True,
         "bridge_port": int(os.getenv("MT5_BRIDGE_PORT", "5055")),
+        "terminal_path": os.getenv("MT5_TERMINAL_PATH", r"C:\MT5\FTMO\terminal64.exe"),
         "account_size": ftmo_cfg.get("account_size", 100000),
         "max_daily_loss_pct": ftmo_cfg.get("max_daily_loss_pct", 0.05),
         "max_total_dd_pct": ftmo_cfg.get("max_total_loss_pct", 0.10),

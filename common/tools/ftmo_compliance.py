@@ -51,12 +51,17 @@ class FTMOCompliance:
     Supports parameterized limits for multi-account setups (FTMO, BrightFunded, etc.).
     """
 
+    # Class-level: track which accounts already logged LAST_TRADE_LOADED
+    # (survives instance recreation on bot restart within same process)
+    _last_trade_logged_accounts: set[str] = set()
+
     def __init__(self, initial_balance: float, logger=None, discord=None,
                  account_name: str = "default",
                  max_daily_loss_pct: float | None = None,
                  max_total_dd_pct: float | None = None,
                  total_dd_warning_pct: float | None = None,
-                 dd_type: str = "trailing"):
+                 dd_type: str = "trailing",
+                 news_blackout_enabled: bool = True):
         self.initial_balance = initial_balance
         self.logger = logger
         self.discord = discord
@@ -85,6 +90,7 @@ class FTMOCompliance:
         self._inactivity_warned = False
 
         # News filter
+        self.news_blackout_enabled = news_blackout_enabled
         self._news_events: list[dict] = []
         self._news_last_refresh: float = 0
         self._news_lock = threading.Lock()
@@ -285,6 +291,8 @@ class FTMOCompliance:
         Returns (is_blocked, reason).
         True = trading blocked due to news event proximity.
         """
+        if not self.news_blackout_enabled:
+            return False, ""
         self.refresh_news_calendar()
 
         now_ts = time.time()
@@ -401,7 +409,9 @@ class FTMOCompliance:
         return False, int(days_inactive)
 
     def load_last_trade_time(self, audit_db_path: str):
-        """Load the last trade timestamp from audit database."""
+        """Load the last trade timestamp from audit database. Logs only once per account."""
+        log_key = f"{self.account_name}:{audit_db_path}"
+        already_logged = log_key in FTMOCompliance._last_trade_logged_accounts
         try:
             conn = sqlite3.connect(audit_db_path)
             row = conn.execute(
@@ -413,9 +423,11 @@ class FTMOCompliance:
                 if last_ts.tzinfo is None:
                     last_ts = last_ts.replace(tzinfo=timezone.utc)
                 self._last_trade_time = last_ts.timestamp()
-                days_ago = (time.time() - self._last_trade_time) / 86400
-                self._log('INFO', 'LAST_TRADE_LOADED',
-                          f'Last trade: {days_ago:.1f} days ago')
+                if not already_logged:
+                    days_ago = (time.time() - self._last_trade_time) / 86400
+                    self._log('INFO', 'LAST_TRADE_LOADED',
+                              f'Last trade: {days_ago:.1f} days ago')
+                    FTMOCompliance._last_trade_logged_accounts.add(log_key)
         except Exception as e:
             self._log('WARNING', 'LAST_TRADE_LOAD_FAILED', str(e))
 

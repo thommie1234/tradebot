@@ -25,9 +25,9 @@ import pandas as pd
 
 
 DRIVE_PRIORITY = [
-    "/home/tradebot/ssd_data_1",
-    "/home/tradebot/ssd_data_2",
-    "/home/tradebot/data_1",
+    r"C:\tick_data\ssd1",
+    r"C:\tick_data\ssd2",
+    r"C:\tick_data\nvme",
 ]
 DATA_DIR_NAME = "tick_data"
 MIN_FREE_GB = 10

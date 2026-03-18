@@ -38,7 +38,7 @@ class OrderRouter:
         self.portfolio_optimizer = None  # F5: set by SovereignBot
         self._account_symbols = account_symbols  # Per-account symbol configs (overrides cfg.SYMBOLS)
         self._margin_leverage: dict | None = None  # Set from account context if available
-        self._h4_cache: dict[str, tuple[int, float]] = {}  # symbol → (primary_side, timestamp)
+        self._h4_cache: dict[str, tuple[int, float]] = {}  # symbol -> (primary_side, timestamp)
 
     @staticmethod
     def _group_split_orders(positions) -> list[list]:
@@ -195,7 +195,7 @@ class OrderRouter:
         H4_CONF_BOOST = 0.03   # confidence bonus when H1 and H4 aligned
         sym_cfg_h4 = self._sym_cfg(symbol)
         asset_class = sym_cfg_h4.get('asset_class', 'forex')
-        h4_alignment_enabled = sym_cfg_h4.get('h4_alignment', asset_class != 'crypto')
+        h4_alignment_enabled = sym_cfg_h4.get('h4_alignment', asset_class not in ('crypto', 'forex'))
         if h4_alignment_enabled:
             h4_side = self._get_h4_primary_side(symbol, mt5)
             if h4_side is not None and h4_side != 0:
@@ -210,7 +210,7 @@ class OrderRouter:
                     ml_confidence = min(0.999, ml_confidence + H4_CONF_BOOST)
                     self.logger.log('DEBUG', 'OrderRouter', 'H4_ALIGNED',
                                     f'{symbol} {direction}: H4 aligned, '
-                                    f'conf +{H4_CONF_BOOST:.2f} → {ml_confidence:.3f}')
+                                    f'conf +{H4_CONF_BOOST:.2f} -> {ml_confidence:.3f}')
 
         # Ultra-high confidence: bypass slot limit
         logical_groups = self._group_split_orders(our_positions)
@@ -246,7 +246,7 @@ class OrderRouter:
             self.last_reject_reason = 'live trading disabled'
             return False
 
-        # Guardrail 0.5: Trading hours check
+        # Guardrail 0.5: Trading hours check — also block near session close
         is_open, mins_left = self.trading_schedule.is_trading_open(symbol)
         if not is_open:
             self.logger.log('WARNING', 'OrderRouter', 'MARKET_CLOSED',
@@ -254,6 +254,11 @@ class OrderRouter:
             self.logger.log_trade(symbol, direction, 0, 0, 0, 0, 0, ml_confidence,
                                   status='REJECTED_MARKET_CLOSED')
             self.last_reject_reason = 'markt gesloten (feestdag/buiten handelsuren)'
+            return False
+        if mins_left is not None and mins_left <= 10:
+            self.logger.log('WARNING', 'OrderRouter', 'SESSION_CLOSE_SOON',
+                            f'{symbol} {direction}: only {mins_left} min left in session — blocking')
+            self.last_reject_reason = f'sessie sluit over {mins_left} min'
             return False
 
         # Guardrail 0.6: Friday close
@@ -354,10 +359,13 @@ class OrderRouter:
             return False
 
         sl_distance = atr * sl_mult
+        # Compensate SL for broker spread so SL isn't prematurely hit
+        spread_abs = abs(tick.ask - tick.bid)
+        sl_distance += spread_abs
         tp_distance = atr * tp_mult
 
         # ── F8: Confidence-scaled TP ─────────────────────────────────
-        # 0.55→1.0×, 0.75→1.36×, 0.85→1.55×, capped at 2.0×
+        # 0.55->1.0×, 0.75->1.36×, 0.85->1.55×, capped at 2.0×
         tp_confidence_factor = max(1.0, min(2.0, ml_confidence / 0.55))
         tp_distance *= tp_confidence_factor
 
@@ -389,7 +397,7 @@ class OrderRouter:
 
             if swap_pts < 0:
                 swap_cost_price = abs(swap_pts * point) * total_swap_nights
-            # F6: positive swap → reduce effective cost (floor at spread so costs never negative)
+            # F6: positive swap -> reduce effective cost (floor at spread so costs never negative)
             if swap_pts > 0:
                 swap_benefit_price = swap_pts * point * total_swap_nights
 
@@ -438,7 +446,7 @@ class OrderRouter:
         risk_pct = max(self.position_sizer.kelly_risk_pct(symbol), config_risk)
 
         # ── F4: Confidence-scaled sizing ─────────────────────────────
-        # 0.55→0.5×, 0.70→1.0×, 0.85→1.5×, capped at 2.0×
+        # 0.55->0.5×, 0.70->1.0×, 0.85->1.5×, capped at 2.0×
         conf_multiplier = max(0.5, min(2.0, 0.5 + (ml_confidence - 0.55) * 3.33))
         risk_pct *= conf_multiplier
 
@@ -509,7 +517,7 @@ class OrderRouter:
                         lot_size = round(lot_size, 8)
                     lot_size = max(vol_min, lot_size)
                     self.logger.log('WARNING', 'OrderRouter', 'MARGIN_CLAMP',
-                        f'{symbol}: lots {old_lots:.0f} → {lot_size:.0f} '
+                        f'{symbol}: lots {old_lots:.0f} -> {lot_size:.0f} '
                         f'(margin_free=${account_info.margin_free:.0f}, '
                         f'eff_leverage={effective_leverage:.1f}x)')
 
@@ -569,6 +577,12 @@ class OrderRouter:
         total_filled_lots = 0.0
 
         for i, chunk_vol in enumerate(chunks):
+            # Refresh price for subsequent chunks to avoid stale deviation
+            if i > 0:
+                tick = mt5.symbol_info_tick(symbol)
+                if tick:
+                    entry_price = tick.ask if direction == "BUY" else tick.bid
+
             request = {
                 "action": mt5.TRADE_ACTION_DEAL,
                 "symbol": symbol,
@@ -744,7 +758,7 @@ class OrderRouter:
                     if self.discord:
                         acct_tag = f" [{self.account_name}]" if self.account_name != "default" else ""
                         self.discord.send(
-                            f"SLOT REPLACE{acct_tag}: {rep.symbol} → {symbol}",
+                            f"SLOT REPLACE{acct_tag}: {rep.symbol} -> {symbol}",
                             f"Closed {rep.symbol} {r_dir}{chunks_info} "
                             f"(PnL: ${replace_score:+.2f}, {reason})\n"
                             f"Opening {symbol} {direction} (conf: {ml_confidence:.1%})",
@@ -822,13 +836,13 @@ class OrderRouter:
                     pnl = pos.profit + pos.swap
                     self.logger.log('INFO', 'OrderRouter', 'FLIP_CLOSE',
                                     f'{symbol}: closed {pos_dir} ticket {pos.ticket} '
-                                    f'(P&L: ${pnl:+.2f}) → flipping to {direction} '
+                                    f'(P&L: ${pnl:+.2f}) -> flipping to {direction} '
                                     f'(proba={ml_confidence:.3f})')
                     if self.discord:
                         color = "green" if pnl > 0 else "red"
                         acct_tag = f" [{self.account_name}]" if self.account_name != "default" else ""
                         self.discord.send(
-                            f"FLIP{acct_tag}: {symbol} {pos_dir} → {direction}",
+                            f"FLIP{acct_tag}: {symbol} {pos_dir} -> {direction}",
                             f"Closed {pos_dir} (P&L: ${pnl:+.2f})\n"
                             f"Opening {direction} (confidence: {ml_confidence:.0%})",
                             color,

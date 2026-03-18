@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+EURUSD,H4,2026,1,2024-2025,192,76,0.4605263157894737,-4.512002082587233,-11.851195152052114,-0.0660298720033089,0.5416826694617535,cuda,0.273544175104512,5.0,8.273544175104512

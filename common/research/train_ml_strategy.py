@@ -21,7 +21,7 @@ def parse_args():
     )
     p.add_argument(
         "--data-roots",
-        default="/home/tradebot/ssd_data_1/tick_data,/home/tradebot/ssd_data_2/tick_data,/home/tradebot/data_1/tick_data,/home/tradebot/data_2/tick_data,/home/tradebot/data_3/tick_data",
+        default=r"C:\tick_data\ssd1,C:\tick_data\ssd2,C:\tick_data\nvme",
     )
     p.add_argument("--years", default="", help="Comma separated filter, e.g. 2018,2019,2020")
     p.add_argument("--symbols", default="", help="Optional comma-separated symbols filter")
@@ -78,10 +78,38 @@ def symbol_files(symbol, data_roots):
         d = os.path.join(root, symbol)
         if not os.path.isdir(d):
             continue
-        for f in sorted(os.listdir(d)):
-            if f.endswith(".parquet"):
-                out.append(os.path.join(d, f))
+        for entry in sorted(os.listdir(d)):
+            full = os.path.join(d, entry)
+            if entry.endswith(".parquet"):
+                out.append(full)
+            elif os.path.isdir(full):
+                # Alpaca format: symbol/YYYY/*.parquet
+                for f in sorted(os.listdir(full)):
+                    if f.endswith(".parquet"):
+                        out.append(os.path.join(full, f))
     return out
+
+
+def _detect_alpaca_format(fp):
+    """Check if a parquet file is Alpaca format (has 'timestamp' + 'price' columns)."""
+    schema = pl.read_parquet_schema(fp)
+    return "timestamp" in schema and "price" in schema and "time" not in schema
+
+
+def _load_alpaca_parquet(fp):
+    """Load Alpaca tick parquet and convert to standard format."""
+    df = pl.read_parquet(fp)
+    if df.height == 0:
+        return None
+    # Alpaca: timestamp (microseconds), price, size, exchange, conditions
+    # Convert to: time, bid, ask, price, size
+    return df.select([
+        (pl.col("timestamp") * 1000).cast(pl.Datetime(time_unit="ns", time_zone="UTC")).alias("time"),
+        pl.col("price").alias("bid"),    # trade price as bid proxy
+        pl.col("price").alias("ask"),    # trade price as ask proxy
+        pl.col("price"),
+        pl.col("size"),
+    ])
 
 
 def load_symbol_ticks(symbol, data_roots, years_filter):
@@ -94,22 +122,34 @@ def load_symbol_ticks(symbol, data_roots, years_filter):
             y = None
         if years_filter and y not in years_filter:
             continue
-        df = pl.read_parquet(fp).select(["time", "bid", "ask", "last", "volume", "volume_real"])
+        try:
+            if _detect_alpaca_format(fp):
+                df = _load_alpaca_parquet(fp)
+                if df is not None and df.height > 0:
+                    frames.append(df)
+                continue
+            df = pl.read_parquet(fp).select(["time", "bid", "ask", "last", "volume", "volume_real"])
+        except Exception:
+            continue
         if df.height == 0:
             continue
         frames.append(df)
     if not frames:
         return None
-    d = pl.concat(frames, how="vertical").sort("time").with_columns(
-        [
-            pl.col("time").cast(pl.Datetime(time_unit="us", time_zone="UTC")),
+    d = pl.concat(frames, how="vertical").sort("time")
+    # Normalize time column
+    if d["time"].dtype != pl.Datetime("us", "UTC"):
+        d = d.with_columns(pl.col("time").cast(pl.Datetime(time_unit="us", time_zone="UTC")))
+    # If loaded from Alpaca, bid/ask/price are already set
+    if "last" in d.columns:
+        d = d.with_columns([
             pl.when(pl.col("last") > 0)
             .then(pl.col("last"))
             .otherwise((pl.col("bid") + pl.col("ask")) / 2.0)
             .alias("price"),
             pl.when(pl.col("volume_real") > 0).then(pl.col("volume_real")).otherwise(pl.col("volume")).alias("size"),
-        ]
-    ).drop_nulls(["time", "price", "size"])
+        ])
+    d = d.drop_nulls(["time", "price", "size"])
     if d.select(pl.col("size").sum()).item() <= 0:
         d = d.with_columns(pl.lit(1.0).alias("size"))
     return d.select(["time", "bid", "ask", "price", "size"])
@@ -191,13 +231,63 @@ def recency_weights(years: np.ndarray) -> np.ndarray:
     return 0.1 * np.power(10.0, frac)
 
 
-def infer_spread_bps(ticks: pl.DataFrame) -> float:
+def _load_cost_model_spreads(account: str = "") -> dict[str, float] | None:
+    """Load spread overrides from cost model YAML if available."""
+    import yaml
+    cost_dir = os.path.join(os.path.dirname(__file__), "..", "config", "cost_models")
+    # Map account names to cost model files
+    if not account:
+        account = os.environ.get("COST_MODEL", "")
+    name = account.split("_")[0] if account else ""
+    for candidate in [name, "ttp", "ftmo", "brightfunded"]:
+        path = os.path.join(cost_dir, f"{candidate}.yaml")
+        if os.path.isfile(path):
+            with open(path) as f:
+                cm = yaml.safe_load(f)
+            spreads = {}
+            default = cm.get("default_spread_pct", 0)
+            overrides = cm.get("spread_overrides", {})
+            # Convert from percentage to bps: 0.04% -> 4 bps, 0.02% -> 2 bps
+            return {"_default": default * 100, **{k: v * 100 for k, v in overrides.items()}}
+    return None
+
+
+# Module-level cache for cost model spreads
+_COST_MODEL_SPREADS: dict[str, float] | None = None
+
+
+def infer_spread_bps(ticks: pl.DataFrame, symbol: str = "") -> float:
     d = ticks.with_columns(
         (((pl.col("ask") - pl.col("bid")) / pl.col("price")) * 1e4).alias("spread_bps")
     ).filter(pl.col("spread_bps").is_finite() & (pl.col("spread_bps") > 0))
-    if d.height == 0:
-        return 0.0
-    return float(d.select(pl.col("spread_bps").median()).item())
+    if d.height > 0:
+        return float(d.select(pl.col("spread_bps").median()).item())
+    # Fallback: use cost model spread if bid==ask (e.g. Alpaca trade data)
+    global _COST_MODEL_SPREADS
+    if _COST_MODEL_SPREADS is None:
+        _COST_MODEL_SPREADS = _load_cost_model_spreads() or {}
+    if symbol in _COST_MODEL_SPREADS:
+        return _COST_MODEL_SPREADS[symbol]
+    if "_default" in _COST_MODEL_SPREADS:
+        return _COST_MODEL_SPREADS["_default"]
+    return 0.0
+
+
+def infer_spread_bps_pessimistic(ticks: pl.DataFrame, symbol: str = "") -> float:
+    """80th percentile spread + 20% markup — pessimistic for WFO realism.
+
+    Accounts for spread widening during volatility, news events,
+    weekend gaps, and demo-vs-live execution differences.
+    """
+    d = ticks.with_columns(
+        (((pl.col("ask") - pl.col("bid")) / pl.col("price")) * 1e4).alias("spread_bps")
+    ).filter(pl.col("spread_bps").is_finite() & (pl.col("spread_bps") > 0))
+    if d.height > 0:
+        p80 = float(d.select(pl.col("spread_bps").quantile(0.80)).item())
+        return p80 * 1.2
+    # Fallback: use cost model spread with 50% markup for pessimistic estimate
+    base = infer_spread_bps(ticks, symbol)
+    return base * 1.5 if base > 0 else 0.0
 
 
 def infer_slippage_bps(symbol: str) -> float:
@@ -336,7 +426,7 @@ def process_symbol(symbol, args_dict):
     if ticks is None or ticks.height == 0:
         return dict(symbol=symbol, status="no_data")
 
-    spread_bps = infer_spread_bps(ticks)
+    spread_bps = infer_spread_bps(ticks, symbol)
     slippage_bps = infer_slippage_bps(symbol)
     timeframes = [x.strip().upper() for x in args.timeframes.split(",") if x.strip()]
     all_rows = []
@@ -496,6 +586,32 @@ def process_symbol(symbol, args_dict):
     out_csv = os.path.join(box_dir, "wfo_metrics.csv")
     out_df.write_parquet(out_parquet, compression="zstd")
     out_df.write_csv(out_csv)
+
+    # Save a production model trained on ALL data (last timeframe with valid folds)
+    if os.environ.get("SAVE_PRODUCTION_MODEL", "0") == "1" and X is not None and y is not None:
+        try:
+            pos = max(int(y.sum()), 1)
+            neg = max(int(len(y) - y.sum()), 1)
+            prod_params = dict(
+                n_estimators=args.n_estimators,
+                max_depth=args.max_depth,
+                learning_rate=args.learning_rate,
+                subsample=args.subsample,
+                colsample_bytree=args.colsample_bytree,
+                reg_alpha=args.reg_alpha,
+                reg_lambda=args.reg_lambda,
+                objective="binary:logistic",
+                eval_metric="logloss",
+                n_jobs=args.xgb_jobs,
+                random_state=42,
+                scale_pos_weight=neg / pos,
+            )
+            prod_model, _dev = fit_xgb_with_fallback(prod_params, X, y, w, args.device)
+            model_path = os.path.join(args.out_dir, f"{symbol}.json")
+            prod_model.get_booster().save_model(model_path)
+        except Exception as e:
+            print(f"  WARN: {symbol} production model save failed: {e}", flush=True)
+
     return dict(symbol=symbol, status="ok", folds=len(all_rows), parquet=out_parquet)
 
 

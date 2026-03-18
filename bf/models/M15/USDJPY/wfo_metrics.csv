@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+USDJPY,M15,2026,1,2024-2025,3492,25,0.08,-24.131609714243822,-32.01530328590912,-0.059457769988289666,0.039001642752600305,cuda,0.4621514470295217,5.0,8.462151447029521

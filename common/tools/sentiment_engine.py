@@ -130,6 +130,11 @@ RSS_FEEDS: list[dict] = [
     {"name": "Investing.com", "url": "https://www.investing.com/rss/news.rss", "category": "broad"},
     {"name": "FXStreet", "url": "https://www.fxstreet.com/rss/news", "category": "forex"},
     {"name": "CNBC Markets", "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=15839069", "category": "broad"},
+    # Financial Times — macro, forex, commodities, geopolitics
+    {"name": "FT Home", "url": "https://www.ft.com/rss/home", "category": "broad"},
+    {"name": "FT Markets", "url": "https://www.ft.com/markets?format=rss", "category": "broad"},
+    {"name": "FT Currencies", "url": "https://www.ft.com/currencies?format=rss", "category": "forex"},
+    {"name": "FT Commodities", "url": "https://www.ft.com/commodities?format=rss", "category": "broad"},
 ]
 
 CRYPTOPANIC_URL = "https://cryptopanic.com/api/free/v1/posts/?public=true&kind=news"
@@ -174,14 +179,50 @@ class SentimentEngine:
         self.db_path = db_path
         self.ollama_host = ollama_host
         self._seen_urls: set[str] = set()
+        self._portfolio_symbols: set[str] = set()
+        self._portfolio_mtime: dict[str, float] = {}  # track config file mtimes
+        self._refresh_portfolio()
         self._init_db()
         self._load_seen_urls()
+
+    # ---- Portfolio symbols (for filtering alerts) ----
+
+    def _refresh_portfolio(self):
+        """Reload portfolio symbols from account configs if files changed."""
+        repo = Path(__file__).resolve().parent.parent.parent
+        changed = False
+        for acct_dir in ("ftmo", "bf"):
+            cfg_path = repo / acct_dir / "config.json"
+            if cfg_path.exists():
+                mtime = cfg_path.stat().st_mtime
+                if mtime != self._portfolio_mtime.get(acct_dir, 0):
+                    changed = True
+                    self._portfolio_mtime[acct_dir] = mtime
+
+        if not changed and self._portfolio_symbols:
+            return
+
+        symbols: set[str] = set()
+        for acct_dir in ("ftmo", "bf"):
+            cfg_path = repo / acct_dir / "config.json"
+            if cfg_path.exists():
+                try:
+                    with open(cfg_path) as f:
+                        data = json.load(f)
+                    for sym in data:
+                        if isinstance(data[sym], dict):
+                            symbols.add(sym)
+                except Exception:
+                    pass
+        self._portfolio_symbols = symbols
+        log.info("Portfolio refreshed: %d symbols: %s",
+                 len(symbols), ", ".join(sorted(symbols)))
 
     # ---- DB setup ----
 
     def _init_db(self):
         """Create sentiment_scores table if it doesn't exist."""
-        conn = sqlite3.connect(self.db_path)
+        conn = sqlite3.connect(self.db_path, timeout=30)
         try:
             conn.execute("""
                 CREATE TABLE IF NOT EXISTS sentiment_scores (
@@ -211,7 +252,7 @@ class SentimentEngine:
     def _load_seen_urls(self):
         """Load recent URLs from DB to avoid re-scoring on restart."""
         cutoff = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
-        conn = sqlite3.connect(self.db_path)
+        conn = sqlite3.connect(self.db_path, timeout=30)
         try:
             rows = conn.execute(
                 "SELECT url FROM sentiment_scores WHERE timestamp > ? AND url IS NOT NULL",
@@ -430,7 +471,7 @@ class SentimentEngine:
         """Store scored headlines in SQLite."""
         now = datetime.now(timezone.utc).isoformat()
         inserted = 0
-        conn = sqlite3.connect(self.db_path)
+        conn = sqlite3.connect(self.db_path, timeout=30)
         try:
             for h in scored_headlines:
                 try:
@@ -453,11 +494,34 @@ class SentimentEngine:
     # ---- Discord alerts ----
 
     def _alert_extreme(self, scored_headlines: list[dict]):
-        """Send Discord alert for extreme sentiment (|score| > 0.7)."""
+        """Send Discord alert for extreme sentiment (|score| > 0.7).
+
+        Only alerts for headlines matching active portfolio symbols or broad
+        market keywords (risk_off, crypto, forex).
+        """
         if not DISCORD_WEBHOOK:
             return
 
-        extreme = [h for h in scored_headlines if abs(h.get("score", 0)) >= 0.7]
+        # Refresh portfolio if configs changed on disk
+        self._refresh_portfolio()
+        portfolio_symbols = self._portfolio_symbols
+
+        extreme = []
+        for h in scored_headlines:
+            if abs(h.get("score", 0)) < 0.7:
+                continue
+            matched = h.get("symbols", "")
+            category = h.get("category", "")
+            # Keep if: matches a portfolio symbol, or is broad market news
+            if matched:
+                headline_syms = set(matched.split(","))
+                if headline_syms & portfolio_symbols:
+                    extreme.append(h)
+                    continue
+            # Always keep broad risk_off / macro headlines
+            if category in ("broad", "risk_off"):
+                extreme.append(h)
+
         if not extreme:
             return
 

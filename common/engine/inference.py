@@ -79,19 +79,20 @@ class SovereignMLFilter:
         """Load cached model from disk, preferring registry if available."""
         _ensure_ml_imports()
 
-        # F13: Try loading via registry first
-        registry = self._get_registry()
-        if registry:
-            version, path = registry.get_active_model(self.symbol)
-            if path and os.path.exists(path):
-                self.model = xgb.Booster()
-                self.model.load_model(path)
-                self._model_version = version or "default"
-                self.logger.log('INFO', 'SovereignMLFilter', 'MODEL_LOADED',
-                                f'{self.symbol} v={self._model_version} loaded from {path}')
-                return True
+        # F13: Try loading via registry first (skip if explicit model_dir override)
+        if not self._model_dir:
+            registry = self._get_registry()
+            if registry:
+                version, path = registry.get_active_model(self.symbol)
+                if path and os.path.exists(path):
+                    self.model = xgb.Booster()
+                    self.model.load_model(path)
+                    self._model_version = version or "default"
+                    self.logger.log('INFO', 'SovereignMLFilter', 'MODEL_LOADED',
+                                    f'{self.symbol} v={self._model_version} loaded from {path}')
+                    return True
 
-        # Fallback to direct file load
+        # Fallback to direct file load (uses _model_dir if set)
         path = self.model_path()
         if not os.path.exists(path):
             return False
@@ -128,9 +129,31 @@ class SovereignMLFilter:
 
         optuna_cfg = cfg.OPTUNA_PARAMS.get(self.symbol)
         if not optuna_cfg:
-            self.logger.log('WARNING', 'SovereignMLFilter', 'NO_OPTUNA_PARAMS',
-                            f'{self.symbol}: no Optuna params, skipping')
-            return False
+            # Try without underscores (BTC_USD → BTCUSD)
+            optuna_cfg = cfg.OPTUNA_PARAMS.get(self.symbol.replace("_", ""))
+        if not optuna_cfg:
+            # Use sensible defaults so we get a real model instead of a flat one
+            sym_cfg = cfg.SYMBOLS.get(self.symbol, {})
+            train_tf = sym_cfg.get("atr_timeframe", "H1")
+            optuna_cfg = {
+                "timeframe": train_tf,
+                "num_boost_round": 600,
+                "fee_bps": 0.0 if sym_cfg.get("asset_class") in ("index", "forex") else 3.0,
+                "xgb_params": {
+                    "objective": "binary:logistic",
+                    "device": "cuda",
+                    "eval_metric": "logloss",
+                    "eta": 0.05,
+                    "max_depth": 4,
+                    "min_child_weight": 10,
+                    "subsample": 0.8,
+                    "colsample_bytree": 0.8,
+                    "gamma": 0.5,
+                    "lambda": 2.0,
+                },
+            }
+            self.logger.log('INFO', 'SovereignMLFilter', 'DEFAULT_PARAMS',
+                            f'{self.symbol}: no Optuna params, using defaults ({train_tf})')
 
         train_tf = optuna_cfg.get("timeframe", "H1")
         ticks = None
@@ -241,7 +264,7 @@ class SovereignMLFilter:
         # F15: Train TabNet ensemble (optional, graceful if torch not available)
         try:
             from engine.deep_ensemble import DeepEnsemble, _torch_available
-            if _torch_available():
+            if _torch_available() and not os.environ.get("SKIP_TABNET"):
                 # Use 80/20 train/val split for TabNet
                 split_idx = int(len(x) * 0.8)
                 ensemble = DeepEnsemble(self.symbol)
@@ -336,17 +359,27 @@ class SovereignMLFilter:
         """Load tick data from parquet files."""
         _ensure_ml_imports()
         frames = []
+        # Try symbol name variants (EURCZK, EUR_CZK, AAVEUSD, AAVE_USD)
+        variants = [self.symbol]
+        if "_" in self.symbol:
+            variants.append(self.symbol.replace("_", ""))
+        else:
+            # Insert underscore before last 3 chars (USD/CZK etc.)
+            for sep_pos in (3, 4):
+                if len(self.symbol) > sep_pos:
+                    variants.append(self.symbol[:sep_pos] + "_" + self.symbol[sep_pos:])
         for root in cfg.DATA_ROOTS:
-            sym_dir = os.path.join(root, self.symbol)
-            if not os.path.isdir(sym_dir):
-                continue
-            for f in sorted(os.listdir(sym_dir)):
-                if f.endswith(".parquet"):
-                    df = pl.read_parquet(os.path.join(sym_dir, f)).select(
-                        ["time", "bid", "ask", "last", "volume", "volume_real"]
-                    )
-                    if df.height > 0:
-                        frames.append(df)
+            for variant in variants:
+                sym_dir = os.path.join(root, variant)
+                if not os.path.isdir(sym_dir):
+                    continue
+                for f in sorted(os.listdir(sym_dir)):
+                    if f.endswith(".parquet"):
+                        df = pl.read_parquet(os.path.join(sym_dir, f)).select(
+                            ["time", "bid", "ask", "last", "volume", "volume_real"]
+                        )
+                        if df.height > 0:
+                            frames.append(df)
         if not frames:
             return None
 

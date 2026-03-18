@@ -8,12 +8,10 @@ from pathlib import Path
 
 import yaml
 
-from api.config import BRIDGE_HOST, BRIDGE_PORT
-
-# Async lock to rate-limit MT5 bridge access (max ~2 req/5s)
+# Async lock to rate-limit MT5 access
 bridge_lock = asyncio.Lock()
 
-# Simple TTL cache for bridge responses
+# Simple TTL cache
 _cache: dict[str, tuple[float, object]] = {}
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -60,15 +58,25 @@ def cache_set(key: str, value: object):
     _cache[key] = (time.time(), value)
 
 
-# ── Bridge (multi-account) ──────────────────────────────────────────
+# ── MT5 (native singleton) ──────────────────────────────────────────
+
+_mt5_initialized = False
+
 
 def get_bridge(account_id: str | None = None):
-    """Get MT5BridgeClient for account. Falls back to default port."""
-    from tools.mt5_bridge import MT5BridgeClient
-    port = BRIDGE_PORT
-    if account_id and account_id in ACCOUNTS:
-        port = ACCOUNTS[account_id].get("bridge_port", BRIDGE_PORT)
-    return MT5BridgeClient(host=BRIDGE_HOST, port=port, timeout=5)
+    """Get MT5 module (native). Returns None if MT5 is not available."""
+    global _mt5_initialized
+    try:
+        import MetaTrader5 as mt5
+    except ImportError:
+        return None
+
+    if not _mt5_initialized:
+        if mt5.terminal_info() is None:
+            if not mt5.initialize():
+                return None
+        _mt5_initialized = True
+    return mt5
 
 
 # ── Database (multi-account) ────────────────────────────────────────
@@ -87,6 +95,30 @@ def _resolve_db_path(account_id: str | None = None) -> str:
 @contextmanager
 def get_db(account_id: str | None = None):
     db_path = _resolve_db_path(account_id)
+    conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True, timeout=10)
+    conn.row_factory = sqlite3.Row
+    try:
+        yield conn
+    finally:
+        conn.close()
+
+
+def _resolve_paper_db_path(account_id: str) -> str | None:
+    """Resolve paper_trades.db path for account."""
+    prefix = account_id.split("_")[0]
+    for folder in [prefix, "bf" if prefix == "bright" else prefix]:
+        path = REPO_ROOT / folder / "audit" / "paper_trades.db"
+        if path.exists():
+            return str(path)
+    return None
+
+
+@contextmanager
+def get_paper_db(account_id: str):
+    db_path = _resolve_paper_db_path(account_id)
+    if db_path is None:
+        yield None
+        return
     conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True, timeout=10)
     conn.row_factory = sqlite3.Row
     try:

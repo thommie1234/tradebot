@@ -1,0 +1,778 @@
+symbol,status,error,gpu,timeframe,best_ev,best_num_boost_round,best_max_depth,best_gamma,best_subsample,best_colsample_bytree,best_reg_alpha,best_reg_lambda,best_min_child_weight,best_eta,best_colsample_bylevel,trials,rows,device_used,cluster,calmar_score,fee_bps,spread_bps,slippage_bps,n_features,htf_enabled,account_id
+AAPL,ok,,0,H4,0.0029426293246681366,1776,2,0.001019853131540035,0.6348227155083986,0.7766129586066863,6.3971331396818965,49.83762968261332,1.0951070921906623,0.008171837255270353,0.6514406776097004,150,5364,cpu,equity,0.0029426293246681366,3.0,4.304469474135437,3.0,39,false,bright_100k
+AAVE_USD,ok,,0,H4,0.0055399869504614944,878,5,0.735195257668046,0.9329257597928293,0.8356869693724864,0.000019482156812069576,0.27083880979444636,0.7348306784962233,0.29451942861045727,0.7504458936750429,150,493,cpu,index,0.0055399869504614944,0.0,5.141279524363123,12.0,39,false,bright_100k
+AAVUSD,error,"[21:45:49] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 7.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+ADAUSD,error,"[21:45:48] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 7.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+ADA_USD,ok,,0,H4,0.007236738024342593,705,8,0.0011388291430020731,0.5622642048295518,0.32009636353789217,0.0011696484614591917,0.6499904805900204,0.5737198047280366,0.251529572729591,0.45451944240541514,150,549,cpu,index,0.007236738024342593,0.0,4.305705059204166,12.0,39,false,bright_100k
+AIRF,ok,,0,H4,0.00046251291032874337,1399,9,0.014034228554995969,0.6689516091549854,0.6257337837112475,0.014643596815219729,0.00015698409811516743,0.339936813080844,0.24510497967864595,0.5928899624807225,150,2670,cpu,equity,0.00046251291032874337,3.0,50.06257822277852,3.0,39,false,bright_100k
+ALGO_USD,error,"[21:45:25] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 13.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+ALGUSD,error,"[21:45:39] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 3.5MB
+- Requested memory: 2.4381MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x16925e) [0x7ddec796925e]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xbdfc38) [0x7ddec83dfc38]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xbd63e0) [0x7ddec83d63e0]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xb24f3f) [0x7ddec8324f3f]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xb261fd) [0x7ddec83261fd]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xca2bd1) [0x7ddec84a2bd1]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xca36e2) [0x7ddec84a36e2]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+ALVG,ok,,0,H4,0.0006358750607080695,1459,7,0.314009729494826,0.6439444348412431,0.6678745520649799,0.0011028755309527977,0.005498718768581517,3.095880710629707,0.10753934793152065,0.850239489706275,150,2538,cpu,equity,0.0006358750607080695,3.0,4.979793530098847,3.0,39,false,bright_100k
+AMZN,ok,,0,H4,0.008144763582084753,221,4,0.051403282994788524,0.5060620074767653,0.866821827272062,0.00013824157239948083,0.17340345421681483,0.5080907058838008,0.26403514386222987,0.37534246701059887,150,1820,cpu,equity,0.008144763582084753,3.0,4.9946647898828616,3.0,39,false,bright_100k
+AUDCAD,error,"[21:46:09] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 7.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+AUDCHF,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+AUDJPY,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+AUDNZD,error,"[21:47:25] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 3.5MB
+- Requested memory: 2.4381MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x16925e) [0x7ddec796925e]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xbdfc38) [0x7ddec83dfc38]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xbd63e0) [0x7ddec83d63e0]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xb24f3f) [0x7ddec8324f3f]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xb261fd) [0x7ddec83261fd]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xca2bd1) [0x7ddec84a2bd1]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xca36e2) [0x7ddec84a36e2]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+AUDUSD,ok,,0,H4,0.00040671754848796134,165,7,0.0022322804937812695,0.9496947214941588,0.7760103545833738,0.0865529011363503,3.6879109472370244,0.5055284849792978,0.09478961752927972,0.5231461985652519,150,16989,cuda,forex,0.00040671754848796134,0.0,0.6350315134377268,2.0,39,false,bright_100k
+AUD_CAD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+AUD_CHF,ok,,0,H4,-0.0004870770380360409,1766,3,0.10614590632822023,0.9187460029872482,0.9415409843822027,1.3915649977843132,0.002356295394072912,9.94000863359566,0.20083290949725674,0.6853540996099533,150,15631,cuda,forex,-0.0004870770380360409,3.0,1.592483477984526,3.0,39,false,bright_100k
+AUD_JPY,ok,,0,H4,-0.0003595435297831694,1766,3,0.10614590632822023,0.9187460029872482,0.9415409843822027,1.3915649977843132,0.002356295394072912,9.94000863359566,0.20083290949725674,0.6853540996099533,150,16604,cuda,forex,-0.0003595435297831694,3.0,1.2294200211050903,3.0,39,false,bright_100k
+AUD_NZD,ok,,0,H4,-0.0006430304840225438,1766,3,0.10614590632822023,0.9187460029872482,0.9415409843822027,1.3915649977843132,0.002356295394072912,9.94000863359566,0.20083290949725674,0.6853540996099533,150,15673,cuda,forex,-0.0006430304840225438,3.0,1.0816852656429534,3.0,39,false,bright_100k
+AUD_USD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+AUS200.cash,ok,,0,H4,-0.0003389989092876544,1766,3,0.13613622914254098,0.9118006703177478,0.9400029815426032,1.9375192607005494,0.002356295394072912,9.35339353827717,0.20083290949725674,0.6853540996099533,150,5467,cpu,index,-0.0003389989092876544,3.0,1.5650676891773196,3.0,39,false,bright_100k
+AVAUSD,ok,,0,H4,0.005151457876600143,1760,4,0.6936742378040756,0.9118006703177478,0.890771982962403,12.063639358270864,0.05896480840667661,25.866441025146546,0.20083290949725674,0.6853540996099533,150,5271,cuda,crypto,0.005151457876600143,3.0,10.082339102672202,3.0,39,false,bright_100k
+BABA,ok,,0,H4,0.019324608944691915,868,5,0.3169447616671961,0.44926139343728294,0.6041999227205079,0.00452077873319869,0.000012888617971864164,0.5699362903069323,0.19779826671305326,0.6253850053470742,150,1500,cuda,equity,0.019324608944691915,3.0,8.129137150155984,3.0,39,false,bright_100k
+BAC,ok,,0,H4,-0.00011679080366490497,1766,3,0.13613622914254098,0.9118006703177478,0.9400029815426032,1.9375192607005494,0.002356295394072912,9.35339353827717,0.20083290949725674,0.6853540996099533,150,1580,cuda,equity,-0.00011679080366490497,3.0,19.04036557501931,3.0,39,false,bright_100k
+BARUSD,ok,,0,H4,0.007994000636534233,952,7,2.380742967871024,0.5380260163777402,0.6920150089846366,0.0015180956286576371,0.001227589616230058,4.782354203530834,0.26338719578857445,0.9475075249508067,150,5538,cuda,crypto,0.007994000636534233,3.0,4.966123940265652,3.0,39,false,bright_100k
+BAYGn,ok,,0,H4,0.0015531230551937727,1766,3,0.13613622914254098,0.9118006703177478,0.9400029815426032,1.9375192607005494,0.002356295394072912,9.35339353827717,0.20083290949725674,0.6853540996099533,150,2579,cuda,equity,0.0015531230551937727,3.0,14.550745725719423,3.0,39,false,bright_100k
+BCHUSD,ok,,0,H4,0.005260505388035072,1202,7,0.6534601074514388,0.6677522611327997,0.42715784033581494,0.21405285798001408,0.0031111384152936257,13.596421566127304,0.13374116692353386,0.7511857663274109,150,8887,cuda,crypto,0.005260505388035072,3.0,16.86814731515386,3.0,39,false,bright_100k
+BNBUSD,ok,,0,H4,0.004438029240158315,1062,10,4.337912153676245,0.413833879318891,0.7227916557003955,0.021243299259287578,0.12965614824626506,5.797091545148808,0.2997018214222484,0.40149794345082196,150,7200,cuda,crypto,0.004438029240158315,3.0,0.30190957808109004,3.0,39,false,bright_100k
+BNB_USD,error,"[04:54:47] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 11.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+BTCUSD,ok,,0,H4,0.0042252339699973655,1996,3,0.058092285998354705,0.6034745805691941,0.3533991852758768,0.29269016719264457,11.285394606585239,1.0588965350029107,0.1905962864158808,0.9260447142365643,150,8938,cuda,crypto,0.0042252339699973655,3.0,0.2412994623435148,3.0,39,false,bright_100k
+BTC_USD,ok,,0,H4,0.001335996027746164,1404,9,0.0018096450851486827,0.6638944370293531,0.8098602216676191,0.007822195420078582,0.4694246570354824,0.5007599741953442,0.10661517118740044,0.95888894385534,150,528,cuda,index,0.001335996027746164,0.0,2.0425996221097895,12.0,39,false,bright_100k
+CADCHF,ok,,0,H4,-0.00008559762264602223,1766,3,0.10614590632822023,0.9187460029872482,0.9415409843822027,1.3915649977843132,0.002356295394072912,9.94000863359566,0.20083290949725674,0.6853540996099533,150,15520,cuda,forex,-0.00008559762264602223,0.0,1.9358585532685195,2.0,39,false,bright_100k
+CADJPY,ok,,0,H4,0.00009319991127693828,1486,8,0.002557401590345704,0.5060612584516041,0.5898304814250293,0.0021853263182822764,0.052175767986973924,6.495752160886827,0.06460468514027934,0.6186533101574306,150,15958,cuda,forex,0.00009319991127693828,0.0,1.3934239678212486,2.0,39,false,bright_100k
+CAD_CHF,ok,,0,H4,-0.0005855976226460223,1766,3,0.10614590632822023,0.9187460029872482,0.9415409843822027,1.3915649977843132,0.002356295394072912,9.94000863359566,0.20083290949725674,0.6853540996099533,150,15520,cuda,forex,-0.0005855976226460223,3.0,1.9358585532685195,3.0,39,false,bright_100k
+CAD_JPY,error,"[07:28:31] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 9.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+CHFJPY,ok,,0,H4,-0.00002026410969800222,1766,3,0.10614590632822023,0.9187460029872482,0.9415409843822027,1.3915649977843132,0.002356295394072912,9.94000863359566,0.20083290949725674,0.6853540996099533,150,16666,cuda,forex,-0.00002026410969800222,0.0,1.1245231873725194,2.0,39,false,bright_100k
+CHF_JPY,error,"[07:06:40] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 9.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+COCOA.c,ok,,0,H4,0.0008941841192472508,1766,3,0.45332313307040456,0.9118006703177478,0.9400029815426032,4.487914069856665,0.010425842406079378,17.198951224606112,0.20083290949725674,0.6853540996099533,150,1645,cuda,commodity,0.0008941841192472508,3.0,19.35260073393781,3.0,39,false,bright_100k
+COFFEE.c,ok,,0,H4,0.001973123821041881,1766,3,0.45332313307040456,0.9118006703177478,0.9400029815426032,4.487914069856665,0.010425842406079378,17.198951224606112,0.20083290949725674,0.6853540996099533,150,1677,cuda,commodity,0.001973123821041881,3.0,8.672142019079525,3.0,39,false,bright_100k
+CORN.c,ok,,0,H4,-0.0019248414950900992,1766,3,0.45332313307040456,0.9118006703177478,0.9400029815426032,4.487914069856665,0.010425842406079378,17.198951224606112,0.20083290949725674,0.6853540996099533,150,2348,cuda,commodity,-0.0019248414950900992,3.0,20.401370113066296,3.0,39,false,bright_100k
+COTTON.c,ok,,0,H4,-0.006417984619918268,1766,3,0.45332313307040456,0.9118006703177478,0.9400029815426032,4.487914069856665,0.010425842406079378,17.198951224606112,0.20083290949725674,0.6853540996099533,150,564,cuda,commodity,-0.006417984619918268,3.0,62.78232907128256,3.0,39,false,bright_100k
+DASHUSD,ok,,0,H4,0.010178325330891316,90,6,0.8242540349606343,0.7234756648018285,0.36038229923470516,0.1379194318783959,1.6671460035762342,1.0421730148075095,0.2992985075552275,0.929057803758075,150,5453,cuda,crypto,0.010178325330891316,3.0,8.83197173769025,3.0,39,false,bright_100k
+DASH_USD,ok,,0,H4,0.04266259866044369,1398,5,0.028698419198335958,0.41397171549841044,0.6507871494974021,0.000011174584803228653,0.02329347901705827,2.8054897641666208,0.23002667858697914,0.43370139535917535,150,532,cuda,index,0.04266259866044369,0.0,22.164758034725626,12.0,39,false,bright_100k
+DBKGn,ok,,0,H4,0.0015871227389962132,1766,3,0.13613622914254098,0.9118006703177478,0.9400029815426032,1.9375192607005494,0.002356295394072912,9.35339353827717,0.20083290949725674,0.6853540996099533,150,2550,cuda,equity,0.0015871227389962132,3.0,9.938711280436502,3.0,39,false,bright_100k
+DOGEUSD,error,"[07:43:27] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 7.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+DOTUSD,ok,,0,H4,-0.00027297576114744163,1760,4,0.6936742378040756,0.9118006703177478,0.890771982962403,12.063639358270864,0.05896480840667661,25.866441025146546,0.20083290949725674,0.6853540996099533,150,5037,cuda,crypto,-0.00027297576114744163,3.0,35.11852502194833,3.0,39,false,bright_100k
+DOT_USD,error,"[07:44:00] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 7.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+DXY.cash,error,"[07:43:07] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 9.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+ETCUSD,error,"[07:52:50] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 31.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+ETHUSD,error,"[07:47:42] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 31.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+ETH_USD,ok,,0,H4,0.0015007166333168408,655,6,0.6276756333710396,0.8842282159162822,0.7255551358883392,0.027980279340117004,0.00012142002161031415,0.5767518188662004,0.13831715124284177,0.7978546406637983,150,542,cpu,index,0.0015007166333168408,0.0,3.1695000274447054,12.0,39,false,bright_100k
+EU50.cash,ok,,0,H4,0.001000437639961358,111,9,0.004115853757811217,0.8299083540324057,0.3772557485954625,0.024078346605965164,0.00001750917199424962,2.4101162131313396,0.14074692239801798,0.9197192048549493,150,3854,cuda,index,0.001000437639961358,0.0,3.0543677458766036,2.0,39,false,bright_100k
+EURAUD,error,"[07:52:54] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 31.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+EURCAD,error,"[09:05:43] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 29.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+EURCHF,error,"[07:58:06] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 31.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+EURGBP,error,"[08:08:07] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 31.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+EURJPY,ok,,0,H4,0.00001502778641103728,695,5,0.004768607382218045,0.9294236294538566,0.7867719534292746,0.019399694348745694,0.00017890605017895406,6.096133211039392,0.08537586531663041,0.5532464982742219,150,16803,cuda,forex,0.00001502778641103728,0.0,0.8453238496036989,2.0,39,false,bright_100k
+EURNZD,error,"[09:16:53] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 31.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+EURUSD,error,"[08:18:22] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 31.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+EUR_AUD,error,"[09:24:29] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 29.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+EUR_CAD,error,"[09:44:44] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 29.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+EUR_CHF,error,"[10:05:48] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 31.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+EUR_CZK,error,"[09:16:53] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 31.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+EUR_GBP,error,"[10:00:07] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 31.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+EUR_HUF,ok,,0,H4,-0.001153686247716146,1766,3,0.10614590632822023,0.9187460029872482,0.9415409843822027,1.3915649977843132,0.002356295394072912,9.94000863359566,0.20083290949725674,0.6853540996099533,150,1643,cuda,forex,-0.001153686247716146,3.0,5.594307353253245,3.0,39,false,bright_100k
+EUR_JPY,error,"[10:00:07] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 23.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+EUR_NOK,ok,,0,H4,-0.0010003185803209,1766,3,0.10614590632822023,0.9187460029872482,0.9415409843822027,1.3915649977843132,0.002356295394072912,9.94000863359566,0.20083290949725674,0.6853540996099533,150,1632,cuda,forex,-0.0010003185803209,3.0,4.652674432527763,3.0,39,false,bright_100k
+EUR_NZD,error,"[10:15:17] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 31.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+EUR_PLN,error,"[09:34:38] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 21.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+EUR_USD,error,"[09:49:56] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 29.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+FETUSD,ok,,0,H4,0.02882186345706819,1480,4,0.1455469620729011,0.6284817294803856,0.49265555150193413,0.018881973212500007,0.02344108963545279,1.6336010138577284,0.2010916374743954,0.8729343917229815,150,1988,cuda,crypto,0.02882186345706819,3.0,2.919281856662939,3.0,39,false,bright_100k
+FRA40.cash,ok,,0,H4,0.0016107102562841781,1792,3,0.0015759025527148451,0.7759868552912081,0.3631577419352068,0.0046809809428925014,0.08115786205779016,0.7379678880403557,0.19070140962033574,0.9722114230933522,150,3888,cuda,index,0.0016107102562841781,0.0,1.9939994240929284,2.0,39,false,bright_100k
+GALUSD,ok,,0,H4,0.006239546309282003,1760,4,0.6936742378040756,0.9118006703177478,0.890771982962403,12.063639358270864,0.05896480840667661,25.866441025146546,0.20083290949725674,0.6853540996099533,150,4834,cuda,crypto,0.006239546309282003,3.0,8.830022075054828,3.0,39,false,bright_100k
+GBPAUD,error,"[11:12:26] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 11.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+GBPCAD,error,"[10:25:33] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 19.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+GBPCHF,error,"[10:59:36] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 27.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+GBPJPY,error,"[10:15:21] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 31.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+GBPNZD,error,"[10:46:16] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 29.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+GBPUSD,error,"[10:20:26] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 31.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+GBP_AUD,error,"[10:46:21] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 29.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+GBP_CAD,error,"[11:12:20] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 21.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+GBP_CHF,error,"[11:11:25] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 1.5MB
+- Requested memory: 1.40112MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x163091) [0x7ddec7963091]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xb25b44) [0x7ddec8325b44]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xb261fd) [0x7ddec83261fd]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xca2bd1) [0x7ddec84a2bd1]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xca36e2) [0x7ddec84a36e2]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6652ae) [0x7ddec7e652ae]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x115d239) [0x7ddec895d239]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+GBP_JPY,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+GBP_NZD,error,"[11:11:26] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 1.5MB
+- Requested memory: 2.4381MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x16925e) [0x7ddec796925e]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xbdfc38) [0x7ddec83dfc38]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xbd63e0) [0x7ddec83d63e0]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xb24f3f) [0x7ddec8324f3f]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xb261fd) [0x7ddec83261fd]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xca2bd1) [0x7ddec84a2bd1]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xca36e2) [0x7ddec84a36e2]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+GBP_USD,error,"[11:11:22] /workspace/src/common/device_vector.cu:23: Memory allocation error on worker 0: std::bad_alloc: cudaErrorMemoryAllocation: out of memory
+- Free memory: 23.5MB
+- Requested memory: 32MB
+
+Stack trace:
+  [bt] (0) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x2be09c) [0x7ddec7abe09c]
+  [bt] (1) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0xafa353) [0x7ddec82fa353]
+  [bt] (2) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1158208) [0x7ddec8958208]
+  [bt] (3) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1152c0d) [0x7ddec8952c0d]
+  [bt] (4) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x118feaf) [0x7ddec898feaf]
+  [bt] (5) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x11912f0) [0x7ddec89912f0]
+  [bt] (6) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x1198466) [0x7ddec8998466]
+  [bt] (7) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a5626) [0x7ddec7ea5626]
+  [bt] (8) /home/tradebot/tradebots/.venv/lib/python3.14/site-packages/xgboost/lib/libxgboost.so(+0x6a6b37) [0x7ddec7ea6b37]
+
+",,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+GER40.cash,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+GOOG,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+GRTUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+HEATOIL.c,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+HK50.cash,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+IBE,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+ICPUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+IMXUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+JP225.cash,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+LINK_USD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+LNKUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+LTCUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+LTC_USD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+LVMH,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+MANUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+META,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+MSFT,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+N25.cash,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+NATGAS.cash,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+NEOUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+NEO_USD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+NERUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+NFLX,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+NVDA,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+NZDCAD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+NZDCHF,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+NZDJPY,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+NZDUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+NZD_CAD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+NZD_CHF,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+NZD_JPY,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+NZD_USD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+PFE,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+RACE,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+SANUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+SOLUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+SOL_USD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+SOYBEAN.c,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+SPN35.cash,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+SUGAR.c,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+T,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+TSLA,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+UK100.cash,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+UKOIL.cash,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+UNIUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+UNI_USD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+US100.cash,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+US2000.cash,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+US30.cash,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+US500.cash,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USDCAD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USDCHF,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USDCNH,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USDJPY,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USDSEK,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USDZAR,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USD_CAD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USD_CHF,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USD_CNH,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USD_CZK,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USD_HKD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USD_HUF,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USD_ILS,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USD_JPY,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USD_MXN,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USD_NOK,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USD_PLN,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USD_SEK,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USD_SGD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USD_ZAR,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+USOIL.cash,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+V,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+VECUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+VOWG_p,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+WHEAT.c,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+WMT,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+XAG_AUD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+XAG_EUR,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+XAG_USD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+XAU_AUD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+XAU_EUR,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+XAU_USD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+XCU_USD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+XLMUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+XLM_USD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+XMRUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+XPD_USD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+XPT_USD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+XRPUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+XRP_USD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+XTZUSD,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k
+ZM,error,A process in the process pool was terminated abruptly while the future was running or pending.,,,,,,,,,,,,,,,,,,,,,,,,bright_100k

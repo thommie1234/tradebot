@@ -1,0 +1,2 @@
+symbol,status,folds,parquet
+USDNOK,ok,1,/home/tradebot/tradebots/bf/models/M5/USDNOK/wfo_metrics.parquet

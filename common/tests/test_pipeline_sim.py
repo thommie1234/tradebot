@@ -147,10 +147,12 @@ def get_volume_limits(symbol: str, specs: dict, asset_class: str):
 # ── Load Data ───────────────────────────────────────────────────────────────
 
 def load_bar_data(symbols: list[str], days: int) -> dict[str, list[dict]]:
-    """Load H1 bar data for all symbols via MT5 bridge."""
-    from tools.mt5_bridge import MT5BridgeClient
+    """Load H1 bar data for all symbols via MT5."""
+    import MetaTrader5 as mt5
 
-    mt5 = MT5BridgeClient(port=5056)
+    if not mt5.terminal_info() and not mt5.initialize():
+        print(f"  MT5 init failed: {mt5.last_error()}")
+        return {}
     bars_needed = days * 24 + 200  # extra for feature warmup
     TF_H1 = 16385  # MT5 TIMEFRAME_H1 constant
 

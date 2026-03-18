@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+GBPCAD,H1,2026,1,2024-2025,843,34,0.5294117647058824,-3.9270154510978403,-11.163120853545498,-0.026194321553812294,0.5718239200224605,cuda,0.954624453546466,5.0,8.954624453546465

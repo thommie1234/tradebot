@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+BNB_USD,M30,2026,1,2025-2026,523,213,0.47417840375586856,-1.479485401184355,-2.1471128885056863,-0.4125794370010416,0.7890829293919719,cuda,2.2914757103566887,3.0,8.29147571035669

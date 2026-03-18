@@ -1,78 +1,137 @@
 # Multi-Account Configuration
-# Each account runs its own MT5 terminal + bridge proxy on a separate port.
+# Each account runs its own MT5 terminal as a separate process.
 # Signals are shared (same ML models), but compliance, positions, and
 # risk management are completely isolated per account.
 
 accounts:
-  ftmo_100k:
-    name: "FTMO 100k"
-    enabled: true
-    bridge_port: 5056
-    account_size: 100000
-    config_path: "ftmo/config.json"
-    model_dir: "ftmo/models"
-    optuna_csv: "ftmo/optuna/ritual_combined_20260224_enriched.csv"
-
-    # Prop firm compliance limits
-    max_daily_loss_pct: 0.05       # 5% FTMO daily loss limit
-    max_total_dd_pct: 0.10         # 10% FTMO max drawdown
-    dd_type: "trailing"            # trailing = from high water mark
-    total_dd_warning_pct: 0.08     # Warning at 8%
-
-    # Profit targets
-    profit_target_step1_pct: 0.10  # 10% ($10,000) for Challenge
-    profit_target_step2_pct: 0.05  # 5% ($5,000) for Verification
-
-    # Our internal (stricter) limits
-    internal_daily_loss_pct: 0.035 # Stop trading at -3.5%
-    internal_profit_lock_pct: 0.03 # Lock profits at +3%
-    dd_recovery_threshold: 0.04    # Halve lots when DD >= 4%
-    dd_recovery_exit: 0.01         # Exit recovery when DD <= 1%
-
-    # Risk scaling
-    risk_scale: 1.0                # Multiplier on risk_per_trade from sovereign_configs.json
-    max_positions: 12              # Normal max concurrent positions
-    max_positions_alpha: 80        # High-confidence override
-
-    # Audit (separate DB per account)
-    audit_db: "ftmo/audit/sovereign_log.db"
-
   bright_100k:
     name: "BrightFunded 100k"
     enabled: true
-    bridge_port: 5057
+    terminal_path: "C:\\Program Files\\BrightFunded MT5 Terminal\\terminal64.exe"
     account_size: 100000
     config_path: "bf/config.json"
     model_dir: "bf/models"
     optuna_csv: "bf/optuna/summary.csv"
 
-    # Prop firm compliance limits
-    max_daily_loss_pct: 0.05       # 5% BrightFunded daily loss limit
+    # BrightFunded compliance limits
+    max_daily_loss_pct: 0.05       # 5% daily loss limit
     max_total_dd_pct: 0.10         # 10% max drawdown
-    dd_type: "trailing"            # EOD high-watermark trailing (BF specific)
+    dd_type: "trailing"            # EOD high-watermark trailing
     total_dd_warning_pct: 0.08
 
     # Profit targets
     profit_target_step1_pct: 0.08  # 8% ($8,000) for Step 1
     profit_target_step2_pct: 0.04  # 4% ($4,000) for Step 2
 
-    # Our internal (stricter) limits
+    # Internal (stricter) limits
     internal_daily_loss_pct: 0.035
-    internal_profit_lock_pct: 0.03
+    internal_profit_lock_pct: 0.02
     dd_recovery_threshold: 0.04
     dd_recovery_exit: 0.01
+    floating_profit_close_pct: 0.00
+    floating_profit_hard_pct: 0.02
+    floating_profit_tighten_pct: 0.01
+    profit_gate_pct: 0.02
+    profit_gate_min_conf: 0.80
+    profit_trail_activate_pct: 0.0205
+    profit_trail_buffer_pct: 0.0005
 
-    # Risk scaling — BF has wider spreads, reduce risk proportionally
+    # Risk scaling
     risk_scale: 0.8
     max_positions: 10
     max_positions_alpha: 60
 
     # BrightFunded specific rules
-    news_window_minutes: 5         # 5 min before/after (vs FTMO 2 min)
-    rollover_blackout_start: "23:30"  # CET — no orders 23:30-23:59
+    news_blackout_enabled: false
+    news_window_minutes: 5
+    rollover_blackout_start: "23:30"
     rollover_blackout_end: "23:59"
-    weekend_close_required: false  # BF allows weekend holding
-    monitor_interval: 2.0          # Slower trailing stop polling (avoid hyperactivity)
+    weekend_close_required: true
+    monitor_interval: 2.0
 
-    # Audit (separate DB per account)
+    # Audit
     audit_db: "bf/audit/sovereign_log.db"
+
+  ftmo_100k:
+    name: "FTMO 100k"
+    enabled: true
+    terminal_path: "C:\\Program Files\\FTMO Global Markets MT5 Terminal\\terminal64.exe"
+    account_size: 100000
+    config_path: "ftmo/config.json"
+    model_dir: "ftmo/models"
+    optuna_csv: "ftmo/optuna/ritual_combined_20260224_enriched.csv"
+
+    # FTMO compliance limits
+    max_daily_loss_pct: 0.05       # 5% daily loss limit
+    max_total_dd_pct: 0.10         # 10% max drawdown
+    dd_type: "equity"              # FTMO = equity-based (relatief t.o.v. startbalans)
+    total_dd_warning_pct: 0.08
+
+    # Profit targets
+    profit_target_step1_pct: 0.10  # 10% ($10,000) Challenge
+    profit_target_step2_pct: 0.05  # 5% ($5,000) Verification
+
+    # Internal (stricter) limits
+    internal_daily_loss_pct: 0.035
+    internal_profit_lock_pct: 0.02
+    dd_recovery_threshold: 0.04
+    dd_recovery_exit: 0.01
+    floating_profit_close_pct: 0.00
+    floating_profit_hard_pct: 0.02
+    floating_profit_tighten_pct: 0.01
+    profit_gate_pct: 0.02
+    profit_gate_min_conf: 0.80
+    profit_trail_activate_pct: 0.0205
+    profit_trail_buffer_pct: 0.0005
+
+    news_blackout_enabled: false
+
+    # Risk scaling
+    risk_scale: 1.0
+    max_positions: 10
+    max_positions_alpha: 60
+
+    # Audit
+    audit_db: "ftmo/audit/sovereign_log.db"
+
+  ttp_100k:
+    name: "The Trading Pit 100k"
+    enabled: false                 # Niet actief — wacht op account
+    terminal_path: "C:\\MT5\\TTP\\terminal64.exe"
+    account_size: 100000
+    config_path: "ttp/config.json"
+    model_dir: "ttp/models"
+
+    # The Trading Pit compliance limits
+    # NB: TTP regels varieren per plan, pas aan wanneer account actief is
+    max_daily_loss_pct: 0.05       # 5% daily loss limit (standaard)
+    max_total_dd_pct: 0.10         # 10% max drawdown (standaard)
+    dd_type: "trailing"            # TTP = trailing DD from HWM
+    total_dd_warning_pct: 0.08
+
+    # Profit targets (pas aan per TTP plan)
+    profit_target_step1_pct: 0.08  # 8% standaard
+    profit_target_step2_pct: 0.05  # 5% standaard
+
+    # Internal (stricter) limits
+    internal_daily_loss_pct: 0.035
+    internal_profit_lock_pct: 0.02
+    dd_recovery_threshold: 0.04
+    dd_recovery_exit: 0.01
+    floating_profit_close_pct: 0.00
+    floating_profit_hard_pct: 0.02
+    floating_profit_tighten_pct: 0.01
+    profit_gate_pct: 0.02
+    profit_gate_min_conf: 0.80
+    profit_trail_activate_pct: 0.0205
+    profit_trail_buffer_pct: 0.0005
+
+    news_blackout_enabled: false
+
+    # Risk scaling
+    risk_scale: 1.0
+    max_positions: 10
+    max_positions_alpha: 60
+
+    # Audit
+    audit_db: "ttp/audit/sovereign_log.db"

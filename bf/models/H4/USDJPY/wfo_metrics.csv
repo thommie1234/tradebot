@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+USDJPY,H4,2026,1,2024-2025,197,84,0.35714285714285715,-7.100743606388061,-15.853864861530989,-0.17882764768630122,0.3840177785020977,cuda,0.4621514470295217,5.0,8.462151447029521

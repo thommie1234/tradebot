@@ -1,0 +1,17 @@
+# Order execution parameters
+
+deviation: 10
+rr_ratio: 3.0
+
+reversal_threshold: 0.60
+alpha_override_threshold: 0.80
+replacement_threshold: 0.70
+
+usd_correlation_cap: 3
+
+spread_limits:
+  crypto: 0.005
+  forex: 0.0005
+  commodity: 0.001
+  index: 0.0005
+  equity: 0.001

@@ -49,6 +49,7 @@ from research.train_ml_strategy import (
     make_time_bars,
     sanitize_training_frame,
 )
+from research.cost_model import get_cost_model, CostModel
 from risk.position_sizing import ASSET_CLASS, SECTOR_MAP
 
 # ---------------------------------------------------------------------------
@@ -60,9 +61,9 @@ REPO_ROOT_DIR = SCRIPT_DIR.parent
 CONFIG_PATH = REPO_ROOT_DIR / "config" / "sovereign_configs.json"
 
 DATA_ROOTS = [
-    "/home/tradebot/ssd_data_1/tick_data",
-    "/home/tradebot/ssd_data_2/tick_data",
-    "/home/tradebot/data_1/tick_data",
+    r"C:\tick_data\ssd1",
+    r"C:\tick_data\ssd2",
+    r"C:\tick_data\nvme",
 ]
 
 INFO_DIR = REPO_ROOT_DIR / "data" / "instrument_specs"
@@ -509,8 +510,14 @@ def run_symbol(symbol: str, args_dict: dict) -> dict:
     use_htf = args_dict.get("htf", False)
     bar_roots = args_dict.get("bar_roots", "")
 
-    fee_bps = broker_commission_bps(symbol)
-    slippage_bps = broker_slippage_bps(symbol)
+    account = args_dict.get("account", "")
+    if account:
+        _cm = get_cost_model(account)
+        fee_bps = _cm.commission_bps(symbol)
+        slippage_bps = _cm.slippage_bps(symbol)
+    else:
+        fee_bps = broker_commission_bps(symbol)
+        slippage_bps = broker_slippage_bps(symbol)
 
     # Try pre-downloaded bars first (much more history than tick data)
     bars = None
@@ -865,6 +872,11 @@ def parse_args() -> argparse.Namespace:
         help="Comma-separated symbol list",
     )
 
+    p.add_argument(
+        "--account", type=str, default="",
+        help="Account ID for cost model (e.g. ftmo_100k, bright_100k). "
+             "If omitted, uses hardcoded FTMO specs (backward-compatible).",
+    )
     p.add_argument("--trials", type=int, default=80, help="Trials per symbol")
     p.add_argument("--timeframe", type=str, default="H1")
     p.add_argument("--workers", type=int, default=4, help="Parallel symbol workers")
@@ -895,7 +907,7 @@ def parse_args() -> argparse.Namespace:
     )
     p.add_argument(
         "--bar-roots", type=str,
-        default="/home/tradebot/ssd_data_2/bars",
+        default=r"C:\tick_data\bars",
         help="Root directory for pre-downloaded bar data",
     )
     p.add_argument(
@@ -952,17 +964,26 @@ def main():
         "m5_agg": args.m5_agg,
         "bar_roots": args.bar_roots,
         "min_date_ts": int((datetime.now() - timedelta(days=args.min_years * 365)).timestamp()) if args.min_years > 0 else None,
+        "account": args.account,
     }
 
+    # Cost model for display
+    _display_cm = get_cost_model(args.account) if args.account else None
+
+    acct_tag = f" | account={args.account}" if args.account else ""
     m5_tag = " | M5→agg" if args.m5_agg else ""
-    print(f"[orchestrator] {len(symbols)} symbols | {args.timeframe}{m5_tag} | "
+    print(f"[orchestrator] {len(symbols)} symbols | {args.timeframe}{m5_tag}{acct_tag} | "
           f"z={args.z_threshold} | "
           f"discovery={args.discovery_cutoff} → deep={args.trials} trials | "
           f"{args.workers} workers | {args.trial_jobs} trial-jobs/sym")
     print(f"  Output: {out_dir}")
     for sym in symbols:
-        fee = broker_commission_bps(sym)
-        slip = broker_slippage_bps(sym)
+        if _display_cm:
+            fee = _display_cm.commission_bps(sym)
+            slip = _display_cm.slippage_bps(sym)
+        else:
+            fee = broker_commission_bps(sym)
+            slip = broker_slippage_bps(sym)
         print(f"  {sym:20s} -> {cluster_for_symbol(sym):9s}  "
               f"fee={fee:.1f}bps  slip={slip:.1f}bps")
     print()
@@ -998,6 +1019,8 @@ def main():
             rows.append(r)
 
     out_df = pl.from_dicts(rows).sort("symbol")
+    if args.account:
+        out_df = out_df.with_columns(pl.lit(args.account).alias("account_id"))
     out_df.write_parquet(os.path.join(out_dir, "summary.parquet"), compression="zstd")
     out_df.write_csv(os.path.join(out_dir, "summary.csv"))
     print(f"\n[orchestrator] Done — {os.path.join(out_dir, 'summary.csv')}")

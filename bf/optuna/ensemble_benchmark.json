@@ -1,0 +1,3055 @@
+[
+  {
+    "symbol": "AAPL",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 8,
+    "n_bars": 964,
+    "xgb": {
+      "n_trades": 91,
+      "total_return": 0.09,
+      "sharpe": 0.3,
+      "pf": 1.12,
+      "max_dd_pct": 0.0,
+      "calmar": 0.5,
+      "win_rate": 14.3
+    },
+    "lgb": {
+      "n_trades": 91,
+      "total_return": 0.09,
+      "sharpe": 0.3,
+      "pf": 1.12,
+      "max_dd_pct": 0.0,
+      "calmar": 0.5,
+      "win_rate": 14.3
+    },
+    "cat": {
+      "n_trades": 73,
+      "total_return": -0.17,
+      "sharpe": -0.87,
+      "pf": 0.7,
+      "max_dd_pct": 0.0,
+      "calmar": -0.76,
+      "win_rate": 9.6
+    },
+    "ensemble": {
+      "n_trades": 53,
+      "total_return": 0.09,
+      "sharpe": 0.42,
+      "pf": 1.22,
+      "max_dd_pct": 0.0,
+      "calmar": 0.9,
+      "win_rate": 15.1
+    }
+  },
+  {
+    "symbol": "AAVUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 165,
+      "total_return": 0.47,
+      "sharpe": 0.7,
+      "pf": 1.16,
+      "max_dd_pct": 0.0,
+      "calmar": 1.22,
+      "win_rate": 40.0
+    },
+    "lgb": {
+      "n_trades": 88,
+      "total_return": 0.21,
+      "sharpe": 0.47,
+      "pf": 1.14,
+      "max_dd_pct": 0.0,
+      "calmar": 0.51,
+      "win_rate": 45.5
+    },
+    "cat": {
+      "n_trades": 104,
+      "total_return": 0.63,
+      "sharpe": 1.12,
+      "pf": 1.34,
+      "max_dd_pct": 0.0,
+      "calmar": 1.87,
+      "win_rate": 42.3
+    },
+    "ensemble": {
+      "n_trades": 80,
+      "total_return": 0.63,
+      "sharpe": 1.29,
+      "pf": 1.46,
+      "max_dd_pct": 0.0,
+      "calmar": 3.06,
+      "win_rate": 45.0
+    }
+  },
+  {
+    "symbol": "ALGUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 157,
+      "total_return": 0.29,
+      "sharpe": 0.48,
+      "pf": 1.1,
+      "max_dd_pct": 0.0,
+      "calmar": 0.81,
+      "win_rate": 38.2
+    },
+    "lgb": {
+      "n_trades": 99,
+      "total_return": -0.01,
+      "sharpe": -0.01,
+      "pf": 1.0,
+      "max_dd_pct": 0.0,
+      "calmar": -0.01,
+      "win_rate": 35.4
+    },
+    "cat": {
+      "n_trades": 105,
+      "total_return": 0.06,
+      "sharpe": 0.13,
+      "pf": 1.03,
+      "max_dd_pct": 0.0,
+      "calmar": 0.13,
+      "win_rate": 41.0
+    },
+    "ensemble": {
+      "n_trades": 81,
+      "total_return": 0.21,
+      "sharpe": 0.48,
+      "pf": 1.15,
+      "max_dd_pct": 0.0,
+      "calmar": 0.49,
+      "win_rate": 38.3
+    }
+  },
+  {
+    "symbol": "ALVG",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 15,
+    "n_bars": 1495,
+    "xgb": {
+      "n_trades": 274,
+      "total_return": 0.09,
+      "sharpe": 0.45,
+      "pf": 1.09,
+      "max_dd_pct": 0.0,
+      "calmar": 0.42,
+      "win_rate": 19.7
+    },
+    "lgb": {
+      "n_trades": 251,
+      "total_return": -0.03,
+      "sharpe": -0.18,
+      "pf": 0.96,
+      "max_dd_pct": 0.0,
+      "calmar": -0.16,
+      "win_rate": 19.1
+    },
+    "cat": {
+      "n_trades": 223,
+      "total_return": 0.08,
+      "sharpe": 0.46,
+      "pf": 1.1,
+      "max_dd_pct": 0.0,
+      "calmar": 0.67,
+      "win_rate": 20.2
+    },
+    "ensemble": {
+      "n_trades": 256,
+      "total_return": 0.02,
+      "sharpe": 0.14,
+      "pf": 1.03,
+      "max_dd_pct": 0.0,
+      "calmar": 0.17,
+      "win_rate": 19.9
+    }
+  },
+  {
+    "symbol": "AMZN",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 8,
+    "n_bars": 964,
+    "xgb": {
+      "n_trades": 156,
+      "total_return": 0.65,
+      "sharpe": 2.8,
+      "pf": 1.81,
+      "max_dd_pct": 0.0,
+      "calmar": 7.43,
+      "win_rate": 41.7
+    },
+    "lgb": {
+      "n_trades": 135,
+      "total_return": 0.68,
+      "sharpe": 2.97,
+      "pf": 1.95,
+      "max_dd_pct": 0.0,
+      "calmar": 7.81,
+      "win_rate": 43.7
+    },
+    "cat": {
+      "n_trades": 105,
+      "total_return": 0.32,
+      "sharpe": 1.82,
+      "pf": 1.58,
+      "max_dd_pct": 0.0,
+      "calmar": 3.29,
+      "win_rate": 38.1
+    },
+    "ensemble": {
+      "n_trades": 146,
+      "total_return": 0.57,
+      "sharpe": 2.58,
+      "pf": 1.77,
+      "max_dd_pct": 0.0,
+      "calmar": 5.38,
+      "win_rate": 39.0
+    }
+  },
+  {
+    "symbol": "AUD_CHF",
+    "cluster": "forex",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3116,
+    "xgb": {
+      "n_trades": 442,
+      "total_return": -0.35,
+      "sharpe": -3.15,
+      "pf": 0.65,
+      "max_dd_pct": 0.0,
+      "calmar": -0.95,
+      "win_rate": 16.1
+    },
+    "lgb": {
+      "n_trades": 384,
+      "total_return": -0.29,
+      "sharpe": -2.74,
+      "pf": 0.67,
+      "max_dd_pct": 0.0,
+      "calmar": -0.88,
+      "win_rate": 15.9
+    },
+    "cat": {
+      "n_trades": 382,
+      "total_return": -0.33,
+      "sharpe": -3.54,
+      "pf": 0.63,
+      "max_dd_pct": 0.0,
+      "calmar": -0.9,
+      "win_rate": 17.3
+    },
+    "ensemble": {
+      "n_trades": 442,
+      "total_return": -0.41,
+      "sharpe": -3.64,
+      "pf": 0.61,
+      "max_dd_pct": 0.0,
+      "calmar": -0.97,
+      "win_rate": 15.2
+    }
+  },
+  {
+    "symbol": "AUD_JPY",
+    "cluster": "forex",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3116,
+    "xgb": {
+      "n_trades": 446,
+      "total_return": -0.29,
+      "sharpe": -2.29,
+      "pf": 0.73,
+      "max_dd_pct": 0.0,
+      "calmar": -0.89,
+      "win_rate": 13.5
+    },
+    "lgb": {
+      "n_trades": 361,
+      "total_return": -0.33,
+      "sharpe": -3.19,
+      "pf": 0.62,
+      "max_dd_pct": 0.0,
+      "calmar": -0.92,
+      "win_rate": 11.9
+    },
+    "cat": {
+      "n_trades": 309,
+      "total_return": -0.49,
+      "sharpe": -5.63,
+      "pf": 0.41,
+      "max_dd_pct": 0.0,
+      "calmar": -0.94,
+      "win_rate": 8.4
+    },
+    "ensemble": {
+      "n_trades": 408,
+      "total_return": -0.24,
+      "sharpe": -1.93,
+      "pf": 0.75,
+      "max_dd_pct": 0.0,
+      "calmar": -0.91,
+      "win_rate": 13.5
+    }
+  },
+  {
+    "symbol": "AUD_USD",
+    "cluster": "forex",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3116,
+    "xgb": {
+      "n_trades": 351,
+      "total_return": -0.13,
+      "sharpe": -0.99,
+      "pf": 0.84,
+      "max_dd_pct": 0.0,
+      "calmar": -0.57,
+      "win_rate": 17.9
+    },
+    "lgb": {
+      "n_trades": 297,
+      "total_return": -0.21,
+      "sharpe": -1.74,
+      "pf": 0.72,
+      "max_dd_pct": 0.0,
+      "calmar": -0.68,
+      "win_rate": 16.2
+    },
+    "cat": {
+      "n_trades": 218,
+      "total_return": -0.12,
+      "sharpe": -1.04,
+      "pf": 0.79,
+      "max_dd_pct": 0.0,
+      "calmar": -0.85,
+      "win_rate": 17.0
+    },
+    "ensemble": {
+      "n_trades": 319,
+      "total_return": -0.09,
+      "sharpe": -0.74,
+      "pf": 0.87,
+      "max_dd_pct": 0.0,
+      "calmar": -0.49,
+      "win_rate": 18.2
+    }
+  },
+  {
+    "symbol": "AUS200.cash",
+    "cluster": "index",
+    "timeframe": "H4",
+    "n_folds": 34,
+    "n_bars": 3045,
+    "xgb": {
+      "n_trades": 257,
+      "total_return": -0.04,
+      "sharpe": -0.26,
+      "pf": 0.96,
+      "max_dd_pct": 0.0,
+      "calmar": -0.14,
+      "win_rate": 26.5
+    },
+    "lgb": {
+      "n_trades": 240,
+      "total_return": 0.16,
+      "sharpe": 0.92,
+      "pf": 1.18,
+      "max_dd_pct": 0.0,
+      "calmar": 0.86,
+      "win_rate": 28.3
+    },
+    "cat": {
+      "n_trades": 209,
+      "total_return": 0.02,
+      "sharpe": 0.11,
+      "pf": 1.02,
+      "max_dd_pct": 0.0,
+      "calmar": 0.08,
+      "win_rate": 26.3
+    },
+    "ensemble": {
+      "n_trades": 256,
+      "total_return": -0.06,
+      "sharpe": -0.36,
+      "pf": 0.94,
+      "max_dd_pct": 0.0,
+      "calmar": -0.18,
+      "win_rate": 25.4
+    }
+  },
+  {
+    "symbol": "AVAUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 166,
+      "total_return": 0.48,
+      "sharpe": 0.76,
+      "pf": 1.16,
+      "max_dd_pct": 0.0,
+      "calmar": 0.79,
+      "win_rate": 36.1
+    },
+    "lgb": {
+      "n_trades": 166,
+      "total_return": 0.48,
+      "sharpe": 0.76,
+      "pf": 1.16,
+      "max_dd_pct": 0.0,
+      "calmar": 0.79,
+      "win_rate": 36.1
+    },
+    "cat": {
+      "n_trades": 107,
+      "total_return": 0.16,
+      "sharpe": 0.33,
+      "pf": 1.08,
+      "max_dd_pct": 0.0,
+      "calmar": 0.31,
+      "win_rate": 38.3
+    },
+    "ensemble": {
+      "n_trades": 109,
+      "total_return": 0.4,
+      "sharpe": 0.79,
+      "pf": 1.2,
+      "max_dd_pct": 0.0,
+      "calmar": 0.87,
+      "win_rate": 39.4
+    }
+  },
+  {
+    "symbol": "BABA",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 8,
+    "n_bars": 964,
+    "xgb": {
+      "n_trades": 92,
+      "total_return": -0.6,
+      "sharpe": -1.58,
+      "pf": 0.68,
+      "max_dd_pct": 0.0,
+      "calmar": -1.02,
+      "win_rate": 35.9
+    },
+    "lgb": {
+      "n_trades": 81,
+      "total_return": -0.18,
+      "sharpe": -0.48,
+      "pf": 0.88,
+      "max_dd_pct": 0.0,
+      "calmar": -0.4,
+      "win_rate": 40.7
+    },
+    "cat": {
+      "n_trades": 69,
+      "total_return": -0.39,
+      "sharpe": -1.16,
+      "pf": 0.72,
+      "max_dd_pct": 0.0,
+      "calmar": -0.78,
+      "win_rate": 37.7
+    },
+    "ensemble": {
+      "n_trades": 89,
+      "total_return": -0.63,
+      "sharpe": -1.67,
+      "pf": 0.65,
+      "max_dd_pct": 0.0,
+      "calmar": -0.98,
+      "win_rate": 36.0
+    }
+  },
+  {
+    "symbol": "BAC",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 8,
+    "n_bars": 964,
+    "xgb": {
+      "n_trades": 83,
+      "total_return": 0.37,
+      "sharpe": 1.13,
+      "pf": 1.53,
+      "max_dd_pct": 0.0,
+      "calmar": 2.25,
+      "win_rate": 27.7
+    },
+    "lgb": {
+      "n_trades": 74,
+      "total_return": 0.05,
+      "sharpe": 0.22,
+      "pf": 1.08,
+      "max_dd_pct": 0.0,
+      "calmar": 0.28,
+      "win_rate": 24.3
+    },
+    "cat": {
+      "n_trades": 63,
+      "total_return": 0.01,
+      "sharpe": 0.02,
+      "pf": 1.01,
+      "max_dd_pct": 0.0,
+      "calmar": 0.03,
+      "win_rate": 22.2
+    },
+    "ensemble": {
+      "n_trades": 86,
+      "total_return": -0.07,
+      "sharpe": -0.24,
+      "pf": 0.91,
+      "max_dd_pct": 0.0,
+      "calmar": -0.3,
+      "win_rate": 24.4
+    }
+  },
+  {
+    "symbol": "BARUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 100,
+      "total_return": 0.99,
+      "sharpe": 1.36,
+      "pf": 1.45,
+      "max_dd_pct": 0.0,
+      "calmar": 2.08,
+      "win_rate": 38.0
+    },
+    "lgb": {
+      "n_trades": 96,
+      "total_return": -0.08,
+      "sharpe": -0.12,
+      "pf": 0.97,
+      "max_dd_pct": 0.0,
+      "calmar": -0.15,
+      "win_rate": 32.3
+    },
+    "cat": {
+      "n_trades": 84,
+      "total_return": 0.09,
+      "sharpe": 0.12,
+      "pf": 1.04,
+      "max_dd_pct": 0.0,
+      "calmar": 0.15,
+      "win_rate": 26.2
+    },
+    "ensemble": {
+      "n_trades": 100,
+      "total_return": 1.0,
+      "sharpe": 1.36,
+      "pf": 1.46,
+      "max_dd_pct": 0.0,
+      "calmar": 2.74,
+      "win_rate": 37.0
+    }
+  },
+  {
+    "symbol": "BAYGn",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 15,
+    "n_bars": 1494,
+    "xgb": {
+      "n_trades": 120,
+      "total_return": 0.46,
+      "sharpe": 1.1,
+      "pf": 1.32,
+      "max_dd_pct": 0.0,
+      "calmar": 1.12,
+      "win_rate": 28.3
+    },
+    "lgb": {
+      "n_trades": 116,
+      "total_return": 0.29,
+      "sharpe": 0.72,
+      "pf": 1.2,
+      "max_dd_pct": 0.0,
+      "calmar": 0.85,
+      "win_rate": 27.6
+    },
+    "cat": {
+      "n_trades": 97,
+      "total_return": 0.33,
+      "sharpe": 0.86,
+      "pf": 1.27,
+      "max_dd_pct": 0.0,
+      "calmar": 0.78,
+      "win_rate": 26.8
+    },
+    "ensemble": {
+      "n_trades": 113,
+      "total_return": 0.81,
+      "sharpe": 1.91,
+      "pf": 1.62,
+      "max_dd_pct": 0.0,
+      "calmar": 2.25,
+      "win_rate": 32.7
+    }
+  },
+  {
+    "symbol": "BNBUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 96,
+      "total_return": -0.39,
+      "sharpe": -0.79,
+      "pf": 0.77,
+      "max_dd_pct": 0.0,
+      "calmar": -0.52,
+      "win_rate": 24.0
+    },
+    "lgb": {
+      "n_trades": 94,
+      "total_return": -0.19,
+      "sharpe": -0.39,
+      "pf": 0.87,
+      "max_dd_pct": 0.0,
+      "calmar": -0.32,
+      "win_rate": 19.1
+    },
+    "cat": {
+      "n_trades": 90,
+      "total_return": -0.24,
+      "sharpe": -0.48,
+      "pf": 0.84,
+      "max_dd_pct": 0.0,
+      "calmar": -0.37,
+      "win_rate": 21.1
+    },
+    "ensemble": {
+      "n_trades": 96,
+      "total_return": 0.1,
+      "sharpe": 0.19,
+      "pf": 1.07,
+      "max_dd_pct": 0.0,
+      "calmar": 0.19,
+      "win_rate": 27.1
+    }
+  },
+  {
+    "symbol": "CAD_JPY",
+    "cluster": "forex",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3116,
+    "xgb": {
+      "n_trades": 424,
+      "total_return": -0.19,
+      "sharpe": -1.64,
+      "pf": 0.79,
+      "max_dd_pct": 0.0,
+      "calmar": -0.83,
+      "win_rate": 24.8
+    },
+    "lgb": {
+      "n_trades": 386,
+      "total_return": -0.2,
+      "sharpe": -1.82,
+      "pf": 0.76,
+      "max_dd_pct": 0.0,
+      "calmar": -0.84,
+      "win_rate": 24.4
+    },
+    "cat": {
+      "n_trades": 272,
+      "total_return": -0.24,
+      "sharpe": -2.65,
+      "pf": 0.63,
+      "max_dd_pct": 0.0,
+      "calmar": -1.01,
+      "win_rate": 22.4
+    },
+    "ensemble": {
+      "n_trades": 419,
+      "total_return": -0.24,
+      "sharpe": -2.07,
+      "pf": 0.74,
+      "max_dd_pct": 0.0,
+      "calmar": -0.93,
+      "win_rate": 23.6
+    }
+  },
+  {
+    "symbol": "COCOA.c",
+    "cluster": "commodity",
+    "timeframe": "H4",
+    "n_folds": 21,
+    "n_bars": 1947,
+    "xgb": {
+      "n_trades": 192,
+      "total_return": -0.52,
+      "sharpe": -0.8,
+      "pf": 0.87,
+      "max_dd_pct": 0.0,
+      "calmar": -0.64,
+      "win_rate": 29.2
+    },
+    "lgb": {
+      "n_trades": 179,
+      "total_return": -0.78,
+      "sharpe": -1.29,
+      "pf": 0.79,
+      "max_dd_pct": 0.0,
+      "calmar": -0.73,
+      "win_rate": 26.3
+    },
+    "cat": {
+      "n_trades": 105,
+      "total_return": -0.37,
+      "sharpe": -0.81,
+      "pf": 0.82,
+      "max_dd_pct": 0.0,
+      "calmar": -0.61,
+      "win_rate": 26.7
+    },
+    "ensemble": {
+      "n_trades": 153,
+      "total_return": -0.78,
+      "sharpe": -1.44,
+      "pf": 0.76,
+      "max_dd_pct": 0.0,
+      "calmar": -1.03,
+      "win_rate": 26.8
+    }
+  },
+  {
+    "symbol": "COFFEE.c",
+    "cluster": "commodity",
+    "timeframe": "H4",
+    "n_folds": 21,
+    "n_bars": 1947,
+    "xgb": {
+      "n_trades": 191,
+      "total_return": -0.39,
+      "sharpe": -0.86,
+      "pf": 0.84,
+      "max_dd_pct": 0.0,
+      "calmar": -0.71,
+      "win_rate": 17.3
+    },
+    "lgb": {
+      "n_trades": 176,
+      "total_return": 0.05,
+      "sharpe": 0.12,
+      "pf": 1.02,
+      "max_dd_pct": 0.0,
+      "calmar": 0.11,
+      "win_rate": 19.3
+    },
+    "cat": {
+      "n_trades": 158,
+      "total_return": -0.09,
+      "sharpe": -0.21,
+      "pf": 0.95,
+      "max_dd_pct": 0.0,
+      "calmar": -0.24,
+      "win_rate": 19.0
+    },
+    "ensemble": {
+      "n_trades": 180,
+      "total_return": -0.25,
+      "sharpe": -0.57,
+      "pf": 0.89,
+      "max_dd_pct": 0.0,
+      "calmar": -0.48,
+      "win_rate": 18.9
+    }
+  },
+  {
+    "symbol": "DASHUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 51,
+    "n_bars": 4337,
+    "xgb": {
+      "n_trades": 376,
+      "total_return": 1.74,
+      "sharpe": 1.17,
+      "pf": 1.18,
+      "max_dd_pct": 0.0,
+      "calmar": 1.41,
+      "win_rate": 53.2
+    },
+    "lgb": {
+      "n_trades": 332,
+      "total_return": 1.21,
+      "sharpe": 0.82,
+      "pf": 1.13,
+      "max_dd_pct": 0.0,
+      "calmar": 1.31,
+      "win_rate": 52.1
+    },
+    "cat": {
+      "n_trades": 311,
+      "total_return": 1.34,
+      "sharpe": 0.98,
+      "pf": 1.16,
+      "max_dd_pct": 0.0,
+      "calmar": 1.18,
+      "win_rate": 54.0
+    },
+    "ensemble": {
+      "n_trades": 359,
+      "total_return": 0.89,
+      "sharpe": 0.61,
+      "pf": 1.09,
+      "max_dd_pct": 0.0,
+      "calmar": 0.65,
+      "win_rate": 50.7
+    }
+  },
+  {
+    "symbol": "DBKGn",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 15,
+    "n_bars": 1496,
+    "xgb": {
+      "n_trades": 218,
+      "total_return": 0.28,
+      "sharpe": 0.75,
+      "pf": 1.21,
+      "max_dd_pct": 0.0,
+      "calmar": 0.83,
+      "win_rate": 13.3
+    },
+    "lgb": {
+      "n_trades": 218,
+      "total_return": 0.28,
+      "sharpe": 0.75,
+      "pf": 1.21,
+      "max_dd_pct": 0.0,
+      "calmar": 0.83,
+      "win_rate": 13.3
+    },
+    "cat": {
+      "n_trades": 179,
+      "total_return": 0.72,
+      "sharpe": 1.85,
+      "pf": 1.67,
+      "max_dd_pct": 0.0,
+      "calmar": 5.04,
+      "win_rate": 17.9
+    },
+    "ensemble": {
+      "n_trades": 196,
+      "total_return": 0.08,
+      "sharpe": 0.27,
+      "pf": 1.07,
+      "max_dd_pct": 0.0,
+      "calmar": 0.28,
+      "win_rate": 13.3
+    }
+  },
+  {
+    "symbol": "ETCUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 189,
+      "total_return": 0.76,
+      "sharpe": 1.38,
+      "pf": 1.45,
+      "max_dd_pct": 0.0,
+      "calmar": 2.07,
+      "win_rate": 21.2
+    },
+    "lgb": {
+      "n_trades": 154,
+      "total_return": 0.37,
+      "sharpe": 0.68,
+      "pf": 1.22,
+      "max_dd_pct": 0.0,
+      "calmar": 1.27,
+      "win_rate": 20.1
+    },
+    "cat": {
+      "n_trades": 126,
+      "total_return": 0.2,
+      "sharpe": 0.48,
+      "pf": 1.15,
+      "max_dd_pct": 0.0,
+      "calmar": 0.77,
+      "win_rate": 23.8
+    },
+    "ensemble": {
+      "n_trades": 183,
+      "total_return": 0.44,
+      "sharpe": 0.86,
+      "pf": 1.24,
+      "max_dd_pct": 0.0,
+      "calmar": 1.36,
+      "win_rate": 23.0
+    }
+  },
+  {
+    "symbol": "EU50.cash",
+    "cluster": "index",
+    "timeframe": "H4",
+    "n_folds": 27,
+    "n_bars": 2440,
+    "xgb": {
+      "n_trades": 422,
+      "total_return": 0.15,
+      "sharpe": 0.91,
+      "pf": 1.16,
+      "max_dd_pct": 0.0,
+      "calmar": 1.2,
+      "win_rate": 21.3
+    },
+    "lgb": {
+      "n_trades": 351,
+      "total_return": 0.08,
+      "sharpe": 0.62,
+      "pf": 1.1,
+      "max_dd_pct": 0.0,
+      "calmar": 0.79,
+      "win_rate": 19.7
+    },
+    "cat": {
+      "n_trades": 230,
+      "total_return": -0.04,
+      "sharpe": -0.43,
+      "pf": 0.92,
+      "max_dd_pct": 0.0,
+      "calmar": -0.33,
+      "win_rate": 17.0
+    },
+    "ensemble": {
+      "n_trades": 391,
+      "total_return": 0.13,
+      "sharpe": 0.85,
+      "pf": 1.16,
+      "max_dd_pct": 0.0,
+      "calmar": 1.35,
+      "win_rate": 20.7
+    }
+  },
+  {
+    "symbol": "EUR_JPY",
+    "cluster": "forex",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3116,
+    "xgb": {
+      "n_trades": 259,
+      "total_return": -0.27,
+      "sharpe": -2.41,
+      "pf": 0.69,
+      "max_dd_pct": 0.0,
+      "calmar": -0.93,
+      "win_rate": 26.6
+    },
+    "lgb": {
+      "n_trades": 244,
+      "total_return": -0.14,
+      "sharpe": -1.2,
+      "pf": 0.83,
+      "max_dd_pct": 0.0,
+      "calmar": -0.89,
+      "win_rate": 27.5
+    },
+    "cat": {
+      "n_trades": 231,
+      "total_return": -0.24,
+      "sharpe": -2.19,
+      "pf": 0.7,
+      "max_dd_pct": 0.0,
+      "calmar": -0.91,
+      "win_rate": 26.4
+    },
+    "ensemble": {
+      "n_trades": 257,
+      "total_return": -0.17,
+      "sharpe": -1.5,
+      "pf": 0.79,
+      "max_dd_pct": 0.0,
+      "calmar": -0.79,
+      "win_rate": 29.2
+    }
+  },
+  {
+    "symbol": "EUR_USD",
+    "cluster": "forex",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3116,
+    "xgb": {
+      "n_trades": 385,
+      "total_return": -0.28,
+      "sharpe": -3.39,
+      "pf": 0.61,
+      "max_dd_pct": 0.0,
+      "calmar": -0.87,
+      "win_rate": 12.2
+    },
+    "lgb": {
+      "n_trades": 298,
+      "total_return": -0.16,
+      "sharpe": -2.2,
+      "pf": 0.7,
+      "max_dd_pct": 0.0,
+      "calmar": -0.84,
+      "win_rate": 13.8
+    },
+    "cat": {
+      "n_trades": 217,
+      "total_return": -0.22,
+      "sharpe": -4.1,
+      "pf": 0.48,
+      "max_dd_pct": 0.0,
+      "calmar": -0.93,
+      "win_rate": 11.5
+    },
+    "ensemble": {
+      "n_trades": 355,
+      "total_return": -0.23,
+      "sharpe": -2.94,
+      "pf": 0.64,
+      "max_dd_pct": 0.0,
+      "calmar": -0.87,
+      "win_rate": 13.5
+    }
+  },
+  {
+    "symbol": "FETUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 155,
+      "total_return": -0.88,
+      "sharpe": -1.18,
+      "pf": 0.79,
+      "max_dd_pct": 0.0,
+      "calmar": -0.68,
+      "win_rate": 34.8
+    },
+    "lgb": {
+      "n_trades": 134,
+      "total_return": -0.64,
+      "sharpe": -0.91,
+      "pf": 0.82,
+      "max_dd_pct": 0.0,
+      "calmar": -0.69,
+      "win_rate": 39.6
+    },
+    "cat": {
+      "n_trades": 129,
+      "total_return": -0.82,
+      "sharpe": -1.22,
+      "pf": 0.77,
+      "max_dd_pct": 0.0,
+      "calmar": -0.66,
+      "win_rate": 39.5
+    },
+    "ensemble": {
+      "n_trades": 148,
+      "total_return": -0.81,
+      "sharpe": -1.09,
+      "pf": 0.8,
+      "max_dd_pct": 0.0,
+      "calmar": -0.56,
+      "win_rate": 39.2
+    }
+  },
+  {
+    "symbol": "FRA40.cash",
+    "cluster": "index",
+    "timeframe": "H4",
+    "n_folds": 27,
+    "n_bars": 2438,
+    "xgb": {
+      "n_trades": 350,
+      "total_return": 0.13,
+      "sharpe": 0.73,
+      "pf": 1.15,
+      "max_dd_pct": 0.0,
+      "calmar": 1.28,
+      "win_rate": 14.0
+    },
+    "lgb": {
+      "n_trades": 321,
+      "total_return": 0.16,
+      "sharpe": 0.91,
+      "pf": 1.19,
+      "max_dd_pct": 0.0,
+      "calmar": 1.4,
+      "win_rate": 14.6
+    },
+    "cat": {
+      "n_trades": 241,
+      "total_return": 0.09,
+      "sharpe": 0.54,
+      "pf": 1.14,
+      "max_dd_pct": 0.0,
+      "calmar": 0.85,
+      "win_rate": 12.9
+    },
+    "ensemble": {
+      "n_trades": 328,
+      "total_return": 0.42,
+      "sharpe": 2.12,
+      "pf": 1.5,
+      "max_dd_pct": 0.0,
+      "calmar": 3.69,
+      "win_rate": 17.7
+    }
+  },
+  {
+    "symbol": "GALUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 127,
+      "total_return": -0.55,
+      "sharpe": -0.84,
+      "pf": 0.8,
+      "max_dd_pct": 0.0,
+      "calmar": -0.75,
+      "win_rate": 15.7
+    },
+    "lgb": {
+      "n_trades": 127,
+      "total_return": -0.55,
+      "sharpe": -0.84,
+      "pf": 0.8,
+      "max_dd_pct": 0.0,
+      "calmar": -0.75,
+      "win_rate": 15.7
+    },
+    "cat": {
+      "n_trades": 100,
+      "total_return": -0.29,
+      "sharpe": -0.5,
+      "pf": 0.86,
+      "max_dd_pct": 0.0,
+      "calmar": -0.6,
+      "win_rate": 17.0
+    },
+    "ensemble": {
+      "n_trades": 76,
+      "total_return": -0.44,
+      "sharpe": -0.92,
+      "pf": 0.74,
+      "max_dd_pct": 0.0,
+      "calmar": -0.57,
+      "win_rate": 15.8
+    }
+  },
+  {
+    "symbol": "GBP_JPY",
+    "cluster": "forex",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3116,
+    "xgb": {
+      "n_trades": 512,
+      "total_return": -0.36,
+      "sharpe": -3.65,
+      "pf": 0.63,
+      "max_dd_pct": 0.0,
+      "calmar": -0.96,
+      "win_rate": 12.1
+    },
+    "lgb": {
+      "n_trades": 434,
+      "total_return": -0.23,
+      "sharpe": -2.41,
+      "pf": 0.71,
+      "max_dd_pct": 0.0,
+      "calmar": -0.83,
+      "win_rate": 12.2
+    },
+    "cat": {
+      "n_trades": 371,
+      "total_return": -0.2,
+      "sharpe": -2.21,
+      "pf": 0.71,
+      "max_dd_pct": 0.0,
+      "calmar": -0.98,
+      "win_rate": 12.7
+    },
+    "ensemble": {
+      "n_trades": 489,
+      "total_return": -0.33,
+      "sharpe": -3.34,
+      "pf": 0.64,
+      "max_dd_pct": 0.0,
+      "calmar": -0.89,
+      "win_rate": 11.7
+    }
+  },
+  {
+    "symbol": "GBP_USD",
+    "cluster": "forex",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3116,
+    "xgb": {
+      "n_trades": 492,
+      "total_return": -0.41,
+      "sharpe": -5.45,
+      "pf": 0.54,
+      "max_dd_pct": 0.0,
+      "calmar": -0.96,
+      "win_rate": 19.5
+    },
+    "lgb": {
+      "n_trades": 418,
+      "total_return": -0.33,
+      "sharpe": -5.01,
+      "pf": 0.55,
+      "max_dd_pct": 0.0,
+      "calmar": -0.96,
+      "win_rate": 21.5
+    },
+    "cat": {
+      "n_trades": 426,
+      "total_return": -0.43,
+      "sharpe": -6.73,
+      "pf": 0.46,
+      "max_dd_pct": 0.0,
+      "calmar": -0.99,
+      "win_rate": 18.8
+    },
+    "ensemble": {
+      "n_trades": 473,
+      "total_return": -0.39,
+      "sharpe": -5.34,
+      "pf": 0.54,
+      "max_dd_pct": 0.0,
+      "calmar": -0.95,
+      "win_rate": 19.2
+    }
+  },
+  {
+    "symbol": "GER40.cash",
+    "cluster": "index",
+    "timeframe": "H4",
+    "n_folds": 34,
+    "n_bars": 3044,
+    "xgb": {
+      "n_trades": 325,
+      "total_return": -0.11,
+      "sharpe": -0.56,
+      "pf": 0.91,
+      "max_dd_pct": 0.0,
+      "calmar": -0.29,
+      "win_rate": 16.0
+    },
+    "lgb": {
+      "n_trades": 272,
+      "total_return": 0.04,
+      "sharpe": 0.24,
+      "pf": 1.04,
+      "max_dd_pct": 0.0,
+      "calmar": 0.17,
+      "win_rate": 18.8
+    },
+    "cat": {
+      "n_trades": 236,
+      "total_return": -0.03,
+      "sharpe": -0.19,
+      "pf": 0.96,
+      "max_dd_pct": 0.0,
+      "calmar": -0.11,
+      "win_rate": 16.5
+    },
+    "ensemble": {
+      "n_trades": 302,
+      "total_return": -0.36,
+      "sharpe": -2.02,
+      "pf": 0.69,
+      "max_dd_pct": 0.0,
+      "calmar": -0.89,
+      "win_rate": 13.2
+    }
+  },
+  {
+    "symbol": "GOOG",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 8,
+    "n_bars": 964,
+    "xgb": {
+      "n_trades": 78,
+      "total_return": 0.07,
+      "sharpe": 0.23,
+      "pf": 1.06,
+      "max_dd_pct": 0.0,
+      "calmar": 0.16,
+      "win_rate": 50.0
+    },
+    "lgb": {
+      "n_trades": 81,
+      "total_return": -0.15,
+      "sharpe": -0.52,
+      "pf": 0.87,
+      "max_dd_pct": 0.0,
+      "calmar": -0.32,
+      "win_rate": 45.7
+    },
+    "cat": {
+      "n_trades": 67,
+      "total_return": 0.21,
+      "sharpe": 0.75,
+      "pf": 1.26,
+      "max_dd_pct": 0.0,
+      "calmar": 0.78,
+      "win_rate": 53.7
+    },
+    "ensemble": {
+      "n_trades": 72,
+      "total_return": 0.09,
+      "sharpe": 0.32,
+      "pf": 1.1,
+      "max_dd_pct": 0.0,
+      "calmar": 0.27,
+      "win_rate": 51.4
+    }
+  },
+  {
+    "symbol": "GRTUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 169,
+      "total_return": -0.03,
+      "sharpe": -0.06,
+      "pf": 0.99,
+      "max_dd_pct": 0.0,
+      "calmar": -0.07,
+      "win_rate": 30.8
+    },
+    "lgb": {
+      "n_trades": 169,
+      "total_return": -0.03,
+      "sharpe": -0.06,
+      "pf": 0.99,
+      "max_dd_pct": 0.0,
+      "calmar": -0.07,
+      "win_rate": 30.8
+    },
+    "cat": {
+      "n_trades": 140,
+      "total_return": -0.37,
+      "sharpe": -0.76,
+      "pf": 0.85,
+      "max_dd_pct": 0.0,
+      "calmar": -0.57,
+      "win_rate": 30.0
+    },
+    "ensemble": {
+      "n_trades": 127,
+      "total_return": 0.14,
+      "sharpe": 0.26,
+      "pf": 1.06,
+      "max_dd_pct": 0.0,
+      "calmar": 0.19,
+      "win_rate": 32.3
+    }
+  },
+  {
+    "symbol": "HK50.cash",
+    "cluster": "index",
+    "timeframe": "H4",
+    "n_folds": 31,
+    "n_bars": 2743,
+    "xgb": {
+      "n_trades": 251,
+      "total_return": -0.0,
+      "sharpe": -0.0,
+      "pf": 1.0,
+      "max_dd_pct": 0.0,
+      "calmar": -0.0,
+      "win_rate": 28.3
+    },
+    "lgb": {
+      "n_trades": 222,
+      "total_return": 0.11,
+      "sharpe": 0.43,
+      "pf": 1.07,
+      "max_dd_pct": 0.0,
+      "calmar": 0.5,
+      "win_rate": 30.2
+    },
+    "cat": {
+      "n_trades": 196,
+      "total_return": -0.05,
+      "sharpe": -0.19,
+      "pf": 0.97,
+      "max_dd_pct": 0.0,
+      "calmar": -0.17,
+      "win_rate": 28.1
+    },
+    "ensemble": {
+      "n_trades": 257,
+      "total_return": -0.18,
+      "sharpe": -0.66,
+      "pf": 0.9,
+      "max_dd_pct": 0.0,
+      "calmar": -0.43,
+      "win_rate": 26.1
+    }
+  },
+  {
+    "symbol": "ICPUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 130,
+      "total_return": -0.87,
+      "sharpe": -1.19,
+      "pf": 0.73,
+      "max_dd_pct": 0.0,
+      "calmar": -0.71,
+      "win_rate": 17.7
+    },
+    "lgb": {
+      "n_trades": 131,
+      "total_return": -1.47,
+      "sharpe": -2.19,
+      "pf": 0.55,
+      "max_dd_pct": 0.0,
+      "calmar": -0.97,
+      "win_rate": 14.5
+    },
+    "cat": {
+      "n_trades": 131,
+      "total_return": -0.98,
+      "sharpe": -1.45,
+      "pf": 0.69,
+      "max_dd_pct": 0.0,
+      "calmar": -0.89,
+      "win_rate": 17.6
+    },
+    "ensemble": {
+      "n_trades": 125,
+      "total_return": -1.18,
+      "sharpe": -1.71,
+      "pf": 0.64,
+      "max_dd_pct": 0.0,
+      "calmar": -0.92,
+      "win_rate": 16.8
+    }
+  },
+  {
+    "symbol": "IMXUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 115,
+      "total_return": 0.15,
+      "sharpe": 0.2,
+      "pf": 1.05,
+      "max_dd_pct": 0.0,
+      "calmar": 0.28,
+      "win_rate": 26.1
+    },
+    "lgb": {
+      "n_trades": 101,
+      "total_return": -0.16,
+      "sharpe": -0.25,
+      "pf": 0.94,
+      "max_dd_pct": 0.0,
+      "calmar": -0.28,
+      "win_rate": 23.8
+    },
+    "cat": {
+      "n_trades": 103,
+      "total_return": 0.13,
+      "sharpe": 0.19,
+      "pf": 1.05,
+      "max_dd_pct": 0.0,
+      "calmar": 0.23,
+      "win_rate": 27.2
+    },
+    "ensemble": {
+      "n_trades": 109,
+      "total_return": 0.02,
+      "sharpe": 0.03,
+      "pf": 1.01,
+      "max_dd_pct": 0.0,
+      "calmar": 0.04,
+      "win_rate": 25.7
+    }
+  },
+  {
+    "symbol": "JP225.cash",
+    "cluster": "index",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3089,
+    "xgb": {
+      "n_trades": 241,
+      "total_return": -0.22,
+      "sharpe": -0.8,
+      "pf": 0.87,
+      "max_dd_pct": 0.0,
+      "calmar": -0.55,
+      "win_rate": 31.5
+    },
+    "lgb": {
+      "n_trades": 241,
+      "total_return": -0.22,
+      "sharpe": -0.8,
+      "pf": 0.87,
+      "max_dd_pct": 0.0,
+      "calmar": -0.55,
+      "win_rate": 31.5
+    },
+    "cat": {
+      "n_trades": 200,
+      "total_return": -0.2,
+      "sharpe": -0.81,
+      "pf": 0.86,
+      "max_dd_pct": 0.0,
+      "calmar": -0.58,
+      "win_rate": 32.5
+    },
+    "ensemble": {
+      "n_trades": 191,
+      "total_return": -0.24,
+      "sharpe": -0.95,
+      "pf": 0.83,
+      "max_dd_pct": 0.0,
+      "calmar": -0.7,
+      "win_rate": 34.0
+    }
+  },
+  {
+    "symbol": "LNKUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 158,
+      "total_return": 0.22,
+      "sharpe": 0.36,
+      "pf": 1.08,
+      "max_dd_pct": 0.0,
+      "calmar": 0.31,
+      "win_rate": 27.8
+    },
+    "lgb": {
+      "n_trades": 144,
+      "total_return": 0.14,
+      "sharpe": 0.22,
+      "pf": 1.05,
+      "max_dd_pct": 0.0,
+      "calmar": 0.22,
+      "win_rate": 26.4
+    },
+    "cat": {
+      "n_trades": 135,
+      "total_return": -0.38,
+      "sharpe": -0.68,
+      "pf": 0.85,
+      "max_dd_pct": 0.0,
+      "calmar": -0.35,
+      "win_rate": 23.0
+    },
+    "ensemble": {
+      "n_trades": 148,
+      "total_return": 0.75,
+      "sharpe": 1.2,
+      "pf": 1.31,
+      "max_dd_pct": 0.0,
+      "calmar": 1.5,
+      "win_rate": 32.4
+    }
+  },
+  {
+    "symbol": "LVMH",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 15,
+    "n_bars": 1493,
+    "xgb": {
+      "n_trades": 179,
+      "total_return": -0.25,
+      "sharpe": -0.79,
+      "pf": 0.86,
+      "max_dd_pct": 0.0,
+      "calmar": -0.46,
+      "win_rate": 28.5
+    },
+    "lgb": {
+      "n_trades": 160,
+      "total_return": -0.26,
+      "sharpe": -0.91,
+      "pf": 0.83,
+      "max_dd_pct": 0.0,
+      "calmar": -0.48,
+      "win_rate": 25.6
+    },
+    "cat": {
+      "n_trades": 148,
+      "total_return": -0.54,
+      "sharpe": -2.26,
+      "pf": 0.63,
+      "max_dd_pct": 0.0,
+      "calmar": -0.75,
+      "win_rate": 24.3
+    },
+    "ensemble": {
+      "n_trades": 179,
+      "total_return": -0.14,
+      "sharpe": -0.44,
+      "pf": 0.92,
+      "max_dd_pct": 0.0,
+      "calmar": -0.24,
+      "win_rate": 29.6
+    }
+  },
+  {
+    "symbol": "MANUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 167,
+      "total_return": -0.61,
+      "sharpe": -1.0,
+      "pf": 0.8,
+      "max_dd_pct": 0.0,
+      "calmar": -0.8,
+      "win_rate": 20.4
+    },
+    "lgb": {
+      "n_trades": 134,
+      "total_return": -0.15,
+      "sharpe": -0.27,
+      "pf": 0.94,
+      "max_dd_pct": 0.0,
+      "calmar": -0.27,
+      "win_rate": 22.4
+    },
+    "cat": {
+      "n_trades": 144,
+      "total_return": 0.04,
+      "sharpe": 0.06,
+      "pf": 1.01,
+      "max_dd_pct": 0.0,
+      "calmar": 0.08,
+      "win_rate": 25.0
+    },
+    "ensemble": {
+      "n_trades": 133,
+      "total_return": -0.36,
+      "sharpe": -0.7,
+      "pf": 0.85,
+      "max_dd_pct": 0.0,
+      "calmar": -0.4,
+      "win_rate": 22.6
+    }
+  },
+  {
+    "symbol": "META",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 8,
+    "n_bars": 964,
+    "xgb": {
+      "n_trades": 54,
+      "total_return": -0.12,
+      "sharpe": -0.36,
+      "pf": 0.88,
+      "max_dd_pct": 0.0,
+      "calmar": -0.38,
+      "win_rate": 50.0
+    },
+    "lgb": {
+      "n_trades": 50,
+      "total_return": 0.14,
+      "sharpe": 0.44,
+      "pf": 1.18,
+      "max_dd_pct": 0.0,
+      "calmar": 0.7,
+      "win_rate": 54.0
+    },
+    "cat": {
+      "n_trades": 45,
+      "total_return": 0.32,
+      "sharpe": 1.07,
+      "pf": 1.56,
+      "max_dd_pct": 0.0,
+      "calmar": 2.26,
+      "win_rate": 60.0
+    },
+    "ensemble": {
+      "n_trades": 55,
+      "total_return": -0.07,
+      "sharpe": -0.21,
+      "pf": 0.93,
+      "max_dd_pct": 0.0,
+      "calmar": -0.23,
+      "win_rate": 49.1
+    }
+  },
+  {
+    "symbol": "MSFT",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 8,
+    "n_bars": 964,
+    "xgb": {
+      "n_trades": 84,
+      "total_return": 0.04,
+      "sharpe": 0.18,
+      "pf": 1.07,
+      "max_dd_pct": 0.0,
+      "calmar": 0.2,
+      "win_rate": 17.9
+    },
+    "lgb": {
+      "n_trades": 79,
+      "total_return": -0.09,
+      "sharpe": -0.35,
+      "pf": 0.87,
+      "max_dd_pct": 0.0,
+      "calmar": -0.39,
+      "win_rate": 15.2
+    },
+    "cat": {
+      "n_trades": 76,
+      "total_return": -0.39,
+      "sharpe": -2.33,
+      "pf": 0.48,
+      "max_dd_pct": 0.0,
+      "calmar": -0.76,
+      "win_rate": 10.5
+    },
+    "ensemble": {
+      "n_trades": 83,
+      "total_return": 0.02,
+      "sharpe": 0.09,
+      "pf": 1.03,
+      "max_dd_pct": 0.0,
+      "calmar": 0.1,
+      "win_rate": 18.1
+    }
+  },
+  {
+    "symbol": "NERUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1742,
+    "xgb": {
+      "n_trades": 88,
+      "total_return": -0.42,
+      "sharpe": -0.56,
+      "pf": 0.87,
+      "max_dd_pct": 0.0,
+      "calmar": -0.27,
+      "win_rate": 46.6
+    },
+    "lgb": {
+      "n_trades": 88,
+      "total_return": -0.42,
+      "sharpe": -0.56,
+      "pf": 0.87,
+      "max_dd_pct": 0.0,
+      "calmar": -0.27,
+      "win_rate": 46.6
+    },
+    "cat": {
+      "n_trades": 80,
+      "total_return": 0.69,
+      "sharpe": 0.82,
+      "pf": 1.27,
+      "max_dd_pct": 0.0,
+      "calmar": 0.73,
+      "win_rate": 52.5
+    },
+    "ensemble": {
+      "n_trades": 58,
+      "total_return": 0.12,
+      "sharpe": 0.15,
+      "pf": 1.05,
+      "max_dd_pct": 0.0,
+      "calmar": 0.11,
+      "win_rate": 46.6
+    }
+  },
+  {
+    "symbol": "NVDA",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 8,
+    "n_bars": 964,
+    "xgb": {
+      "n_trades": 98,
+      "total_return": 0.04,
+      "sharpe": 0.12,
+      "pf": 1.04,
+      "max_dd_pct": 0.0,
+      "calmar": 0.23,
+      "win_rate": 22.4
+    },
+    "lgb": {
+      "n_trades": 90,
+      "total_return": -0.09,
+      "sharpe": -0.26,
+      "pf": 0.91,
+      "max_dd_pct": 0.0,
+      "calmar": -0.37,
+      "win_rate": 20.0
+    },
+    "cat": {
+      "n_trades": 70,
+      "total_return": 0.16,
+      "sharpe": 0.44,
+      "pf": 1.21,
+      "max_dd_pct": 0.0,
+      "calmar": 1.03,
+      "win_rate": 22.9
+    },
+    "ensemble": {
+      "n_trades": 89,
+      "total_return": 0.3,
+      "sharpe": 0.76,
+      "pf": 1.31,
+      "max_dd_pct": 0.0,
+      "calmar": 1.55,
+      "win_rate": 23.6
+    }
+  },
+  {
+    "symbol": "NZD_JPY",
+    "cluster": "forex",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3116,
+    "xgb": {
+      "n_trades": 399,
+      "total_return": -0.2,
+      "sharpe": -1.48,
+      "pf": 0.81,
+      "max_dd_pct": 0.0,
+      "calmar": -0.82,
+      "win_rate": 21.8
+    },
+    "lgb": {
+      "n_trades": 372,
+      "total_return": -0.27,
+      "sharpe": -2.12,
+      "pf": 0.73,
+      "max_dd_pct": 0.0,
+      "calmar": -0.97,
+      "win_rate": 20.4
+    },
+    "cat": {
+      "n_trades": 291,
+      "total_return": -0.34,
+      "sharpe": -3.55,
+      "pf": 0.59,
+      "max_dd_pct": 0.0,
+      "calmar": -0.92,
+      "win_rate": 18.9
+    },
+    "ensemble": {
+      "n_trades": 396,
+      "total_return": -0.24,
+      "sharpe": -1.81,
+      "pf": 0.77,
+      "max_dd_pct": 0.0,
+      "calmar": -0.83,
+      "win_rate": 21.5
+    }
+  },
+  {
+    "symbol": "NZD_USD",
+    "cluster": "forex",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3115,
+    "xgb": {
+      "n_trades": 230,
+      "total_return": -0.11,
+      "sharpe": -0.87,
+      "pf": 0.87,
+      "max_dd_pct": 0.0,
+      "calmar": -0.5,
+      "win_rate": 31.3
+    },
+    "lgb": {
+      "n_trades": 190,
+      "total_return": -0.04,
+      "sharpe": -0.34,
+      "pf": 0.94,
+      "max_dd_pct": 0.0,
+      "calmar": -0.22,
+      "win_rate": 31.6
+    },
+    "cat": {
+      "n_trades": 194,
+      "total_return": 0.05,
+      "sharpe": 0.46,
+      "pf": 1.09,
+      "max_dd_pct": 0.0,
+      "calmar": 0.46,
+      "win_rate": 32.5
+    },
+    "ensemble": {
+      "n_trades": 202,
+      "total_return": 0.03,
+      "sharpe": 0.21,
+      "pf": 1.04,
+      "max_dd_pct": 0.0,
+      "calmar": 0.2,
+      "win_rate": 35.1
+    }
+  },
+  {
+    "symbol": "PFE",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 8,
+    "n_bars": 964,
+    "xgb": {
+      "n_trades": 58,
+      "total_return": 0.23,
+      "sharpe": 0.93,
+      "pf": 1.45,
+      "max_dd_pct": 0.0,
+      "calmar": 1.56,
+      "win_rate": 34.5
+    },
+    "lgb": {
+      "n_trades": 48,
+      "total_return": 0.14,
+      "sharpe": 0.7,
+      "pf": 1.33,
+      "max_dd_pct": 0.0,
+      "calmar": 0.95,
+      "win_rate": 35.4
+    },
+    "cat": {
+      "n_trades": 57,
+      "total_return": -0.02,
+      "sharpe": -0.07,
+      "pf": 0.97,
+      "max_dd_pct": 0.0,
+      "calmar": -0.09,
+      "win_rate": 26.3
+    },
+    "ensemble": {
+      "n_trades": 41,
+      "total_return": 0.03,
+      "sharpe": 0.2,
+      "pf": 1.09,
+      "max_dd_pct": 0.0,
+      "calmar": 0.23,
+      "win_rate": 36.6
+    }
+  },
+  {
+    "symbol": "RACE",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 8,
+    "n_bars": 964,
+    "xgb": {
+      "n_trades": 101,
+      "total_return": 0.62,
+      "sharpe": 2.21,
+      "pf": 2.02,
+      "max_dd_pct": 0.0,
+      "calmar": 6.28,
+      "win_rate": 23.8
+    },
+    "lgb": {
+      "n_trades": 84,
+      "total_return": 0.4,
+      "sharpe": 1.7,
+      "pf": 1.78,
+      "max_dd_pct": 0.0,
+      "calmar": 6.62,
+      "win_rate": 23.8
+    },
+    "cat": {
+      "n_trades": 57,
+      "total_return": 0.04,
+      "sharpe": 0.21,
+      "pf": 1.09,
+      "max_dd_pct": 0.0,
+      "calmar": 0.21,
+      "win_rate": 19.3
+    },
+    "ensemble": {
+      "n_trades": 84,
+      "total_return": 0.41,
+      "sharpe": 1.66,
+      "pf": 1.71,
+      "max_dd_pct": 0.0,
+      "calmar": 4.86,
+      "win_rate": 27.4
+    }
+  },
+  {
+    "symbol": "SANUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 94,
+      "total_return": 0.16,
+      "sharpe": 0.22,
+      "pf": 1.06,
+      "max_dd_pct": 0.0,
+      "calmar": 0.35,
+      "win_rate": 27.7
+    },
+    "lgb": {
+      "n_trades": 64,
+      "total_return": 0.45,
+      "sharpe": 0.74,
+      "pf": 1.28,
+      "max_dd_pct": 0.0,
+      "calmar": 1.54,
+      "win_rate": 28.1
+    },
+    "cat": {
+      "n_trades": 83,
+      "total_return": 0.17,
+      "sharpe": 0.24,
+      "pf": 1.07,
+      "max_dd_pct": 0.0,
+      "calmar": 0.35,
+      "win_rate": 27.7
+    },
+    "ensemble": {
+      "n_trades": 84,
+      "total_return": -0.05,
+      "sharpe": -0.07,
+      "pf": 0.98,
+      "max_dd_pct": 0.0,
+      "calmar": -0.08,
+      "win_rate": 25.0
+    }
+  },
+  {
+    "symbol": "SOLUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 117,
+      "total_return": -0.06,
+      "sharpe": -0.11,
+      "pf": 0.97,
+      "max_dd_pct": 0.0,
+      "calmar": -0.07,
+      "win_rate": 32.5
+    },
+    "lgb": {
+      "n_trades": 111,
+      "total_return": -0.02,
+      "sharpe": -0.03,
+      "pf": 0.99,
+      "max_dd_pct": 0.0,
+      "calmar": -0.04,
+      "win_rate": 36.0
+    },
+    "cat": {
+      "n_trades": 97,
+      "total_return": -0.16,
+      "sharpe": -0.3,
+      "pf": 0.92,
+      "max_dd_pct": 0.0,
+      "calmar": -0.22,
+      "win_rate": 32.0
+    },
+    "ensemble": {
+      "n_trades": 116,
+      "total_return": -0.07,
+      "sharpe": -0.11,
+      "pf": 0.97,
+      "max_dd_pct": 0.0,
+      "calmar": -0.1,
+      "win_rate": 32.8
+    }
+  },
+  {
+    "symbol": "SPN35.cash",
+    "cluster": "index",
+    "timeframe": "H4",
+    "n_folds": 22,
+    "n_bars": 2021,
+    "xgb": {
+      "n_trades": 189,
+      "total_return": -0.47,
+      "sharpe": -2.54,
+      "pf": 0.6,
+      "max_dd_pct": 0.0,
+      "calmar": -0.92,
+      "win_rate": 17.5
+    },
+    "lgb": {
+      "n_trades": 181,
+      "total_return": -0.23,
+      "sharpe": -1.17,
+      "pf": 0.77,
+      "max_dd_pct": 0.0,
+      "calmar": -0.85,
+      "win_rate": 19.9
+    },
+    "cat": {
+      "n_trades": 152,
+      "total_return": -0.13,
+      "sharpe": -0.71,
+      "pf": 0.84,
+      "max_dd_pct": 0.0,
+      "calmar": -0.85,
+      "win_rate": 21.1
+    },
+    "ensemble": {
+      "n_trades": 179,
+      "total_return": -0.14,
+      "sharpe": -0.69,
+      "pf": 0.86,
+      "max_dd_pct": 0.0,
+      "calmar": -0.64,
+      "win_rate": 21.8
+    }
+  },
+  {
+    "symbol": "TSLA",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 8,
+    "n_bars": 964,
+    "xgb": {
+      "n_trades": 97,
+      "total_return": 1.16,
+      "sharpe": 1.79,
+      "pf": 1.86,
+      "max_dd_pct": 0.0,
+      "calmar": 1.86,
+      "win_rate": 21.6
+    },
+    "lgb": {
+      "n_trades": 76,
+      "total_return": 0.67,
+      "sharpe": 1.14,
+      "pf": 1.56,
+      "max_dd_pct": 0.0,
+      "calmar": 1.07,
+      "win_rate": 18.4
+    },
+    "cat": {
+      "n_trades": 85,
+      "total_return": 0.59,
+      "sharpe": 1.07,
+      "pf": 1.53,
+      "max_dd_pct": 0.0,
+      "calmar": 1.92,
+      "win_rate": 16.5
+    },
+    "ensemble": {
+      "n_trades": 92,
+      "total_return": 0.45,
+      "sharpe": 0.75,
+      "pf": 1.32,
+      "max_dd_pct": 0.0,
+      "calmar": 0.74,
+      "win_rate": 15.2
+    }
+  },
+  {
+    "symbol": "UK100.cash",
+    "cluster": "index",
+    "timeframe": "H4",
+    "n_folds": 34,
+    "n_bars": 3036,
+    "xgb": {
+      "n_trades": 413,
+      "total_return": -0.07,
+      "sharpe": -0.52,
+      "pf": 0.91,
+      "max_dd_pct": 0.0,
+      "calmar": -0.34,
+      "win_rate": 12.8
+    },
+    "lgb": {
+      "n_trades": 394,
+      "total_return": -0.07,
+      "sharpe": -0.56,
+      "pf": 0.9,
+      "max_dd_pct": 0.0,
+      "calmar": -0.46,
+      "win_rate": 12.4
+    },
+    "cat": {
+      "n_trades": 353,
+      "total_return": -0.05,
+      "sharpe": -0.37,
+      "pf": 0.93,
+      "max_dd_pct": 0.0,
+      "calmar": -0.43,
+      "win_rate": 13.3
+    },
+    "ensemble": {
+      "n_trades": 411,
+      "total_return": -0.22,
+      "sharpe": -1.81,
+      "pf": 0.75,
+      "max_dd_pct": 0.0,
+      "calmar": -0.63,
+      "win_rate": 11.9
+    }
+  },
+  {
+    "symbol": "UKOIL.cash",
+    "cluster": "commodity",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3104,
+    "xgb": {
+      "n_trades": 355,
+      "total_return": 0.02,
+      "sharpe": 0.06,
+      "pf": 1.01,
+      "max_dd_pct": 0.0,
+      "calmar": 0.1,
+      "win_rate": 36.3
+    },
+    "lgb": {
+      "n_trades": 323,
+      "total_return": 0.02,
+      "sharpe": 0.07,
+      "pf": 1.01,
+      "max_dd_pct": 0.0,
+      "calmar": 0.11,
+      "win_rate": 36.2
+    },
+    "cat": {
+      "n_trades": 282,
+      "total_return": 0.04,
+      "sharpe": 0.11,
+      "pf": 1.02,
+      "max_dd_pct": 0.0,
+      "calmar": 0.17,
+      "win_rate": 36.9
+    },
+    "ensemble": {
+      "n_trades": 344,
+      "total_return": 0.01,
+      "sharpe": 0.03,
+      "pf": 1.0,
+      "max_dd_pct": 0.0,
+      "calmar": 0.03,
+      "win_rate": 35.5
+    }
+  },
+  {
+    "symbol": "UNIUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 138,
+      "total_return": 1.0,
+      "sharpe": 1.26,
+      "pf": 1.35,
+      "max_dd_pct": 0.0,
+      "calmar": 1.92,
+      "win_rate": 38.4
+    },
+    "lgb": {
+      "n_trades": 128,
+      "total_return": 0.17,
+      "sharpe": 0.24,
+      "pf": 1.06,
+      "max_dd_pct": 0.0,
+      "calmar": 0.29,
+      "win_rate": 38.3
+    },
+    "cat": {
+      "n_trades": 131,
+      "total_return": -0.0,
+      "sharpe": -0.0,
+      "pf": 1.0,
+      "max_dd_pct": 0.0,
+      "calmar": -0.0,
+      "win_rate": 38.9
+    },
+    "ensemble": {
+      "n_trades": 138,
+      "total_return": -0.11,
+      "sharpe": -0.15,
+      "pf": 0.97,
+      "max_dd_pct": 0.0,
+      "calmar": -0.16,
+      "win_rate": 34.8
+    }
+  },
+  {
+    "symbol": "US100.cash",
+    "cluster": "index",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3089,
+    "xgb": {
+      "n_trades": 558,
+      "total_return": 0.36,
+      "sharpe": 1.85,
+      "pf": 1.32,
+      "max_dd_pct": 0.0,
+      "calmar": 2.9,
+      "win_rate": 24.6
+    },
+    "lgb": {
+      "n_trades": 464,
+      "total_return": 0.05,
+      "sharpe": 0.27,
+      "pf": 1.05,
+      "max_dd_pct": 0.0,
+      "calmar": 0.26,
+      "win_rate": 21.1
+    },
+    "cat": {
+      "n_trades": 387,
+      "total_return": 0.21,
+      "sharpe": 1.16,
+      "pf": 1.25,
+      "max_dd_pct": 0.0,
+      "calmar": 1.9,
+      "win_rate": 24.5
+    },
+    "ensemble": {
+      "n_trades": 515,
+      "total_return": 0.25,
+      "sharpe": 1.3,
+      "pf": 1.23,
+      "max_dd_pct": 0.0,
+      "calmar": 1.8,
+      "win_rate": 24.7
+    }
+  },
+  {
+    "symbol": "US2000.cash",
+    "cluster": "index",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3088,
+    "xgb": {
+      "n_trades": 260,
+      "total_return": -0.09,
+      "sharpe": -0.36,
+      "pf": 0.94,
+      "max_dd_pct": 0.0,
+      "calmar": -0.29,
+      "win_rate": 35.8
+    },
+    "lgb": {
+      "n_trades": 272,
+      "total_return": -0.07,
+      "sharpe": -0.25,
+      "pf": 0.96,
+      "max_dd_pct": 0.0,
+      "calmar": -0.16,
+      "win_rate": 36.4
+    },
+    "cat": {
+      "n_trades": 243,
+      "total_return": -0.26,
+      "sharpe": -0.98,
+      "pf": 0.84,
+      "max_dd_pct": 0.0,
+      "calmar": -0.56,
+      "win_rate": 35.0
+    },
+    "ensemble": {
+      "n_trades": 254,
+      "total_return": -0.1,
+      "sharpe": -0.37,
+      "pf": 0.94,
+      "max_dd_pct": 0.0,
+      "calmar": -0.31,
+      "win_rate": 35.8
+    }
+  },
+  {
+    "symbol": "US30.cash",
+    "cluster": "index",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3088,
+    "xgb": {
+      "n_trades": 345,
+      "total_return": 0.09,
+      "sharpe": 0.54,
+      "pf": 1.1,
+      "max_dd_pct": 0.0,
+      "calmar": 0.67,
+      "win_rate": 16.5
+    },
+    "lgb": {
+      "n_trades": 337,
+      "total_return": -0.23,
+      "sharpe": -1.64,
+      "pf": 0.75,
+      "max_dd_pct": 0.0,
+      "calmar": -0.87,
+      "win_rate": 13.6
+    },
+    "cat": {
+      "n_trades": 315,
+      "total_return": 0.12,
+      "sharpe": 0.76,
+      "pf": 1.15,
+      "max_dd_pct": 0.0,
+      "calmar": 1.14,
+      "win_rate": 18.1
+    },
+    "ensemble": {
+      "n_trades": 328,
+      "total_return": 0.13,
+      "sharpe": 0.74,
+      "pf": 1.15,
+      "max_dd_pct": 0.0,
+      "calmar": 1.16,
+      "win_rate": 17.7
+    }
+  },
+  {
+    "symbol": "US500.cash",
+    "cluster": "index",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3089,
+    "xgb": {
+      "n_trades": 282,
+      "total_return": -0.06,
+      "sharpe": -0.29,
+      "pf": 0.95,
+      "max_dd_pct": 0.0,
+      "calmar": -0.37,
+      "win_rate": 34.4
+    },
+    "lgb": {
+      "n_trades": 285,
+      "total_return": -0.06,
+      "sharpe": -0.29,
+      "pf": 0.95,
+      "max_dd_pct": 0.0,
+      "calmar": -0.35,
+      "win_rate": 33.7
+    },
+    "cat": {
+      "n_trades": 246,
+      "total_return": -0.07,
+      "sharpe": -0.41,
+      "pf": 0.93,
+      "max_dd_pct": 0.0,
+      "calmar": -0.25,
+      "win_rate": 32.1
+    },
+    "ensemble": {
+      "n_trades": 278,
+      "total_return": -0.1,
+      "sharpe": -0.56,
+      "pf": 0.9,
+      "max_dd_pct": 0.0,
+      "calmar": -0.53,
+      "win_rate": 33.1
+    }
+  },
+  {
+    "symbol": "USD_CHF",
+    "cluster": "forex",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3116,
+    "xgb": {
+      "n_trades": 232,
+      "total_return": -0.14,
+      "sharpe": -1.35,
+      "pf": 0.79,
+      "max_dd_pct": 0.0,
+      "calmar": -0.75,
+      "win_rate": 37.1
+    },
+    "lgb": {
+      "n_trades": 224,
+      "total_return": -0.17,
+      "sharpe": -1.77,
+      "pf": 0.73,
+      "max_dd_pct": 0.0,
+      "calmar": -0.75,
+      "win_rate": 36.2
+    },
+    "cat": {
+      "n_trades": 151,
+      "total_return": -0.23,
+      "sharpe": -2.67,
+      "pf": 0.56,
+      "max_dd_pct": 0.0,
+      "calmar": -0.91,
+      "win_rate": 31.1
+    },
+    "ensemble": {
+      "n_trades": 170,
+      "total_return": -0.1,
+      "sharpe": -1.11,
+      "pf": 0.8,
+      "max_dd_pct": 0.0,
+      "calmar": -0.71,
+      "win_rate": 40.6
+    }
+  },
+  {
+    "symbol": "USD_JPY",
+    "cluster": "forex",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3116,
+    "xgb": {
+      "n_trades": 684,
+      "total_return": -0.37,
+      "sharpe": -4.2,
+      "pf": 0.67,
+      "max_dd_pct": 0.0,
+      "calmar": -1.0,
+      "win_rate": 23.5
+    },
+    "lgb": {
+      "n_trades": 544,
+      "total_return": -0.22,
+      "sharpe": -2.63,
+      "pf": 0.75,
+      "max_dd_pct": 0.0,
+      "calmar": -1.01,
+      "win_rate": 23.3
+    },
+    "cat": {
+      "n_trades": 458,
+      "total_return": -0.14,
+      "sharpe": -1.86,
+      "pf": 0.81,
+      "max_dd_pct": 0.0,
+      "calmar": -1.01,
+      "win_rate": 27.1
+    },
+    "ensemble": {
+      "n_trades": 644,
+      "total_return": -0.44,
+      "sharpe": -5.0,
+      "pf": 0.61,
+      "max_dd_pct": 0.0,
+      "calmar": -1.0,
+      "win_rate": 22.4
+    }
+  },
+  {
+    "symbol": "USOIL.cash",
+    "cluster": "commodity",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3102,
+    "xgb": {
+      "n_trades": 481,
+      "total_return": -0.22,
+      "sharpe": -0.7,
+      "pf": 0.92,
+      "max_dd_pct": 0.0,
+      "calmar": -0.61,
+      "win_rate": 31.4
+    },
+    "lgb": {
+      "n_trades": 425,
+      "total_return": -0.38,
+      "sharpe": -1.32,
+      "pf": 0.85,
+      "max_dd_pct": 0.0,
+      "calmar": -0.74,
+      "win_rate": 31.1
+    },
+    "cat": {
+      "n_trades": 419,
+      "total_return": -0.35,
+      "sharpe": -1.13,
+      "pf": 0.87,
+      "max_dd_pct": 0.0,
+      "calmar": -0.73,
+      "win_rate": 28.2
+    },
+    "ensemble": {
+      "n_trades": 477,
+      "total_return": -0.53,
+      "sharpe": -1.61,
+      "pf": 0.82,
+      "max_dd_pct": 0.0,
+      "calmar": -0.81,
+      "win_rate": 28.5
+    }
+  },
+  {
+    "symbol": "V",
+    "cluster": "equity",
+    "timeframe": "H4",
+    "n_folds": 8,
+    "n_bars": 964,
+    "xgb": {
+      "n_trades": 91,
+      "total_return": 0.37,
+      "sharpe": 1.6,
+      "pf": 1.76,
+      "max_dd_pct": 0.0,
+      "calmar": 3.46,
+      "win_rate": 18.7
+    },
+    "lgb": {
+      "n_trades": 76,
+      "total_return": 0.3,
+      "sharpe": 1.43,
+      "pf": 1.78,
+      "max_dd_pct": 0.0,
+      "calmar": 4.72,
+      "win_rate": 17.1
+    },
+    "cat": {
+      "n_trades": 83,
+      "total_return": 0.36,
+      "sharpe": 1.6,
+      "pf": 1.84,
+      "max_dd_pct": 0.0,
+      "calmar": 5.44,
+      "win_rate": 18.1
+    },
+    "ensemble": {
+      "n_trades": 91,
+      "total_return": 0.27,
+      "sharpe": 1.17,
+      "pf": 1.53,
+      "max_dd_pct": 0.0,
+      "calmar": 2.83,
+      "win_rate": 16.5
+    }
+  },
+  {
+    "symbol": "VECUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 174,
+      "total_return": 0.16,
+      "sharpe": 0.27,
+      "pf": 1.06,
+      "max_dd_pct": 0.0,
+      "calmar": 0.31,
+      "win_rate": 23.0
+    },
+    "lgb": {
+      "n_trades": 174,
+      "total_return": 0.16,
+      "sharpe": 0.27,
+      "pf": 1.06,
+      "max_dd_pct": 0.0,
+      "calmar": 0.31,
+      "win_rate": 23.0
+    },
+    "cat": {
+      "n_trades": 119,
+      "total_return": 0.57,
+      "sharpe": 1.02,
+      "pf": 1.34,
+      "max_dd_pct": 0.0,
+      "calmar": 2.01,
+      "win_rate": 25.2
+    },
+    "ensemble": {
+      "n_trades": 136,
+      "total_return": -0.18,
+      "sharpe": -0.34,
+      "pf": 0.91,
+      "max_dd_pct": 0.0,
+      "calmar": -0.34,
+      "win_rate": 20.6
+    }
+  },
+  {
+    "symbol": "XAG_AUD",
+    "cluster": "commodity",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3103,
+    "xgb": {
+      "n_trades": 401,
+      "total_return": 0.23,
+      "sharpe": 0.57,
+      "pf": 1.11,
+      "max_dd_pct": 0.0,
+      "calmar": 0.87,
+      "win_rate": 16.0
+    },
+    "lgb": {
+      "n_trades": 333,
+      "total_return": 0.01,
+      "sharpe": 0.02,
+      "pf": 1.0,
+      "max_dd_pct": 0.0,
+      "calmar": 0.02,
+      "win_rate": 14.7
+    },
+    "cat": {
+      "n_trades": 323,
+      "total_return": 0.06,
+      "sharpe": 0.18,
+      "pf": 1.04,
+      "max_dd_pct": 0.0,
+      "calmar": 0.28,
+      "win_rate": 15.2
+    },
+    "ensemble": {
+      "n_trades": 269,
+      "total_return": 0.36,
+      "sharpe": 0.92,
+      "pf": 1.26,
+      "max_dd_pct": 0.0,
+      "calmar": 2.08,
+      "win_rate": 16.4
+    }
+  },
+  {
+    "symbol": "XAG_EUR",
+    "cluster": "commodity",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3103,
+    "xgb": {
+      "n_trades": 300,
+      "total_return": 0.32,
+      "sharpe": 0.68,
+      "pf": 1.14,
+      "max_dd_pct": 0.0,
+      "calmar": 0.92,
+      "win_rate": 20.0
+    },
+    "lgb": {
+      "n_trades": 269,
+      "total_return": 0.48,
+      "sharpe": 0.99,
+      "pf": 1.23,
+      "max_dd_pct": 0.0,
+      "calmar": 1.67,
+      "win_rate": 20.1
+    },
+    "cat": {
+      "n_trades": 265,
+      "total_return": -0.34,
+      "sharpe": -0.91,
+      "pf": 0.83,
+      "max_dd_pct": 0.0,
+      "calmar": -0.58,
+      "win_rate": 15.8
+    },
+    "ensemble": {
+      "n_trades": 298,
+      "total_return": 0.13,
+      "sharpe": 0.27,
+      "pf": 1.06,
+      "max_dd_pct": 0.0,
+      "calmar": 0.27,
+      "win_rate": 19.1
+    }
+  },
+  {
+    "symbol": "XAG_USD",
+    "cluster": "commodity",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3103,
+    "xgb": {
+      "n_trades": 245,
+      "total_return": -0.53,
+      "sharpe": -0.98,
+      "pf": 0.81,
+      "max_dd_pct": 0.0,
+      "calmar": -0.51,
+      "win_rate": 20.8
+    },
+    "lgb": {
+      "n_trades": 225,
+      "total_return": 0.21,
+      "sharpe": 0.38,
+      "pf": 1.09,
+      "max_dd_pct": 0.0,
+      "calmar": 0.34,
+      "win_rate": 22.7
+    },
+    "cat": {
+      "n_trades": 206,
+      "total_return": -0.61,
+      "sharpe": -1.27,
+      "pf": 0.71,
+      "max_dd_pct": 0.0,
+      "calmar": -0.68,
+      "win_rate": 17.5
+    },
+    "ensemble": {
+      "n_trades": 238,
+      "total_return": -0.71,
+      "sharpe": -1.64,
+      "pf": 0.74,
+      "max_dd_pct": 0.0,
+      "calmar": -0.54,
+      "win_rate": 22.7
+    }
+  },
+  {
+    "symbol": "XAU_AUD",
+    "cluster": "commodity",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3103,
+    "xgb": {
+      "n_trades": 258,
+      "total_return": -0.01,
+      "sharpe": -0.06,
+      "pf": 0.99,
+      "max_dd_pct": 0.0,
+      "calmar": -0.03,
+      "win_rate": 24.0
+    },
+    "lgb": {
+      "n_trades": 253,
+      "total_return": -0.15,
+      "sharpe": -0.64,
+      "pf": 0.9,
+      "max_dd_pct": 0.0,
+      "calmar": -0.34,
+      "win_rate": 22.9
+    },
+    "cat": {
+      "n_trades": 246,
+      "total_return": -0.05,
+      "sharpe": -0.22,
+      "pf": 0.96,
+      "max_dd_pct": 0.0,
+      "calmar": -0.18,
+      "win_rate": 24.0
+    },
+    "ensemble": {
+      "n_trades": 252,
+      "total_return": -0.06,
+      "sharpe": -0.27,
+      "pf": 0.96,
+      "max_dd_pct": 0.0,
+      "calmar": -0.17,
+      "win_rate": 24.2
+    }
+  },
+  {
+    "symbol": "XAU_EUR",
+    "cluster": "commodity",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3103,
+    "xgb": {
+      "n_trades": 407,
+      "total_return": -0.13,
+      "sharpe": -0.5,
+      "pf": 0.92,
+      "max_dd_pct": 0.0,
+      "calmar": -0.26,
+      "win_rate": 15.7
+    },
+    "lgb": {
+      "n_trades": 385,
+      "total_return": -0.1,
+      "sharpe": -0.4,
+      "pf": 0.93,
+      "max_dd_pct": 0.0,
+      "calmar": -0.22,
+      "win_rate": 15.8
+    },
+    "cat": {
+      "n_trades": 363,
+      "total_return": -0.07,
+      "sharpe": -0.28,
+      "pf": 0.95,
+      "max_dd_pct": 0.0,
+      "calmar": -0.16,
+      "win_rate": 15.4
+    },
+    "ensemble": {
+      "n_trades": 406,
+      "total_return": 0.05,
+      "sharpe": 0.17,
+      "pf": 1.03,
+      "max_dd_pct": 0.0,
+      "calmar": 0.11,
+      "win_rate": 16.0
+    }
+  },
+  {
+    "symbol": "XAU_USD",
+    "cluster": "commodity",
+    "timeframe": "H4",
+    "n_folds": 35,
+    "n_bars": 3103,
+    "xgb": {
+      "n_trades": 626,
+      "total_return": 0.2,
+      "sharpe": 0.98,
+      "pf": 1.13,
+      "max_dd_pct": 0.0,
+      "calmar": 1.47,
+      "win_rate": 25.1
+    },
+    "lgb": {
+      "n_trades": 568,
+      "total_return": 0.12,
+      "sharpe": 0.61,
+      "pf": 1.09,
+      "max_dd_pct": 0.0,
+      "calmar": 0.82,
+      "win_rate": 23.9
+    },
+    "cat": {
+      "n_trades": 479,
+      "total_return": 0.01,
+      "sharpe": 0.05,
+      "pf": 1.01,
+      "max_dd_pct": 0.0,
+      "calmar": 0.05,
+      "win_rate": 21.7
+    },
+    "ensemble": {
+      "n_trades": 613,
+      "total_return": 0.04,
+      "sharpe": 0.2,
+      "pf": 1.03,
+      "max_dd_pct": 0.0,
+      "calmar": 0.18,
+      "win_rate": 23.0
+    }
+  },
+  {
+    "symbol": "XCU_USD",
+    "cluster": "commodity",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1727,
+    "xgb": {
+      "n_trades": 193,
+      "total_return": 0.1,
+      "sharpe": 0.41,
+      "pf": 1.1,
+      "max_dd_pct": 0.0,
+      "calmar": 0.36,
+      "win_rate": 16.1
+    },
+    "lgb": {
+      "n_trades": 162,
+      "total_return": 0.16,
+      "sharpe": 0.7,
+      "pf": 1.2,
+      "max_dd_pct": 0.0,
+      "calmar": 1.3,
+      "win_rate": 17.3
+    },
+    "cat": {
+      "n_trades": 153,
+      "total_return": -0.02,
+      "sharpe": -0.11,
+      "pf": 0.97,
+      "max_dd_pct": 0.0,
+      "calmar": -0.08,
+      "win_rate": 15.0
+    },
+    "ensemble": {
+      "n_trades": 203,
+      "total_return": -0.14,
+      "sharpe": -0.62,
+      "pf": 0.86,
+      "max_dd_pct": 0.0,
+      "calmar": -0.47,
+      "win_rate": 13.3
+    }
+  },
+  {
+    "symbol": "XLMUSD",
+    "cluster": "crypto",
+    "timeframe": "H4",
+    "n_folds": 18,
+    "n_bars": 1743,
+    "xgb": {
+      "n_trades": 151,
+      "total_return": 0.23,
+      "sharpe": 0.41,
+      "pf": 1.11,
+      "max_dd_pct": 0.0,
+      "calmar": 0.48,
+      "win_rate": 19.9
+    },
+    "lgb": {
+      "n_trades": 126,
+      "total_return": 0.1,
+      "sharpe": 0.19,
+      "pf": 1.06,
+      "max_dd_pct": 0.0,
+      "calmar": 0.17,
+      "win_rate": 19.0
+    },
+    "cat": {
+      "n_trades": 104,
+      "total_return": -0.04,
+      "sharpe": -0.09,
+      "pf": 0.97,
+      "max_dd_pct": 0.0,
+      "calmar": -0.1,
+      "win_rate": 18.3
+    },
+    "ensemble": {
+      "n_trades": 117,
+      "total_return": -0.73,
+      "sharpe": -1.57,
+      "pf": 0.64,
+      "max_dd_pct": 0.0,
+      "calmar": -0.77,
+      "win_rate": 16.2
+    }
+  }
+]

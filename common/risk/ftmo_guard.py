@@ -16,7 +16,7 @@ class TradingSchedule:
     """Per-instrument trading hours loaded from FTMO CSV files."""
 
     GMT2_OFFSET = timedelta(hours=2)
-    FRIDAY_CLOSE_BUFFER_MIN = 10
+    FRIDAY_CLOSE_BUFFER_MIN = 90  # Block new trades 90 min before Friday close (was 10 — caused FRA40 weekend gap)
 
     def __init__(self, info_dir=None, override_csv=None):
         self.info_dir = info_dir or cfg.INFO_DIR
@@ -136,6 +136,19 @@ class TradingSchedule:
                     ("thu_open", "thu_close", 3),
                     ("fri_open", "fri_close", 4),
                 ]
+                # Weekend: sat_status/sun_status can be "closed" or "HH:MM"
+                # If it's a time like "00:05", treat sat_status as open, sun_status as close
+                sat_str = row.get("sat_status", "closed").strip()
+                sun_str = row.get("sun_status", "closed").strip()
+                if sat_str.lower() != "closed" and ":" in sat_str:
+                    # sat_status = open time, sun_status = close time (same for both days)
+                    o_parts = sat_str.split(":")
+                    c_parts = sun_str.split(":")
+                    if len(o_parts) == 2 and len(c_parts) == 2:
+                        o_min = int(o_parts[0]) * 60 + int(o_parts[1])
+                        c_min = int(c_parts[0]) * 60 + int(c_parts[1])
+                        day_map[5] = [(o_min, c_min)]  # Saturday
+                        day_map[6] = [(o_min, c_min)]  # Sunday
                 for open_col, close_col, day_idx in day_cols:
                     o_str = row.get(open_col, "").strip()
                     c_str = row.get(close_col, "").strip()
@@ -165,6 +178,9 @@ class TradingSchedule:
 
         sched = self.schedule.get(symbol)
         if sched is None:
+            # Weekend: always closed for non-crypto
+            if day_idx >= 5 and symbol not in self.crypto_symbols:
+                return False, None
             return True, None
 
         sessions = sched.get(day_idx)

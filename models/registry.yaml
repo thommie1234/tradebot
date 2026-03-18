@@ -1,0 +1,180 @@
+symbols:
+  USDILS:
+    champion: USDILS_20260306_155928
+    versions:
+    - version: USDILS_20260306_155928
+      path: /home/tradebot/tradebots/ftmo/models/versions/USDILS_20260306_155928.json
+      timestamp: '20260306_155928'
+      metadata:
+        train_samples: 3141
+        optuna_ev: -0.0007407571204075188
+        num_boost_round: 600
+    ab_results: []
+  USDNOK:
+    champion: USDNOK_20260306_155930
+    versions:
+    - version: USDNOK_20260306_155930
+      path: /home/tradebot/tradebots/ftmo/models/versions/USDNOK_20260306_155930.json
+      timestamp: '20260306_155930'
+      metadata:
+        train_samples: 3141
+        optuna_ev: -0.0002535878506164683
+        num_boost_round: 600
+    ab_results: []
+  EURUSD:
+    champion: EURUSD_20260317_100116
+    versions:
+    - version: EURUSD_20260315_075833
+      path: C:\tradebots\ftmo\models\versions\EURUSD_20260315_075833.json
+      timestamp: '20260315_075833'
+      metadata:
+        train_samples: 51179
+        optuna_ev: 0.00027155167278719746
+        num_boost_round: 400
+    - version: EURUSD_20260315_075855
+      path: C:\tradebots\ftmo\models\versions\EURUSD_20260315_075855.json
+      timestamp: '20260315_075855'
+      metadata:
+        train_samples: 25568
+        optuna_ev: 0.00027155167278719746
+        num_boost_round: 500
+    - version: EURUSD_20260315_080228
+      path: C:\tradebots\ftmo\models\versions\EURUSD_20260315_080228.json
+      timestamp: '20260315_080228'
+      metadata:
+        train_samples: 12760
+        optuna_ev: 0.00027155167278719746
+        num_boost_round: 800
+    - version: EURUSD_20260317_100116
+      path: C:\tradebots\ftmo\models\versions\EURUSD_20260317_100116.json
+      timestamp: '20260317_100116'
+      metadata:
+        train_samples: 152544
+        optuna_ev: 0.00027155167278719746
+        num_boost_round: 300
+    ab_results: []
+  GBPUSD:
+    champion: GBPUSD_20260315_080236
+    versions:
+    - version: GBPUSD_20260315_075834
+      path: C:\tradebots\ftmo\models\versions\GBPUSD_20260315_075834.json
+      timestamp: '20260315_075834'
+      metadata:
+        train_samples: 51179
+        optuna_ev: 0.00033802806226999226
+        num_boost_round: 400
+    - version: GBPUSD_20260315_075858
+      path: C:\tradebots\ftmo\models\versions\GBPUSD_20260315_075858.json
+      timestamp: '20260315_075858'
+      metadata:
+        train_samples: 25569
+        optuna_ev: 0.00033802806226999226
+        num_boost_round: 500
+    - version: GBPUSD_20260315_080236
+      path: C:\tradebots\ftmo\models\versions\GBPUSD_20260315_080236.json
+      timestamp: '20260315_080236'
+      metadata:
+        train_samples: 12761
+        optuna_ev: 0.00033802806226999226
+        num_boost_round: 800
+    ab_results: []
+  GBPCAD:
+    champion: GBPCAD_20260315_080248
+    versions:
+    - version: GBPCAD_20260315_075838
+      path: C:\tradebots\ftmo\models\versions\GBPCAD_20260315_075838.json
+      timestamp: '20260315_075838'
+      metadata:
+        train_samples: 51175
+        optuna_ev: 8.51697801450844e-06
+        num_boost_round: 116
+    - version: GBPCAD_20260315_080140
+      path: C:\tradebots\ftmo\models\versions\GBPCAD_20260315_080140.json
+      timestamp: '20260315_080140'
+      metadata:
+        train_samples: 25563
+        optuna_ev: 8.51697801450844e-06
+        num_boost_round: 116
+    - version: GBPCAD_20260315_080248
+      path: C:\tradebots\ftmo\models\versions\GBPCAD_20260315_080248.json
+      timestamp: '20260315_080248'
+      metadata:
+        train_samples: 12761
+        optuna_ev: 8.51697801450844e-06
+        num_boost_round: 116
+    ab_results: []
+  USDJPY:
+    champion: USDJPY_20260317_100123
+    versions:
+    - version: USDJPY_20260315_075839
+      path: C:\tradebots\ftmo\models\versions\USDJPY_20260315_075839.json
+      timestamp: '20260315_075839'
+      metadata:
+        train_samples: 51177
+        optuna_ev: 0.00012278839456594053
+        num_boost_round: 400
+    - version: USDJPY_20260315_080128
+      path: C:\tradebots\ftmo\models\versions\USDJPY_20260315_080128.json
+      timestamp: '20260315_080128'
+      metadata:
+        train_samples: 25569
+        optuna_ev: 0.00012278839456594053
+        num_boost_round: 500
+    - version: USDJPY_20260315_080243
+      path: C:\tradebots\ftmo\models\versions\USDJPY_20260315_080243.json
+      timestamp: '20260315_080243'
+      metadata:
+        train_samples: 12761
+        optuna_ev: 0.00012278839456594053
+        num_boost_round: 800
+    - version: USDJPY_20260317_100123
+      path: C:\tradebots\ftmo\models\versions\USDJPY_20260317_100123.json
+      timestamp: '20260317_100123'
+      metadata:
+        train_samples: 152539
+        optuna_ev: 0.00012278839456594053
+        num_boost_round: 300
+    ab_results: []
+  NZDUSD:
+    champion: NZDUSD_20260315_080301
+    versions:
+    - version: NZDUSD_20260315_075908
+      path: C:\tradebots\ftmo\models\versions\NZDUSD_20260315_075908.json
+      timestamp: '20260315_075908'
+      metadata:
+        train_samples: 51169
+        optuna_ev: 0.0004274289968490791
+        num_boost_round: 400
+    - version: NZDUSD_20260315_080142
+      path: C:\tradebots\ftmo\models\versions\NZDUSD_20260315_080142.json
+      timestamp: '20260315_080142'
+      metadata:
+        train_samples: 25566
+        optuna_ev: 0.0004274289968490791
+        num_boost_round: 500
+    - version: NZDUSD_20260315_080301
+      path: C:\tradebots\ftmo\models\versions\NZDUSD_20260315_080301.json
+      timestamp: '20260315_080301'
+      metadata:
+        train_samples: 12759
+        optuna_ev: 0.0004274289968490791
+        num_boost_round: 800
+    ab_results: []
+  GBPAUD:
+    champion: GBPAUD_20260315_080303
+    versions:
+    - version: GBPAUD_20260315_080131
+      path: C:\tradebots\ftmo\models\versions\GBPAUD_20260315_080131.json
+      timestamp: '20260315_080131'
+      metadata:
+        train_samples: 25565
+        optuna_ev: 9.951268078435081e-05
+        num_boost_round: 500
+    - version: GBPAUD_20260315_080303
+      path: C:\tradebots\ftmo\models\versions\GBPAUD_20260315_080303.json
+      timestamp: '20260315_080303'
+      metadata:
+        train_samples: 12761
+        optuna_ev: 9.951268078435081e-05
+        num_boost_round: 800
+    ab_results: []

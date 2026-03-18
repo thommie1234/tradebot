@@ -18,8 +18,8 @@ from datetime import datetime, timedelta, timezone
 from config.loader import cfg
 
 # ML exit settings
-ML_EXIT_THRESHOLD = 0.42      # Below this proba → count as exit signal
-ML_EXIT_STRIKES = 3           # N consecutive exit signals → close
+ML_EXIT_THRESHOLD = 0.42      # Below this proba -> count as exit signal
+ML_EXIT_STRIKES = 3           # N consecutive exit signals -> close
 ML_EXIT_COOLDOWN_S = 300      # Check every 5 minutes (not every 60s loop)
 ML_EXIT_MIN_HOLD_BARS = 2     # Don't exit within first 2 bars (give trade room)
 ML_EXIT_MAX_CLOSE_FAILS = 10  # After N consecutive close failures, back off to hourly retries
@@ -47,10 +47,10 @@ class PositionManager:
         or None if not near session close (or crypto).
 
         Progressive tightening:
-          > 60 min  → None (normal trailing)
-          30-60 min → 0.6  (activate earlier, trail tighter)
-          15-30 min → 0.4  (aggressive profit lock)
-          5-15 min  → 0.25 (very tight, almost at session close)
+          > 60 min  -> None (normal trailing)
+          30-60 min -> 0.6  (activate earlier, trail tighter)
+          15-30 min -> 0.4  (aggressive profit lock)
+          5-15 min  -> 0.25 (very tight, almost at session close)
         """
         if not hasattr(self, '_trading_schedule') or self._trading_schedule is None:
             return None
@@ -79,9 +79,9 @@ class PositionManager:
         When the whole portfolio is in profit, tighten trail SL progressively
         to lock in gains while still letting positions run.
 
-          < tighten_pct        → 1.0  (normal)
-          tighten – tighten+0.5% → 0.6  (tighter)
-          tighten+0.5% – hard  → 0.35 (very tight)
+          < tighten_pct        -> 1.0  (normal)
+          tighten – tighten+0.5% -> 0.6  (tighter)
+          tighten+0.5% – hard  -> 0.35 (very tight)
 
         The hard-close threshold is handled separately in _monitor_loop.
         """
@@ -106,7 +106,7 @@ class PositionManager:
         self._atr_cache = {}
         self._trading_schedule = None  # Set by run_bot after init
         self._ftmo = None  # Set by run_bot after init — for SL modification throttle
-        # ML exit tracking: ticket → {strikes, last_check, last_proba, close_fails, last_fail_time}
+        # ML exit tracking: ticket -> {strikes, last_check, last_proba, close_fails, last_fail_time}
         self._ml_exit_strikes: dict[int, dict] = {}
         self._ml_exit_last_run: float = 0
         self._ml_exit_initialized: bool = False  # Pre-seed strikes on first run after restart
@@ -119,6 +119,10 @@ class PositionManager:
         self._trading_schedule = None  # Set by run_bot for session close checks
         self._last_session_close_check: float = 0
 
+        # Session close cooldown: ticket -> timestamp of last failed attempt
+        self._session_close_cooldown: dict[int, float] = {}
+        _SESSION_CLOSE_COOLDOWN_S = 300  # Don't retry same ticket for 5 min after failure
+
         # Floating profit management — set by account_context after init
         self._profit_close_pct: float = 0     # soft close (disabled = 0)
         self._profit_hard_pct: float = 0      # hard close at e.g. 0.02 = 2%
@@ -128,6 +132,8 @@ class PositionManager:
         self._profit_gate_fired: bool = False  # prevent repeated triggers
         self._profit_gate_date = datetime.now(timezone.utc).date()  # for daily reset
         self._current_floating_pct: float = 0  # updated each monitor cycle
+        self._drawdown_guard = None  # Set by account_context for daily P&L trailing
+        self._profit_trail_fired: bool = False
 
     def _sym_cfg(self, symbol: str) -> dict:
         """Get per-symbol config, checking account-specific symbols first."""
@@ -191,10 +197,11 @@ class PositionManager:
 
                 positions = self.mt5.positions_get()
 
-                # Daily reset of profit gate (UTC midnight)
+                # Daily reset of profit gate + trail (UTC midnight)
                 _today = datetime.now(timezone.utc).date()
                 if _today != self._profit_gate_date:
                     self._profit_gate_fired = False
+                    self._profit_trail_fired = False
                     self._profit_gate_date = _today
 
                 # Update portfolio floating P&L (used for trail tightening + hard close)
@@ -207,12 +214,25 @@ class PositionManager:
                     self._current_floating_pct = 0.0
                     floating = 0.0
 
-                # Hard close at 2% — absolute safety net
+                # Hard close at floating profit % — absolute safety net
                 if (positions and not self._profit_gate_fired and self._on_profit_close
                         and self._profit_hard_pct > 0
                         and self._current_floating_pct >= self._profit_hard_pct):
                     self._profit_gate_fired = True
                     self._on_profit_close(floating, True)
+
+                # Trailing daily P&L stop — close all if daily P&L drops below trail floor
+                if (positions and not self._profit_trail_fired
+                        and self._drawdown_guard and self._on_profit_close):
+                    try:
+                        acc_info = self.mt5.account_info()
+                        should_close, reason = self._drawdown_guard.check_profit_trail(acc_info)
+                        if should_close:
+                            self._profit_trail_fired = True
+                            self._on_profit_close(floating, True)
+                    except Exception as e:
+                        self.logger.log('ERROR', 'PositionManager',
+                                        'PROFIT_TRAIL_ERROR', str(e))
 
                 if positions:
                     for pos in positions:
@@ -247,8 +267,7 @@ class PositionManager:
             self._monitor_stats["cycles"] += 1
             self._monitor_stats["last_cycle_ms"] = elapsed_ms
 
-            # Wait for next cycle (interruptible)
-            self._monitor_stop.wait(timeout=self._monitor_interval)
+            # No sleep — continuous monitoring for fastest trailing SL response
 
     def _deal_pnl(self, ticket: int) -> float | None:
         """Get realized P&L from deal history and update trades table.
@@ -375,7 +394,7 @@ class PositionManager:
         trail_activation = sym_cfg.get('trail_activation_atr', defaults['trail_activation_atr']) * atr
         trail_distance_base = sym_cfg.get('trail_distance_atr', defaults['trail_distance_atr']) * atr
 
-        # F6: Positive swap → trail activation 30% higher (hold longer for carry)
+        # F6: Positive swap -> trail activation 30% higher (hold longer for carry)
         sym_info_swap = self.mt5.symbol_info(pos.symbol)
         if sym_info_swap:
             is_buy_swap = pos.type == self.mt5.ORDER_TYPE_BUY
@@ -383,7 +402,7 @@ class PositionManager:
             if swap_pts > 0:
                 trail_activation *= 1.3
 
-        # F9: Friday evening → tighter trail to protect against weekend gaps
+        # F9: Friday evening -> tighter trail to protect against weekend gaps
         # Crypto is 24/7 so less aggressive tightening
         friday_factor = self._friday_trail_factor()
         if friday_factor is not None:
@@ -392,7 +411,7 @@ class PositionManager:
             trail_activation *= friday_factor
             trail_distance_base *= friday_factor
 
-        # Session close approach → progressively tighter trailing
+        # Session close approach -> progressively tighter trailing
         session_factor = self._session_trail_factor(pos.symbol)
         if session_factor is not None:
             trail_activation *= session_factor
@@ -427,11 +446,11 @@ class PositionManager:
         # Progressive trail: aggressively tighten as profit grows beyond activation.
         # Tiers: (ATR profit beyond activation, fraction of base distance)
         # E.g. with base 0.5 ATR and activation at 1.2 ATR:
-        #   1.2 ATR profit → 0.50 ATR trail (full base)
-        #   1.5 ATR profit → 0.40 ATR trail
-        #   2.0 ATR profit → 0.30 ATR trail
-        #   2.5 ATR profit → 0.20 ATR trail
-        #   3.0+ ATR profit → 0.15 ATR trail
+        #   1.2 ATR profit -> 0.50 ATR trail (full base)
+        #   1.5 ATR profit -> 0.40 ATR trail
+        #   2.0 ATR profit -> 0.30 ATR trail
+        #   2.5 ATR profit -> 0.20 ATR trail
+        #   3.0+ ATR profit -> 0.15 ATR trail
         _PROG_TIERS = [
             (0.0, 1.00),   # at activation: full base distance
             (0.3, 0.80),   # 0.3 ATR beyond activation
@@ -506,41 +525,46 @@ class PositionManager:
             self._monitor_stats["sl_moves"] += 1
             mode = "TRAILING" if price_profit >= trail_activation else "BREAKEVEN"
             self.logger.log('INFO', 'TrailingStop', f'SL_{mode}',
-                            f'{pos.symbol} SL: {current_sl:.5f} → {new_sl:.5f} '
+                            f'{pos.symbol} SL: {current_sl:.5f} -> {new_sl:.5f} '
                             f'(profit={price_profit:.5f}, ATR={atr:.5f})')
-            if self.discord and mode == "TRAILING":
-                # Only notify Discord when SL moved significantly (>= 0.5× ATR since last notify)
-                last_notified = getattr(self, '_trail_last_notified', {})
-                prev_sl = last_notified.get(pos.ticket, 0)
-                if abs(new_sl - prev_sl) >= atr * 0.5:
-                    direction = "BUY" if is_buy else "SELL"
-                    acct_tag = f" [{self.account_name}]" if self.account_name != "default" else ""
-                    self.discord.send(
-                        f"TRAIL{acct_tag}: {pos.symbol}",
-                        f"{direction} SL → {new_sl:.5f}\nProfit: {price_profit/atr:.1f}×ATR",
-                        "green",
-                    )
-                    if not hasattr(self, '_trail_last_notified'):
-                        self._trail_last_notified = {}
-                    self._trail_last_notified[pos.ticket] = new_sl
+            if self.discord:
+                direction = "BUY" if is_buy else "SELL"
+                acct_tag = f" [{self.account_name}]" if self.account_name != "default" else ""
+                color = "green" if mode == "TRAILING" else "blue"
+                self.discord.send(
+                    f"{mode}{acct_tag}: {pos.symbol}",
+                    f"{direction} SL: {current_sl:.5f} -> {new_sl:.5f}\n"
+                    f"Profit: {price_profit/atr:.1f}×ATR | Price: {current_price:.5f}",
+                    color,
+                )
 
-    # Timeframe → minutes per bar (for horizon exit)
+
+    # Timeframe -> minutes per bar (for horizon exit)
     _TF_MINUTES = {"M5": 5, "M15": 15, "M30": 30, "H1": 60, "H4": 240, "D1": 1440}
 
-    def _close_with_retry(self, request: dict, max_retries: int = 3, retry_delay: float = 2.0):
-        """Send a market close order, retrying on rc=10030 (TOO_MANY_REQUESTS)."""
+    # Retryable MT5 error codes
+    _RETRYABLE_RC = {10004, 10021, 10030}  # REQUOTE, PRICE_CHANGED, TOO_MANY_REQUESTS
+
+    def _close_with_retry(self, request: dict, max_retries: int = 5, base_delay: float = 2.0):
+        """Send a market close order, retrying on transient errors.
+
+        Retries on: 10004 (REQUOTE), 10021 (PRICE_CHANGED), 10030 (TOO_MANY_REQUESTS).
+        Uses exponential backoff: 2s, 4s, 8s, 16s, 32s.
+        """
+        result = None
         for attempt in range(max_retries):
             result = self.mt5.order_send(request)
             if result is None:
                 return None
             if result.retcode == self.mt5.TRADE_RETCODE_DONE:
                 return result
-            if result.retcode == 10030:  # TRADE_RETCODE_TOO_MANY_REQUESTS
+            if result.retcode in self._RETRYABLE_RC:
                 if attempt < max_retries - 1:
-                    self.logger.log('WARN', 'CloseRetry', 'TOO_MANY_REQUESTS',
+                    delay = base_delay * (2 ** attempt)
+                    self.logger.log('WARN', 'CloseRetry', f'RC_{result.retcode}',
                                     f'{request["symbol"]} ticket={request.get("position")} '
-                                    f'attempt={attempt + 1}/{max_retries} retrying in {retry_delay}s')
-                    time.sleep(retry_delay)
+                                    f'attempt={attempt + 1}/{max_retries} retrying in {delay:.0f}s')
+                    time.sleep(delay)
                     tick = self.mt5.symbol_info_tick(request["symbol"])
                     if tick:
                         if request["type"] == self.mt5.ORDER_TYPE_SELL:
@@ -548,7 +572,7 @@ class PositionManager:
                         else:
                             request["price"] = tick.ask
                 continue
-            return result  # Any other error — return immediately
+            return result  # Non-retryable error — return immediately
         return result
 
     def horizon_exit_check(self, running: bool, emergency_stop: bool):
@@ -661,7 +685,7 @@ class PositionManager:
                     reason = f"MICRO_REMNANT (vol={pos.volume}, {hold_hours:.1f}h, partial fill remnant)"
 
                 if hold_hours > 12 and pnl <= 0 and abs(swap) > 0.50:
-                    # F6: positive swap (carry) → don't close as SWAP_BLEEDING
+                    # F6: positive swap (carry) -> don't close as SWAP_BLEEDING
                     if swap <= 0 and (abs(pnl) < 0.50 or (abs(swap) / abs(pnl) > 0.25)):
                         reason = f"SWAP_BLEEDING (pnl=${pnl:+.2f}, swap=${swap:.2f}, {hold_hours:.0f}h)"
 
@@ -923,12 +947,23 @@ class PositionManager:
 
                 is_open, minutes_left = trading_schedule.is_trading_open(pos.symbol)
 
-                # Not open or no schedule info → skip
-                if not is_open or minutes_left is None:
+                # No schedule info -> skip (unknown instrument)
+                if minutes_left is None and is_open:
                     continue
 
-                # Still enough time → skip
-                if minutes_left > SESSION_CLOSE_BUFFER_MIN:
+                # Session already closed -> close immediately (prevents weekend gaps)
+                if not is_open:
+                    self.logger.log('WARNING', 'SessionClose', 'SESSION_ALREADY_CLOSED',
+                                    f'{pos.symbol} position {pos.ticket} open after session close — closing now')
+                    # Fall through to close logic below
+                elif minutes_left > SESSION_CLOSE_BUFFER_MIN:
+                    # Still enough time -> skip
+                    continue
+
+                # Skip if recently failed (cooldown to avoid hammering broker)
+                last_fail = self._session_close_cooldown.get(pos.ticket, 0)
+                now_ts = time.time()
+                if now_ts - last_fail < self._SESSION_CLOSE_COOLDOWN_S:
                     continue
 
                 # Close the position
@@ -957,6 +992,7 @@ class PositionManager:
                 }
                 result = self._close_with_retry(request)
                 if result and result.retcode == self.mt5.TRADE_RETCODE_DONE:
+                    self._session_close_cooldown.pop(pos.ticket, None)
                     real_pnl = self._deal_pnl(pos.ticket)
                     pnl_str = f"${real_pnl:+.2f}" if real_pnl is not None else f"~${pnl:+.2f}"
                     self.logger.log('INFO', 'SessionClose', 'POSITION_CLOSED',
@@ -974,8 +1010,10 @@ class PositionManager:
                         )
                 else:
                     rc = result.retcode if result else 'None'
+                    self._session_close_cooldown[pos.ticket] = now_ts
                     self.logger.log('ERROR', 'SessionClose', 'CLOSE_FAILED',
-                                    f'{pos.symbol} ticket={pos.ticket} rc={rc}')
+                                    f'{pos.symbol} ticket={pos.ticket} rc={rc} '
+                                    f'(cooldown {self._SESSION_CLOSE_COOLDOWN_S}s)')
 
         except Exception as e:
             self.logger.log('ERROR', 'SessionClose', 'ERROR', str(e))

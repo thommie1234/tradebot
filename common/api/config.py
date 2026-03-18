@@ -24,5 +24,3 @@ _cfg = _load()
 JWT_SECRET: str = _cfg["jwt_secret"]
 API_KEY: str = _cfg["api_key"]
 JWT_EXPIRY_DAYS: int = _cfg.get("jwt_expiry_days", 30)
-BRIDGE_HOST: str = _cfg.get("bridge_host", "127.0.0.1")
-BRIDGE_PORT: int = _cfg.get("bridge_port", 5056)

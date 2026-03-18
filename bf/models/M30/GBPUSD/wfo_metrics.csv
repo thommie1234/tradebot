@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+GBPUSD,M30,2026,1,2024-2025,1787,58,0.4827586206896552,-6.24232090809867,-14.50842928555894,-0.04614326506797439,0.40541736173621745,cuda,0.5274758397228076,5.0,8.527475839722808

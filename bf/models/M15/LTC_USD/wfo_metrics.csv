@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+LTC_USD,M15,2026,1,2025-2026,1048,279,0.5125448028673835,0.1347191661502033,0.20112290187491497,-0.1767274500586028,1.0226114348249076,cuda,4.354452427606362,3.0,10.354452427606361

@@ -23,11 +23,9 @@ SYMBOLS_FILE = os.path.join(REPO_ROOT, "data", "symbols.xlsx")
 CONFIGS_FILE = os.path.join(REPO_ROOT, "config", "sovereign_configs.json")
 
 DRIVE_PRIORITY = [
-    "/home/tradebot/ssd_data_1",
-    "/home/tradebot/ssd_data_2",
-    "/home/tradebot/data_1",
-    "/home/tradebot/data_2",
-    "/home/tradebot/data_3",
+    r"C:\tick_data\ssd1",
+    r"C:\tick_data\ssd2",
+    r"C:\tick_data\nvme",
 ]
 DATA_DIR_NAME = "tick_data"
 MIN_FREE_GB = 10

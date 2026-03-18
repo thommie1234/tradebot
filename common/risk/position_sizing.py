@@ -353,56 +353,6 @@ class PositionSizingEngine:
         self.KELLY_CAP = self.DAILY_BUDGET / self.MAX_CONCURRENT
         self._kelly_cache = {}
         self._kelly_cache_ttl = 3600
-        # F3: RL position sizer (lazy loaded)
-        self._rl_sizer = None
-        self._rl_loaded = False
-
-    def _get_rl_sizer(self):
-        """Lazy-load RL sizer (F3)."""
-        if not self._rl_loaded:
-            self._rl_loaded = True
-            try:
-                from risk.rl_sizer import ContextualBanditSizer
-                self._rl_sizer = ContextualBanditSizer()
-                if not self._rl_sizer.load():
-                    self.logger.log('INFO', 'PositionSizing', 'RL_SIZER_NEW',
-                                    'No saved RL sizer found, starting fresh')
-            except Exception as e:
-                self._rl_sizer = None
-                self.logger.log('DEBUG', 'PositionSizing', 'RL_SIZER_SKIP', str(e))
-        return self._rl_sizer
-
-    def rl_adjust_risk(self, base_risk: float, ml_confidence: float = 0.55,
-                       regime: int = 0, volatility: float = 0.0,
-                       drawdown_pct: float = 0.0) -> tuple[float, int | None]:
-        """
-        F3: Apply RL multiplier to base risk. Returns (adjusted_risk, arm_index).
-        If RL sizer unavailable, returns (base_risk, None).
-        """
-        sizer = self._get_rl_sizer()
-        if sizer is None:
-            return base_risk, None
-
-        context = sizer.build_context(ml_confidence, regime, volatility, drawdown_pct)
-        arm_idx, multiplier = sizer.select_arm(context)
-
-        adjusted = base_risk * multiplier
-        # Never exceed KELLY_CAP
-        adjusted = min(adjusted, self.KELLY_CAP)
-
-        self.logger.log('DEBUG', 'PositionSizing', 'RL_ADJUST',
-                        f'RL arm={arm_idx} mult={multiplier:.2f} '
-                        f'risk {base_risk:.4%} → {adjusted:.4%}')
-        return adjusted, arm_idx
-
-    def rl_update(self, arm: int, context_args: dict, reward: float):
-        """F3: Update RL sizer after trade result."""
-        sizer = self._get_rl_sizer()
-        if sizer is None or arm is None:
-            return
-        context = sizer.build_context(**context_args)
-        sizer.update(arm, context, reward)
-        sizer.save()
 
     def kelly_risk_pct(self, symbol: str) -> float:
         """Compute half-Kelly risk fraction from MT5 closed trade history."""
@@ -481,6 +431,11 @@ class PositionSizingEngine:
             self._kelly_cache[symbol] = (fallback, now)
             return fallback
 
+    def rl_adjust_risk(self, risk_pct: float, ml_confidence: float,
+                       regime: int, volatility: float, current_dd: float):
+        """Passthrough — RL sizer removed, return risk_pct unchanged."""
+        return risk_pct, 0
+
     def calculate_lot_size(self, symbol, account_equity, risk_pct, sl_distance,
                            symbol_info=None):
         """
@@ -503,7 +458,22 @@ class PositionSizingEngine:
             max_lot = symbol_info.get("volume_max", 100.0)
             lot_step = symbol_info.get("volume_step", 0.01)
 
-        risk_per_lot = sl_distance * contract_size
+        # Use trade_tick_value for proper quote→account currency conversion.
+        # MT5's trade_tick_value = USD value of 1 tick move per 1 lot.
+        # risk_per_lot = (sl_distance / tick_size) * tick_value
+        # This handles JPY pairs, CHF pairs, etc. automatically.
+        tick_value = 0.0
+        tick_size = 0.0
+        if symbol_info:
+            tick_value = symbol_info.get("trade_tick_value", 0.0)
+            tick_size = symbol_info.get("trade_tick_size", 0.0)
+
+        if tick_value > 0 and tick_size > 0:
+            risk_per_lot = (sl_distance / tick_size) * tick_value
+        else:
+            # Fallback: assume quote currency = account currency (USD pairs)
+            risk_per_lot = sl_distance * contract_size
+
         if risk_per_lot <= 0:
             return min_lot
 
@@ -516,8 +486,10 @@ class PositionSizingEngine:
         # splitting into multiple orders when lot_size > volume_max.
         lot_size = max(min_lot, lot_size)
 
+        tv_info = f'TV:{tick_value} TS:{tick_size}' if tick_value > 0 else 'fallback'
         self.logger.log('DEBUG', 'PositionSizing', 'LOT_CALC',
                         f'{symbol} Risk:${risk_amount:.2f} SL_dist:{sl_distance:.5f} '
-                        f'CS:{contract_size} step:{lot_step} min:{min_lot} max:{max_lot} '
+                        f'CS:{contract_size} RPL:{risk_per_lot:.2f} [{tv_info}] '
+                        f'step:{lot_step} min:{min_lot} max:{max_lot} '
                         f'raw:{risk_amount/risk_per_lot:.4f} -> {lot_size:.2f} lots')
         return round(lot_size, 2)

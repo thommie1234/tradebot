@@ -27,17 +27,15 @@ import pandas as pd
 import MetaTrader5 as mt5_module
 
 
-INFO_DIR = os.getenv("INFO_DIR", "/home/tradebot/tradebots/data/instrument_specs")
+INFO_DIR = os.getenv("INFO_DIR", r"C:\tradebots\data\instrument_specs")
 DATA_ROOT_DIR_NAME = os.getenv("DATA_ROOT_DIR_NAME", "bars_m1")
 YEARS_TO_DOWNLOAD = int(os.getenv("YEARS_TO_DOWNLOAD", "20"))
 DRIVE_FREE_SPACE_GB = float(os.getenv("DRIVE_FREE_SPACE_GB", "10"))
 
 DRIVE_PRIORITY = [
-    "/home/tradebot/ssd_data_1",
-    "/home/tradebot/ssd_data_2",
-    "/home/tradebot/data_1",
-    "/home/tradebot/data_2",
-    "/home/tradebot/data_3",
+    r"C:\tick_data\ssd1",
+    r"C:\tick_data\ssd2",
+    r"C:\tick_data\nvme",
 ]
 
 

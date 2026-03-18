@@ -42,7 +42,7 @@ class BlackoutLogger:
         if self._db_dir:
             os.makedirs(self._db_dir, exist_ok=True)
         conn = sqlite3.connect(self.db_path, timeout=30, check_same_thread=False)
-        conn.execute("PRAGMA journal_mode=DELETE")
+        conn.execute("PRAGMA journal_mode=WAL")
         conn.execute("PRAGMA synchronous=NORMAL")
         conn.execute("PRAGMA busy_timeout=30000")
         return conn
@@ -160,6 +160,25 @@ class BlackoutLogger:
                     conn.close()
         except sqlite3.OperationalError as e:
             print(f"[WARNING] Logger.DB_ERROR: {e}")
+
+    def close_trade(self, ticket: int, exit_price: float, pnl: float,
+                    exit_timestamp: str | None = None, status: str = 'CLOSED'):
+        """Update trades table with exit info when a position is closed."""
+        ts = exit_timestamp or datetime.now().isoformat()
+        try:
+            with self._lock:
+                conn = self._open()
+                try:
+                    conn.execute('''
+                        UPDATE trades
+                        SET exit_price = ?, exit_timestamp = ?, pnl = ?, status = ?
+                        WHERE ticket = ?
+                    ''', (exit_price, ts, pnl, status, ticket))
+                    conn.commit()
+                finally:
+                    conn.close()
+        except sqlite3.OperationalError as e:
+            print(f"[WARNING] Logger.DB_ERROR close_trade: {e}")
 
     def log_heartbeat(self, mt5_connected, account_balance, account_equity,
                       open_positions, daily_pnl):

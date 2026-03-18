@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+EURCHF,M30,2026,1,2024-2025,1684,9,0.4444444444444444,-3.15007248693035,-9.03354596941423,-0.0038109480461615552,0.6356714178681103,cuda,0.96137925877696,5.0,8.96137925877696

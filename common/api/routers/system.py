@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from api.auth import require_auth
 from api.deps import get_account_config
 from api.services import bridge_service, db_service
-from api.services.bot_control import get_bot_uptime, is_bot_running, restart_bot
+from api.services.bot_control import get_bot_uptime, is_bot_running, restart_bot, scan_bot
 
 router = APIRouter(prefix="/api", tags=["system"])
 
@@ -36,24 +36,32 @@ async def recent_events(
 
 @router.get("/bot/status")
 async def bot_status():
-    running = await is_bot_running()
-    uptime = await get_bot_uptime() if running else None
-
-    # Check both bridges
-    ftmo_ok = await bridge_service.ping("ftmo_100k")
-    bf_ok = await bridge_service.ping("bright_100k")
+    accounts = {}
+    for aid in ("ftmo_100k", "bright_100k"):
+        r = await is_bot_running(aid)
+        accounts[aid] = {
+            "running": r,
+            "uptime": await get_bot_uptime(aid) if r else None,
+            "bridge": await bridge_service.ping(aid),
+        }
 
     return {
-        "bot_running": running,
-        "bot_uptime": uptime,
-        "bridges": {
-            "ftmo_100k": ftmo_ok,
-            "bright_100k": bf_ok,
-        },
+        "bot_running": any(a["running"] for a in accounts.values()),
+        "bot_uptime": next((a["uptime"] for a in accounts.values() if a.get("uptime")), None),
+        "accounts": accounts,
     }
 
 
 @router.post("/bot/restart")
 async def bot_restart(_=Depends(require_auth)):
     ok, msg = await restart_bot()
+    return {"success": ok, "message": msg}
+
+
+@router.post("/bot/scan/{account_id}")
+async def bot_scan(account_id: str):
+    """Force a full scan (H1 + multi-TF) for the given account."""
+    ok, msg = await scan_bot(account_id)
+    if not ok:
+        raise HTTPException(500, msg)
     return {"success": ok, "message": msg}

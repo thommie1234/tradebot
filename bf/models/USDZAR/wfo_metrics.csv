@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+USDZAR,H1,2026,1,2024-2025,844,51,0.47058823529411764,-5.154504145601816,-14.504329480714791,-0.06208834821787246,0.49344769698320196,cuda,5.6161533112926225,5.0,13.616153311292623

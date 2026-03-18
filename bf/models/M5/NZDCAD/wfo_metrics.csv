@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+NZDCAD,M5,2026,1,2024-2025,10437,9,0.4444444444444444,-7.428960519858743,-19.08352295463389,-0.005935044878236706,0.33239674686470405,cuda,1.755948274779791,5.0,9.75594827477979

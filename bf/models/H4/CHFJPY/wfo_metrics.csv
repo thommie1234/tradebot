@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+CHFJPY,H4,2026,1,2024-2025,198,90,0.4666666666666667,-3.3463742537161227,-7.367182428087105,-0.09580310876439979,0.6274710816096813,cuda,1.1206761806179324,5.0,9.120676180617933

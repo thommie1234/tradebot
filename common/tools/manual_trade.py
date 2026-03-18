@@ -18,7 +18,7 @@ from pathlib import Path
 
 # Add project root to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from tools.mt5_bridge import MT5BridgeClient, initialize_mt5
+import MetaTrader5 as mt5
 
 CONFIG_PATH = Path(__file__).resolve().parent.parent / "config" / "sovereign_configs.json"
 DEVIATION = 10
@@ -159,24 +159,19 @@ def main():
                         help="Override risk_per_trade from config")
     parser.add_argument("--dry-run", action="store_true",
                         help="Show calculations without executing")
-    parser.add_argument("--port", type=int, default=None,
-                        help="MT5 bridge port (default: env MT5_BRIDGE_PORT or 5056)")
     args = parser.parse_args()
 
     if not args.close and not args.direction:
         parser.error("direction (BUY/SELL) is required unless --close is used")
 
     symbol = args.symbol
-    port = args.port or int(os.getenv("MT5_BRIDGE_PORT", "5056"))
 
     # ── 1. Connect ───────────────────────────────────────────────────
-    print(f"Connecting to MT5 bridge on port {port}...")
-    mt5 = MT5BridgeClient(port=port)
-    ok, err, mode = initialize_mt5(mt5)
-    if not ok:
-        print(f"FATAL: MT5 init failed: {err}")
+    print(f"Connecting to MT5...")
+    if not mt5.initialize():
+        print(f"FATAL: MT5 init failed: {mt5.last_error()}")
         sys.exit(1)
-    print(f"MT5 connected ({mode})\n")
+    print(f"MT5 connected\n")
 
     # ── 2. Load config ───────────────────────────────────────────────
     sym_cfg, margin_leverage = load_configs(symbol)

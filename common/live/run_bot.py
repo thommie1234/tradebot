@@ -37,7 +37,7 @@ from audit.feature_logger import FeatureLogger
 # Engine
 from engine.inference import SovereignMLFilter, _ensure_ml_imports
 from engine.decay_tracker import ModelDecayTracker
-from engine.signal import check_signals, ScanCache
+# check_signals / ScanCache no longer needed — all scanning via MultiTFScanner
 from engine.multi_tf_scanner import MultiTFScanner
 
 # Risk
@@ -161,6 +161,8 @@ class SovereignBot:
         self.position_manager._trading_schedule = self.trading_schedule
         self.position_manager.start_monitor(interval=0.5)  # Continuous trailing-stop monitoring
 
+        # Paper tracker monitors will be started after mt5 is confirmed ready (in run())
+
         # Order router (primary — used for backwards compat and single-account mode)
         self.order_router = OrderRouter(
             self.logger, mt5, self.position_sizer, self.trading_schedule,
@@ -180,7 +182,7 @@ class SovereignBot:
         self.multi_tf = MultiTFScanner(self)
 
         # Scan cache — preloads tick data + lead-lag before bar close
-        self.scan_cache = ScanCache()
+        # scan_cache removed — MultiTFScanner handles preloading internally
 
         # FTMO (primary — set during run())
         self.ftmo = None
@@ -191,6 +193,9 @@ class SovereignBot:
             if self._account_id not in self.accounts:
                 raise ValueError(f"Account '{self._account_id}' not found in accounts.yaml")
             self.accounts = {self._account_id: self.accounts[self._account_id]}
+
+        # Paper trackers — shadow trading for strategy testing
+        # Paper trading runs as separate process (paper_bot.py)
 
     def _enter_safe_mode(self, reason: str):
         if self.safe_mode:
@@ -223,6 +228,8 @@ class SovereignBot:
         Symbols from per-account configs that are not already in cfg.SYMBOLS
         get added (using their internal/model name) so the scanner picks them up.
         Existing symbols are NOT overwritten — the primary config takes precedence.
+        For existing symbols, broker_symbol is updated if the account has one
+        (each broker may use different symbol names, e.g. DOGEUSD vs XDG/USD).
         """
         added = []
         for acct in self.accounts.values():
@@ -233,6 +240,10 @@ class SovereignBot:
                 if internal_sym not in cfg.SYMBOLS:
                     cfg.SYMBOLS[internal_sym] = sym_cfg
                     added.append(f"{internal_sym} (from {acct.name})")
+                elif broker_sym != internal_sym:
+                    # Symbol exists but this broker uses a different name —
+                    # update broker_symbol so the scanner fetches the right bars
+                    cfg.SYMBOLS[internal_sym]["broker_symbol"] = broker_sym
         if added:
             self.logger.log('INFO', 'SovereignBot', 'SYMBOLS_MERGED',
                             f'Added {len(added)} account-specific symbols: {", ".join(added)}')
@@ -308,6 +319,9 @@ class SovereignBot:
                 "Leg in 3-5 zinnen in het Nederlands uit wat er deze scan gebeurde: "
                 "waarom er wel/niet gehandeld is, welke symbolen het dichtst bij een signaal zaten, "
                 "en of er iets opvalt (RSI divergentie, volatiliteit). "
+                "BELANGRIJK: Als er signalen zijn geblokkeerd (ALREADY_IN_MARKET, H4_MISALIGN, "
+                "SPREAD_TOO_WIDE, DD_GATE, PROFIT_LOCK, CORR_BLOCK, etc.), benoem deze EXPLICIET "
+                "per symbool met de reden waarom ze geblokkeerd zijn. "
                 "Gebruik altijd de ML-threshold die in de tabel staat. "
                 "Noem z-scores alleen als ze in de tabel staan. "
                 "Wees bondig en direct. Geen disclaimers."
@@ -328,12 +342,13 @@ class SovereignBot:
                 commentary = resp.json().get("response", "").strip()
                 if commentary:
                     self.logger.log('INFO', 'SovereignBot', 'SCAN_COMMENTARY', commentary[:500])
-                    if self.discord and executed > 0:
+                    if self.discord and found > 0:
                         status_emoji = f"{found} signals, {executed} trades"
+                        color = "green" if executed > 0 else "blue"
                         self.discord.send(
                             f"SCAN {now_str} | {status_emoji}",
                             commentary[:1900],
-                            "green",
+                            color,
                         )
         except Exception as e:
             self.logger.log('DEBUG', 'SovereignBot', 'SCAN_COMMENTARY_ERROR', str(e))
@@ -376,6 +391,9 @@ class SovereignBot:
                 f"Leg in 3-5 zinnen in het Nederlands uit wat er deze scan gebeurde: "
                 f"waarom er wel/niet gehandeld is, welke symbolen het dichtst bij een signaal zaten, "
                 f"en of er iets opvalt (RSI, volatiliteit). "
+                f"BELANGRIJK: Als er signalen zijn geblokkeerd (ALREADY_IN_MARKET, H4_MISALIGN, "
+                f"SPREAD_TOO_WIDE, DD_GATE, PROFIT_LOCK, CORR_BLOCK, etc.), benoem deze EXPLICIET "
+                f"per symbool met de reden waarom ze geblokkeerd zijn. "
                 f"Wees bondig en direct. Geen disclaimers."
             )
 
@@ -394,12 +412,13 @@ class SovereignBot:
                 commentary = resp.json().get("response", "").strip()
                 if commentary:
                     self.logger.log('INFO', 'MultiTF', 'SCAN_COMMENTARY', commentary[:500])
-                    if self.discord and executed > 0:
+                    if self.discord and found > 0:
                         status_emoji = f"{found} signals, {executed} trades"
+                        color = "green" if executed > 0 else "blue"
                         self.discord.send(
                             f"{tf} SCAN {now_str} | {status_emoji}",
                             commentary[:1900],
-                            "green",
+                            color,
                         )
         except Exception as e:
             self.logger.log('DEBUG', 'MultiTF', 'SCAN_COMMENTARY_ERROR', str(e))
@@ -438,6 +457,33 @@ class SovereignBot:
             for ticket in closed_tickets:
                 info = self._tracked_tickets.pop(ticket)
                 close_info = self._get_deal_close_info(ticket)
+
+                # Fallback: if deal history unavailable, estimate from last tick
+                if close_info is None:
+                    try:
+                        _sym = info.get('broker_symbol', info['symbol'])
+                        _tick = mt5.symbol_info_tick(_sym)
+                        if _tick:
+                            _exit_p = _tick.bid if info['direction'] == 'BUY' else _tick.ask
+                            _si = mt5.symbol_info(_sym)
+                            _cs = _si.trade_contract_size if _si else 1.0
+                            _lots = info.get('lot_size', 0)
+                            if info['direction'] == 'BUY':
+                                _est_pnl = (_exit_p - info.get('entry_price', _exit_p)) * _lots * _cs
+                            else:
+                                _est_pnl = (info.get('entry_price', _exit_p) - _exit_p) * _lots * _cs
+                            close_info = {
+                                'pnl': round(_est_pnl, 2),
+                                'exit_price': _exit_p,
+                                'exit_time': datetime.now(timezone.utc).isoformat(),
+                            }
+                            self.logger.log('WARN', 'SovereignBot', 'CLOSE_NO_DEALS',
+                                            f'{info["symbol"]} ticket={ticket}: no deal history, '
+                                            f'estimated exit={_exit_p} pnl=${_est_pnl:+.2f}')
+                    except Exception as _fb_err:
+                        self.logger.log('ERROR', 'SovereignBot', 'CLOSE_FALLBACK_ERROR',
+                                        f'{info["symbol"]} ticket={ticket}: {_fb_err}')
+
                 pnl = close_info['pnl'] if close_info else None
                 if pnl is not None:
                     self.decay_tracker.record_trade(
@@ -542,6 +588,133 @@ class SovereignBot:
         except Exception as e:
             self.logger.log('ERROR', 'SovereignBot', 'CLOSED_CHECK_ERROR', str(e))
 
+    def _reconcile_stale_positions(self):
+        """Reconcile DB positions marked FILLED that are no longer open on MT5.
+
+        On bot restart, positions may have been closed broker-side (SL/TP hit,
+        session close) while the bot was down.  This method fetches deal history
+        and updates the audit DB so FILLED ↔ MT5 stays in sync.
+        """
+        if not MT5_AVAILABLE:
+            return
+        try:
+            import sqlite3 as _sql
+            from collections import defaultdict
+
+            # 1. All FILLED tickets in audit DB
+            conn = _sql.connect(self.logger.db_path)
+            conn.row_factory = _sql.Row
+            filled = conn.execute(
+                "SELECT ticket, symbol FROM trades "
+                "WHERE status = 'FILLED' AND ticket IS NOT NULL"
+            ).fetchall()
+            if not filled:
+                conn.close()
+                return
+
+            # 2. Currently live tickets on MT5
+            live_positions = mt5.positions_get()
+            live_tickets = set()
+            if live_positions:
+                for p in live_positions:
+                    if p.magic >= 2000:
+                        live_tickets.add(p.ticket)
+
+            stale = [r for r in filled if r['ticket'] not in live_tickets]
+            if not stale:
+                conn.close()
+                return
+
+            self.logger.log('INFO', 'SovereignBot', 'RECONCILE_START',
+                            f'{len(stale)} stale FILLED positions to reconcile')
+
+            # 3. Fetch all deal history (one call, filter client-side)
+            now = datetime.now(timezone.utc)
+            start = now - timedelta(days=30)
+            all_deals = mt5.history_deals_get(start, now)
+            by_pos = defaultdict(list)
+            if all_deals:
+                for d in all_deals:
+                    pid = getattr(d, 'position_id', 0)
+                    if pid > 0:
+                        by_pos[pid].append(d)
+
+            # 4. Update each stale position
+            reconciled = 0
+            no_history = 0
+            for row in stale:
+                ticket = row['ticket']
+                pos_deals = by_pos.get(ticket, [])
+                exit_deals = [d for d in pos_deals
+                              if getattr(d, 'entry', -1) == 1]
+                entry_deals = [d for d in pos_deals
+                               if getattr(d, 'entry', -1) == 0]
+
+                if exit_deals:
+                    pnl = sum(d.profit + d.commission + d.swap
+                              for d in exit_deals)
+                    pnl += sum(d.commission + d.swap for d in entry_deals)
+                    exit_price = exit_deals[-1].price
+                    exit_time = datetime.fromtimestamp(
+                        exit_deals[-1].time, tz=timezone.utc
+                    ).isoformat()
+                    conn.execute(
+                        "UPDATE trades SET exit_price=?, exit_timestamp=?, "
+                        "pnl=?, status='CLOSED' WHERE ticket=?",
+                        (exit_price, exit_time, pnl, ticket),
+                    )
+                    reconciled += 1
+                    self.logger.log('INFO', 'SovereignBot', 'RECONCILE_CLOSED',
+                                    f'{row["symbol"]} ticket={ticket} '
+                                    f'PnL=${pnl:+.2f}')
+                else:
+                    # No deal history — try last tick price as fallback
+                    _est_exit = 0
+                    _est_pnl = 0
+                    try:
+                        _sym = row['symbol']
+                        _tick = mt5.symbol_info_tick(_sym)
+                        if _tick:
+                            # Need direction from DB
+                            _row_full = conn.execute(
+                                "SELECT direction, entry_price, lot_size FROM trades WHERE ticket=?",
+                                (ticket,)
+                            ).fetchone()
+                            if _row_full:
+                                _dir = _row_full['direction']
+                                _entry = _row_full['entry_price']
+                                _lots = _row_full['lot_size'] or 0
+                                _est_exit = _tick.bid if _dir == 'BUY' else _tick.ask
+                                _si = mt5.symbol_info(_sym)
+                                _cs = _si.trade_contract_size if _si else 1.0
+                                if _dir == 'BUY':
+                                    _est_pnl = (_est_exit - _entry) * _lots * _cs
+                                else:
+                                    _est_pnl = (_entry - _est_exit) * _lots * _cs
+                                _est_pnl = round(_est_pnl, 2)
+                    except Exception:
+                        pass
+
+                    conn.execute(
+                        "UPDATE trades SET status='CLOSED_NO_HISTORY', "
+                        "exit_price=?, pnl=?, exit_timestamp=? WHERE ticket=?",
+                        (_est_exit, _est_pnl,
+                         datetime.now(timezone.utc).isoformat(), ticket),
+                    )
+                    no_history += 1
+
+            conn.commit()
+            conn.close()
+
+            msg = (f'Reconciled {reconciled} positions from deal history, '
+                   f'{no_history} without history')
+            self.logger.log('INFO', 'SovereignBot', 'RECONCILE_DONE', msg)
+            if self.discord and reconciled > 0:
+                self.discord.send("AUDIT RECONCILIATION", msg, "blue")
+
+        except Exception as e:
+            self.logger.log('ERROR', 'SovereignBot', 'RECONCILE_ERROR', str(e))
+
     def _refresh_sentiment(self):
         if not SENTIMENT_AVAILABLE:
             return
@@ -563,7 +736,7 @@ class SovereignBot:
         info = self._get_deal_close_info(ticket)
         return info['pnl'] if info else None
 
-    def _get_deal_close_info(self, ticket: int) -> dict | None:
+    def _get_deal_close_info(self, ticket: int, _retries: int = 3) -> dict | None:
         """Get PnL, exit price, and exit time from MT5 deal history."""
         try:
             now = datetime.now(timezone.utc)
@@ -574,16 +747,27 @@ class SovereignBot:
             pos_deals = [d for d in deals if d.position_id == ticket]
             if not pos_deals:
                 return None
-            total_pnl = sum(d.profit + d.commission + d.swap for d in pos_deals)
 
-            # Find closing deal (DEAL_ENTRY_OUT = 1) for exit price/time
-            exit_price = 0.0
-            exit_time = now.isoformat()
-            for d in pos_deals:
-                if hasattr(d, 'entry') and d.entry == 1:
-                    exit_price = d.price
-                    exit_time = datetime.fromtimestamp(d.time, tz=timezone.utc).isoformat()
-                    break
+            # Only count exit deals (entry=1) for P&L — entry deals have
+            # profit=0 and their commission is already baked into the
+            # exit deal's total cost on most brokers.
+            exit_deals = [d for d in pos_deals if hasattr(d, 'entry') and d.entry == 1]
+            if not exit_deals:
+                # Exit deal not yet in history (race condition) — retry
+                if _retries > 0:
+                    import time
+                    time.sleep(1)
+                    return self._get_deal_close_info(ticket, _retries - 1)
+                return None
+
+            # Sum profit + commission + swap across all exit deals (split fills)
+            total_pnl = sum(d.profit + d.commission + d.swap for d in exit_deals)
+            # Add entry commission separately (not included in exit deal on some brokers)
+            entry_deals = [d for d in pos_deals if hasattr(d, 'entry') and d.entry == 0]
+            total_pnl += sum(d.commission + d.swap for d in entry_deals)
+
+            exit_price = exit_deals[0].price
+            exit_time = datetime.fromtimestamp(exit_deals[0].time, tz=timezone.utc).isoformat()
 
             return {'pnl': total_pnl, 'exit_price': exit_price, 'exit_time': exit_time}
         except Exception:
@@ -620,7 +804,7 @@ class SovereignBot:
             open_count = sum(1 for p in positions if p.magic >= 2000) if positions else 0
             open_pnl = sum(p.profit for p in positions if p.magic >= 2000) if positions else 0
 
-            conn = sqlite3.connect(self.logger.db_path)
+            conn = sqlite3.connect(self.logger.db_path, timeout=30)
             try:
                 yesterday = (datetime.now() - timedelta(days=1)).isoformat()
                 trades_today = conn.execute(
@@ -844,13 +1028,30 @@ class SovereignBot:
         mtf_count = self.multi_tf.load_config(allowed_symbols=mtf_allowed)
         if mtf_count > 0:
             self.logger.log('INFO', 'SovereignBot', 'MULTI_TF_INIT',
-                            f'{mtf_count} symbols on non-H1 timeframes')
+                            f'{mtf_count} symbols loaded across all timeframes')
 
         self.init_filters()
         print(f"\n[1] Initialized filters for {len(self.filters)} symbols")
 
-        # Start MT5
-        mt5_ok, mt5_mode = initialize(self.logger)
+        # Start MT5 — use account-specific terminal path if running single-account
+        _mt5_terminal = None
+        if self._account_id and self._account_id in self.accounts:
+            _mt5_terminal = self.accounts[self._account_id].terminal_path
+        print(f"  [DEBUG] MT5 module: {mt5.__name__}, terminal_path: {_mt5_terminal}")
+        from tools.mt5_bridge import initialize_mt5 as _init_mt5
+        _ok, _err, _mode = _init_mt5(terminal_path=_mt5_terminal)
+        print(f"  [DEBUG] MT5 init result: ok={_ok}, mode={_mode}, error={_err}")
+        mt5_ok = _ok
+        mt5_mode = _mode
+        if mt5_ok:
+            self.logger.log('INFO', 'BrokerAPI', 'MT5_INIT_MODE',
+                            f'MT5 initialized via {mt5_mode}')
+            account_info = mt5.account_info()
+            if account_info:
+                self.logger.log('INFO', 'BrokerAPI', 'MT5_INITIALIZED',
+                                f'Account {account_info.login} | '
+                                f'Balance ${account_info.balance:,.2f} | '
+                                f'Equity ${account_info.equity:,.2f}')
 
         # Initialize FTMO compliance — single source of truth for all FTMO rules
         if mt5_ok and FTMO_AVAILABLE:
@@ -868,6 +1069,8 @@ class SovereignBot:
 
         if mt5_ok:
             self.heartbeat.start()
+            # Reconcile stale FILLED positions against MT5 on startup
+            self._reconcile_stale_positions()
 
         # Initialize multi-account contexts
         self._active_accounts: list[AccountContext] = []
@@ -937,8 +1140,8 @@ class SovereignBot:
         print(f"\n[3] Loading ML models...")
         self.train_models()
 
-        models_ready = sum(1 for f in self.filters.values() if f.model is not None)
-        print(f"    Models ready: {models_ready} / {len(self.filters)}")
+        models_ready = sum(1 for f in self.multi_tf.filters.values() if f.model is not None)
+        print(f"    Models ready: {models_ready} / {len(self.multi_tf.symbols)}")
 
         self.decay_tracker.load_baselines_from_config()
         print(f"    Decay tracker baselines: {len(self.decay_tracker.baselines)}")
@@ -948,13 +1151,13 @@ class SovereignBot:
             self._stop()
             return
 
-        if not mt5_ok:
+        if not mt5_ok and not self._active_accounts:
             print("[ERROR] MT5 not connected. Cannot run live mode.")
             self._stop()
             return
 
-        # Live trading loop
-        print(f"\n[4] LIVE MODE — waiting for H1 candle close signals...")
+        # Live trading loop — all TFs handled by MultiTFScanner
+        print(f"\n[4] LIVE MODE — multi-TF parallel scanner active")
         print(f"    Active symbols: {models_ready}")
         per_sym_thrs = {s: c.get("prob_threshold", cfg.ML_THRESHOLD)
                         for s, c in cfg.SYMBOLS.items() if "prob_threshold" in c}
@@ -964,197 +1167,114 @@ class SovereignBot:
             print(f"    ML threshold:   {cfg.ML_THRESHOLD}")
         print(f"    Press Ctrl+C to stop\n")
 
-        # Count H1-only symbols (not handled by multi-TF scanner)
-        mtf_syms = self.multi_tf.get_multi_tf_symbols() if self.multi_tf else set()
-        h1_only_count = len([s for s in cfg.SYMBOLS if s not in mtf_syms
-                             and s in self.filters and self.filters[s].model is not None])
-
         if self.discord:
-            # Build startup summary with multi-TF breakdown
-            h1_count = h1_only_count
-            mtf_loaded = len([s for s in mtf_syms if s in self.multi_tf.filters and self.multi_tf.filters[s].model is not None]) if self.multi_tf else 0
-            lines = [f"{h1_count} symbols active on H1"]
-            if mtf_loaded > 0:
-                # Group by timeframe
-                tf_groups = {}
-                for sym, sym_cfg in (self.multi_tf.symbols or {}).items():
-                    tf = sym_cfg.get("timeframe", "?")
-                    tf_groups.setdefault(tf, []).append(sym)
-                for tf, syms in sorted(tf_groups.items()):
-                    loaded = [s for s in syms if s in self.multi_tf.filters and self.multi_tf.filters[s].model is not None]
-                    lines.append(f"{len(loaded)} symbols active on {tf}: {', '.join(loaded)}")
-            self.discord.send("SOVEREIGN BOT STARTED", "\n".join(lines), "blue")
+            # Build startup summary grouped by TF
+            lines = []
+            tf_groups = {}
+            for sym, sym_cfg in (self.multi_tf.symbols or {}).items():
+                tf = sym_cfg.get("timeframe", "?")
+                tf_groups.setdefault(tf, []).append(sym)
+            for tf, syms in sorted(tf_groups.items()):
+                loaded = [s for s in syms if s in self.multi_tf.filters and self.multi_tf.filters[s].model is not None]
+                if loaded:
+                    lines.append(f"{len(loaded)} symbols on {tf}: {', '.join(loaded)}")
+            self.discord.send("SOVEREIGN BOT STARTED", "\n".join(lines) or "No symbols loaded", "blue")
+
+        # Paper trading runs as separate process (paper_bot.py)
 
         try:
             if scan_once:
-                # Multi-TF symbols first (H4, M15, etc.)
-                mtf_found, mtf_executed = 0, 0
-                if getattr(self, 'multi_tf', None) and self.multi_tf._tf_groups:
-                    self.logger.log('INFO', 'SovereignBot', 'MTF_FORCE_SCAN',
-                                    'Force-scanning all multi-TF symbols...')
-                    mtf_found, mtf_executed = self.multi_tf.force_scan(mt5)
-                    self.logger.log('INFO', 'SovereignBot', 'MTF_FORCE_RESULT',
-                                    f'Multi-TF signals: {mtf_found}, Executed: {mtf_executed}')
+                self.logger.log('INFO', 'SovereignBot', 'FORCE_SCAN',
+                                'Force-scanning all symbols across all TFs...')
+                found, executed = self.multi_tf.force_scan(mt5)
+                self.logger.log('INFO', 'SovereignBot', 'FORCE_SCAN_RESULT',
+                                f'Signals: {found}, Executed: {executed}')
 
-                # H1 symbols
-                self.logger.log('INFO', 'SovereignBot', 'H1_CHECK',
-                                f'Checking {h1_only_count} H1 symbols (scan-now)...')
-                found, executed, scanned = check_signals(
-                    self, self.filters, self.decay_tracker,
-                    self.trading_schedule, self.feature_logger,
-                    self.discord, mt5, self._llm_scan_commentary
-                )
-                self.logger.log('INFO', 'SovereignBot', 'H1_RESULT',
-                                f'Signals: {found}, Executed: {executed}, Scanned: {scanned}')
-
-                total_found = found + mtf_found
-                total_exec = executed + mtf_executed
-                if total_found > 0 or total_exec > 0:
-                    self.logger.log('INFO', 'SovereignBot', 'SCAN_NOW_TOTAL',
-                                    f'Total signals: {total_found}, Executed: {total_exec}')
-
-                if scanned == 0 and mtf_found == 0 and self.discord:
-                    h1_syms = [s for s in cfg.SYMBOLS if s not in mtf_syms
-                               and s in self.filters and self.filters[s].model is not None]
-                    any_open = any(self.trading_schedule.is_trading_open(s)[0] for s in h1_syms)
+                if found == 0 and self.discord:
+                    all_syms = list(self.multi_tf.symbols.keys())
+                    any_open = any(self.trading_schedule.is_trading_open(s)[0] for s in all_syms)
                     if any_open:
                         self.discord.send("SCAN FAILED — NO DATA",
-                                          f"H1 scan got 0 bars for all {h1_only_count} H1 symbols.\n"
-                                          "MT5 bridge may be down.", "red")
+                                          f"Force scan got 0 signals for {len(all_syms)} symbols.\n"
+                                          "MT5 may be down.", "red")
+
                 return
 
+            last_slow_check = 0
             while self.running and not self.emergency_stop:
-                # Trailing stop management runs in background monitor thread (0.5s interval)
+                # Friday close checks at loop top
                 friday_progressive_close(self.logger, mt5, self.trading_schedule,
                                          self.running, self.emergency_stop, self.discord)
                 friday_auto_close(self.logger, mt5, self.trading_schedule,
                                   self.running, self.emergency_stop, self.discord)
 
-                wait_time = self.seconds_until_next_h1()
-                now = datetime.now()
-                next_check = now + timedelta(seconds=wait_time)
-                self.logger.log('INFO', 'SovereignBot', 'WAITING',
-                                f'Next check at {next_check.strftime("%H:%M:%S")} '
-                                f'({wait_time/60:.1f} min)')
-
-                sleep_end = time.time() + wait_time
-                last_slow_check = 0
-                while time.time() < sleep_end and self.running:
-                    # Trailing stop monitoring handled by background thread (0.5s)
-
-                    # Multi-TF scanner — fires on M15/M30/etc bar boundaries
-                    try:
-                        self.multi_tf.tick(mt5)
-                    except Exception as e:
-                        self.logger.log('ERROR', 'MultiTF', 'TICK_ERROR', str(e))
-
-                    # Preload tick data + lead-lag ~15s before bar close
-                    remaining = sleep_end - time.time()
-                    if 15 < remaining < 25 and not self.scan_cache.is_warm():
-                        eligible = [
-                            s for s in cfg.SYMBOLS
-                            if not self.decay_tracker.is_disabled(s)
-                            and self.trading_schedule.is_trading_open(s)[0]
-                            and s in self.filters and self.filters[s].model is not None
-                        ]
-                        self.logger.log('INFO', 'ScanCache', 'PRELOAD_START',
-                                        f'{len(eligible)} symbols')
-                        self.scan_cache.preload(eligible, mt5, self.logger)
-
-                    now_ts = time.time()
-                    if now_ts - last_slow_check >= 60:
-                        # FTMO: Total DD hard stop check (primary account)
-                        if self.ftmo:
-                            acct_info = mt5.account_info()
-                            if acct_info:
-                                must_close, dd_reason = self.ftmo.check_total_dd(acct_info.equity)
-                                if must_close:
-                                    self.logger.log('CRITICAL', 'SovereignBot', 'FTMO_HARD_STOP',
-                                                    dd_reason)
-                                    emergency_close_all(self.logger, mt5, self.discord)
-                                    self._enter_safe_mode(dd_reason)
-
-                        # FTMO: Inactivity check (primary account)
-                        if self.ftmo:
-                            self.ftmo.check_inactivity()
-
-                        # Multi-account: DD + floating profit checks for all accounts
-                        for ma in self._active_accounts:
-                            try:
-                                if ma.check_total_dd():
-                                    self.logger.log('CRITICAL', 'SovereignBot', 'ACCOUNT_DD_STOP',
-                                                    f'[{ma.name}] Total DD hard stop triggered')
-                                    emergency_close_all(ma.logger, ma.mt5, self.discord)
-                                    self._account_safe_mode(ma.account_id, 'total DD hard stop')
-                                if ma.ftmo:
-                                    ma.ftmo.check_inactivity()
-                                # Floating profit close is handled by position_manager monitor loop
-                            except Exception as e:
-                                self.logger.log('ERROR', 'SovereignBot', 'ACCT_DD_CHECK_ERROR',
-                                                f'[{ma.name}] {e}')
-
-                        friday_progressive_close(self.logger, mt5, self.trading_schedule,
-                                                 self.running, self.emergency_stop, self.discord)
-                        friday_auto_close(self.logger, mt5, self.trading_schedule,
-                                          self.running, self.emergency_stop, self.discord)
-                        self.position_manager.auto_close_bleeders(self.running, self.emergency_stop)
-                        self.position_manager.session_close_check(
-                            self.trading_schedule, self.running, self.emergency_stop)
-                        self.position_manager.horizon_exit_check(self.running, self.emergency_stop)
-                        # ML exit: check if model still supports open positions
-                        mtf_filters = self.multi_tf.filters if self.multi_tf else None
-                        mtf_symbols = self.multi_tf.symbols if self.multi_tf else None
-                        self.position_manager.ml_exit_check(
-                            self.filters, mtf_filters, mtf_symbols)
-                        self._check_closed_positions()
-                        self._refresh_sentiment()
-                        # Log trailing-stop monitor stats
-                        stats = self.position_manager._monitor_stats
-                        if stats["cycles"] > 0:
-                            self.logger.log('DEBUG', 'TrailingStopMonitor', 'STATS',
-                                            f'cycles={stats["cycles"]} '
-                                            f'sl_moves={stats["sl_moves"]} '
-                                            f'last_cycle={stats["last_cycle_ms"]:.1f}ms')
-                        last_slow_check = now_ts
-
-                    remaining = sleep_end - time.time()
-                    time.sleep(min(5, max(remaining, 0)))
-
-                if not self.running:
-                    break
-
-                self._send_daily_summary()
-
-                self.logger.log('INFO', 'SovereignBot', 'H1_CHECK',
-                                f'Checking {h1_only_count} H1 symbols...')
+                # Multi-TF scanner — handles preload + scan for ALL timeframes
                 try:
-                    cache = self.scan_cache if self.scan_cache.is_warm() else None
-                    found, executed, scanned = check_signals(
-                        self, self.filters, self.decay_tracker,
-                        self.trading_schedule, self.feature_logger,
-                        self.discord, mt5, self._llm_scan_commentary,
-                        cache=cache,
-                    )
-                    self.scan_cache.clear()
-                    self.logger.log('INFO', 'SovereignBot', 'H1_RESULT',
-                                    f'Signals: {found}, Executed: {executed}, Scanned: {scanned}')
-                    if scanned == 0 and self.discord:
-                        # Only alarm if H1-only markets should be open (skip weekends/off-hours)
-                        h1_syms = [s for s in cfg.SYMBOLS if s not in mtf_syms
-                                   and s in self.filters and self.filters[s].model is not None]
-                        any_open = any(self.trading_schedule.is_trading_open(s)[0] for s in h1_syms)
-                        if any_open:
-                            self.discord.send("SCAN FAILED — NO DATA",
-                                              f"H1 scan got 0 bars for {h1_only_count} H1 symbols.\n"
-                                              "MT5 bridge may be down — auto-restart triggered.",
-                                              "red")
+                    found, executed = self.multi_tf.tick(mt5)
+                    if found > 0:
+                        self.logger.log('INFO', 'SovereignBot', 'SCAN_RESULT',
+                                        f'Signals: {found}, Executed: {executed}')
                 except Exception as e:
-                    self.logger.log('ERROR', 'SovereignBot', 'SCAN_CRASHED',
-                                    f'check_signals failed: {e}')
-                    if self.discord:
-                        self.discord.send("SCAN CRASHED",
-                                          f"check_signals raised {type(e).__name__}: {e}\n"
-                                          "Bot will retry next hour.", "red")
+                    self.logger.log('ERROR', 'MultiTF', 'TICK_ERROR', str(e))
+
+                # Slow checks every 60s: FTMO, DD, bleeders, exits
+                now_ts = time.time()
+                if now_ts - last_slow_check >= 60:
+                    # FTMO: Total DD hard stop check (primary account)
+                    if self.ftmo:
+                        acct_info = mt5.account_info()
+                        if acct_info:
+                            must_close, dd_reason = self.ftmo.check_total_dd(acct_info.equity)
+                            if must_close:
+                                self.logger.log('CRITICAL', 'SovereignBot', 'FTMO_HARD_STOP',
+                                                dd_reason)
+                                emergency_close_all(self.logger, mt5, self.discord)
+                                self._enter_safe_mode(dd_reason)
+
+                    # FTMO: Inactivity check (primary account)
+                    if self.ftmo:
+                        self.ftmo.check_inactivity()
+
+                    # Multi-account: DD + floating profit checks for all accounts
+                    for ma in self._active_accounts:
+                        try:
+                            if ma.check_total_dd():
+                                self.logger.log('CRITICAL', 'SovereignBot', 'ACCOUNT_DD_STOP',
+                                                f'[{ma.name}] Total DD hard stop triggered')
+                                emergency_close_all(ma.logger, ma.mt5, self.discord)
+                                self._account_safe_mode(ma.account_id, 'total DD hard stop')
+                            if ma.ftmo:
+                                ma.ftmo.check_inactivity()
+                        except Exception as e:
+                            self.logger.log('ERROR', 'SovereignBot', 'ACCT_DD_CHECK_ERROR',
+                                            f'[{ma.name}] {e}')
+
+                    friday_progressive_close(self.logger, mt5, self.trading_schedule,
+                                             self.running, self.emergency_stop, self.discord)
+                    friday_auto_close(self.logger, mt5, self.trading_schedule,
+                                      self.running, self.emergency_stop, self.discord)
+                    self.position_manager.auto_close_bleeders(self.running, self.emergency_stop)
+                    self.position_manager.session_close_check(
+                        self.trading_schedule, self.running, self.emergency_stop)
+                    self.position_manager.horizon_exit_check(self.running, self.emergency_stop)
+                    # ML exit: check if model still supports open positions
+                    self.position_manager.ml_exit_check(
+                        self.multi_tf.filters, None, self.multi_tf.symbols)
+                    self._check_closed_positions()
+                    self._refresh_sentiment()
+                    self._send_daily_summary()
+                    # Log trailing-stop monitor stats
+                    stats = self.position_manager._monitor_stats
+                    if stats["cycles"] > 0:
+                        self.logger.log('DEBUG', 'TrailingStopMonitor', 'STATS',
+                                        f'cycles={stats["cycles"]} '
+                                        f'sl_moves={stats["sl_moves"]} '
+                                        f'last_cycle={stats["last_cycle_ms"]:.1f}ms')
+                    last_slow_check = now_ts
+
+                # Sleep ~5s between ticks (or less if a bar is closing soon)
+                wait = min(5.0, self.multi_tf.seconds_until_next_bar())
+                time.sleep(max(wait, 1.0))
 
 
         except KeyboardInterrupt:

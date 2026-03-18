@@ -40,16 +40,8 @@ class HeartbeatMonitor:
         self._last_temp_check = 0
         self._temp_warned = False
 
-        # Use a dedicated bridge connection for heartbeat so it doesn't
-        # compete with the trailing-stop monitor thread for the shared socket.
+        # MT5 is a singleton module — no need for separate bridge instances.
         self.mt5 = mt5_module
-        if hasattr(mt5_module, 'port'):
-            try:
-                from tools.mt5_bridge import get_mt5_bridge
-                # Cache key must include port to avoid cross-account collision
-                self.mt5 = get_mt5_bridge(port=mt5_module.port, name=f"heartbeat_{mt5_module.port}")
-            except Exception:
-                pass  # Fall back to shared instance
 
     def start(self):
         self.running = True
@@ -187,30 +179,26 @@ class HeartbeatMonitor:
 
         self._last_bridge_restart = now
         self._consecutive_ping_fails = 0
-        self.logger.log('WARNING', 'HeartbeatMonitor', 'BRIDGE_AUTO_RESTART',
-                        'Restarting mt5-bridge-proxy after consecutive ping failures')
+        self.logger.log('WARNING', 'HeartbeatMonitor', 'MT5_AUTO_REINIT',
+                        'Re-initializing MT5 after consecutive ping failures')
         try:
-            result = subprocess.run(
-                ["systemctl", "--user", "restart", "mt5-bridge-proxy"],
-                capture_output=True, text=True, timeout=30
-            )
-            if result.returncode == 0:
-                self.logger.log('INFO', 'HeartbeatMonitor', 'BRIDGE_RESTARTED',
-                                'mt5-bridge-proxy restarted successfully')
+            self.mt5.shutdown()
+            time.sleep(2)
+            if self.mt5.initialize():
+                self.logger.log('INFO', 'HeartbeatMonitor', 'MT5_REINITIALIZED',
+                                'MT5 re-initialized successfully')
                 if self.discord:
-                    self.discord.send("MT5 BRIDGE AUTO-RESTART",
-                                      "Bridge was unresponsive — restarted automatically.\n"
-                                      "Waiting for reconnection...", "orange")
-                # Give bridge time to start
-                time.sleep(10)
+                    self.discord.send("MT5 AUTO-REINIT",
+                                      "MT5 was unresponsive — re-initialized automatically.", "orange")
             else:
-                self.logger.log('ERROR', 'HeartbeatMonitor', 'BRIDGE_RESTART_FAILED',
-                                f'systemctl restart failed: {result.stderr.strip()}')
+                err = self.mt5.last_error()
+                self.logger.log('ERROR', 'HeartbeatMonitor', 'MT5_REINIT_FAILED',
+                                f'MT5 re-init failed: {err}')
                 if self.discord:
-                    self.discord.send("MT5 BRIDGE RESTART FAILED",
-                                      f"Could not restart bridge:\n{result.stderr.strip()}", "red")
+                    self.discord.send("MT5 REINIT FAILED",
+                                      f"Could not re-initialize MT5:\n{err}", "red")
         except Exception as e:
-            self.logger.log('ERROR', 'HeartbeatMonitor', 'BRIDGE_RESTART_ERROR', str(e))
+            self.logger.log('ERROR', 'HeartbeatMonitor', 'MT5_REINIT_ERROR', str(e))
 
     def _monitor_loop(self):
         from datetime import datetime

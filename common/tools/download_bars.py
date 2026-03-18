@@ -27,7 +27,7 @@ import polars as pl
 
 # Add project root to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from tools.mt5_bridge import MT5BridgeClient, initialize_mt5
+import MetaTrader5 as mt5_lib
 
 
 # ── MT5 timeframe constants ──────────────────────────────────────────
@@ -45,13 +45,13 @@ TF_MAP = {
 
 DEFAULT_TIMEFRAMES = ["M15", "M30", "H1", "H4", "D1"]
 DEFAULT_YEARS = 20
-BAR_ROOT = "/home/tradebot/ssd_data_2/bars"
-SPECS_DIR = "/home/tradebot/tradebots/data/instrument_specs"
-COSTS_DIR = "/home/tradebot/ssd_data_2/bars/_symbol_costs"
+BAR_ROOT = r"C:\tick_data\bars"
+SPECS_DIR = r"C:\tradebots\data\instrument_specs"
+COSTS_DIR = r"C:\tick_data\bars\_symbol_costs"
 
 
 # ── Cost snapshot ─────────────────────────────────────────────────────
-def download_symbol_costs(mt5: MT5BridgeClient, resolved: list[dict], out_dir: str) -> str:
+def download_symbol_costs(mt5: object, resolved: list[dict], out_dir: str) -> str:
     """Snapshot spread/swap/commission data for all resolved symbols.
 
     Saves a dated CSV: {out_dir}/2026-02-22_costs.csv
@@ -139,7 +139,7 @@ def load_all_symbols() -> list[dict]:
 
 # ── Download logic ───────────────────────────────────────────────────
 def download_symbol_tf(
-    mt5: MT5BridgeClient,
+    mt5: object,
     symbol: str,
     tf_name: str,
     tf_const: int,
@@ -220,7 +220,7 @@ def download_symbol_tf(
     return stats
 
 
-def try_symbol_variants(mt5: MT5BridgeClient, symbol: str) -> str | None:
+def try_symbol_variants(mt5: object, symbol: str) -> str | None:
     """Try different symbol name variants until one works in MT5."""
     variants = [
         symbol,
@@ -247,21 +247,17 @@ def main():
                         help=f"Years of history (default: {DEFAULT_YEARS})")
     parser.add_argument("--out-root", default=BAR_ROOT,
                         help=f"Output root (default: {BAR_ROOT})")
-    parser.add_argument("--port", type=int, default=None,
-                        help="MT5 bridge port (default: env MT5_BRIDGE_PORT)")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
-    port = args.port if args.port is not None else int(os.getenv("MT5_BRIDGE_PORT", "5056"))
-    mt5 = MT5BridgeClient(port=port, timeout=30)
+    mt5 = mt5_lib
 
     if not args.dry_run:
-        print(f"[download_bars] Connecting to MT5 bridge on port {port}...")
-        ok, err, mode = initialize_mt5(mt5)
-        if not ok:
-            print(f"[FATAL] MT5 init failed: {err}")
+        print(f"[download_bars] Connecting to MT5...")
+        if not mt5.initialize():
+            print(f"[FATAL] MT5 init failed: {mt5.last_error()}")
             sys.exit(1)
-        print(f"[download_bars] MT5 connected ({mode})")
+        print(f"[download_bars] MT5 connected")
         acct = mt5.account_info()
         if acct:
             print(f"[download_bars] Account: {getattr(acct, 'login', '?')}")

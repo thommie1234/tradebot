@@ -28,7 +28,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
-from tools.mt5_bridge import MT5BridgeClient
+import MetaTrader5 as _mt5
 from live.healthcheck import HeartbeatMonitor
 
 # ── Constants ────────────────────────────────────────────────────────
@@ -141,7 +141,7 @@ def load_account_configs() -> list[dict]:
 
 # ── Data Fetching ────────────────────────────────────────────────────
 
-def get_account_data(mt5: MT5BridgeClient) -> dict | None:
+def get_account_data(mt5: object) -> dict | None:
     try:
         acc = mt5.account_info()
         if acc is None:
@@ -156,7 +156,7 @@ def get_account_data(mt5: MT5BridgeClient) -> dict | None:
         return None
 
 
-def get_positions(mt5: MT5BridgeClient) -> list[dict] | None:
+def get_positions(mt5: object) -> list[dict] | None:
     try:
         positions = mt5.positions_get()
         if positions is None:
@@ -596,7 +596,9 @@ def collect_data(acct_cfg: dict) -> dict:
     db_path = str(REPO_ROOT / acct_cfg["audit_db"])
     initial_balance = acct_cfg["account_size"]
 
-    mt5 = MT5BridgeClient(host="127.0.0.1", port=port, timeout=5)
+    mt5 = _mt5
+    if not mt5.terminal_info():
+        mt5.initialize()
 
     data: dict = {}
     data["account"] = get_account_data(mt5)

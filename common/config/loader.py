@@ -81,7 +81,9 @@ class SovereignConfig:
                 raw = json.load(f)
             # margin_leverage is stored alongside symbols but is NOT a symbol
             self.MARGIN_LEVERAGE = raw.pop("margin_leverage", {})
-            self.SYMBOLS = raw
+            # Filter out disabled symbols
+            self.SYMBOLS = {k: v for k, v in raw.items()
+                            if isinstance(v, dict) and v.get("enabled", True)}
             print(f"[CONFIG] Loaded {len(self.SYMBOLS)} symbols from {self.CONFIG_PATH}")
         else:
             print(f"[CONFIG] WARNING: {self.CONFIG_PATH} not found — run with --build-plan first")

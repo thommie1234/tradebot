@@ -5,6 +5,7 @@ from fastapi import APIRouter, HTTPException, Query
 
 from api.deps import get_account_config
 from api.services import db_service
+from api.routers.stream import _load_wfo_metrics
 
 router = APIRouter(prefix="/api", tags=["history"])
 
@@ -54,3 +55,24 @@ async def recent_trades(
         raise HTTPException(404, f"Unknown account: {account_id}")
 
     return db_service.get_recent_trades(account_id, limit=limit)
+
+
+@router.get("/analytics/{account_id}")
+async def analytics(account_id: str):
+    """Extended analytics: symbol breakdown + Calmar/Sharpe + multi-window win rates."""
+    try:
+        get_account_config(account_id)
+    except KeyError:
+        raise HTTPException(404, f"Unknown account: {account_id}")
+
+    sym_stats = db_service.get_symbol_stats(account_id)
+    wfo = _load_wfo_metrics(account_id)
+    for s in sym_stats:
+        s["wfo"] = wfo.get(s["symbol"], {})
+
+    return {
+        "symbol_stats": sym_stats,
+        "calmar": db_service.get_calmar_ratio(account_id, days=90),
+        "sharpe": db_service.get_sharpe_ratio(account_id, days=30),
+        "extended_stats": db_service.get_extended_stats(account_id),
+    }

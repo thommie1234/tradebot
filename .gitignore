@@ -39,10 +39,29 @@ wfv_v2_trainer.py
 mt5/*/wineprefix/
 
 # Secrets
+.env
 config/discord_config.json
+config/accounts.yaml
+config/api_config.yaml
 tools/discord_config.json
 api/api_config.yaml
+**/accounts.yaml
+**/api_config.yaml
+**/discord_config.json
+*.session
+
+# Telegram session
+common/tools/telegram_session.*
+
+# Backups
+common_backup_*/
+
+# DB artifacts
+*.db-shm
+*.db-wal
+*.db.bak*
 
 # Misc
 *.log
 .claude/
+.env.email

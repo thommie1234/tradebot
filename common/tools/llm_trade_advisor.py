@@ -264,12 +264,10 @@ if __name__ == "__main__":
     import sys
     sys.path.insert(0, str(SCRIPT_DIR))
 
-    from mt5_bridge import get_mt5_bridge, initialize_mt5
+    import MetaTrader5 as mt5
 
-    mt5 = get_mt5_bridge()
-    ok, err, mode = initialize_mt5(mt5)
-    if not ok:
-        print(f"MT5 init failed: {err}")
+    if not mt5.initialize():
+        print(f"MT5 init failed: {mt5.last_error()}")
         sys.exit(1)
 
     # Single analysis

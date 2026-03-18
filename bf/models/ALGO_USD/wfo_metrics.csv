@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+ALGO_USD,H1,2026,1,2025-2026,256,121,0.5289256198347108,0.6542915536932471,1.303102557831841,-0.21298093350238456,1.0976411748389618,cuda,9.362958694948972,3.0,15.362958694948972

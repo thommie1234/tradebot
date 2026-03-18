@@ -237,6 +237,12 @@ def make_ev_custom_objective(
     """
     pos_w = max(float(avg_win), 1e-9)
     neg_w = max(float(avg_loss) + float(costs), 1e-9)
+    # Normalize to unit scale so gradients are O(1) regardless of pip size.
+    # Preserves the win/loss ratio (what matters) while preventing flat models
+    # when avg_win/avg_loss are tiny (e.g. forex ~0.001 vs indices ~0.004).
+    scale = pos_w + neg_w
+    pos_w /= scale
+    neg_w /= scale
 
     def _obj(predt: np.ndarray, dtrain: xgb.DMatrix) -> tuple[np.ndarray, np.ndarray]:
         y = dtrain.get_label()

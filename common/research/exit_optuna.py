@@ -32,15 +32,15 @@ import xgboost as xgb
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 
 from engine.feature_builder import FEATURE_COLUMNS, build_bar_features
-from trading_prop.ml.integrated_pipeline import (
+from research.integrated_pipeline import (
     purged_walk_forward_splits,
     set_polars_threads,
 )
-from trading_prop.ml.train_ml_strategy import (
+from research.train_ml_strategy import (
     infer_spread_bps,
     make_time_bars,
 )
-from trading_prop.production.optuna_orchestrator import (
+from research.optuna_orchestrator import (
     DATA_ROOTS,
     broker_commission_bps,
     broker_slippage_bps,
@@ -49,6 +49,7 @@ from trading_prop.production.optuna_orchestrator import (
     discover_symbols_from_data,
     load_symbol_ticks_lf,
 )
+from research.cost_model import get_cost_model
 from research.exit_simulator import ExitParams, simulate_trades
 
 # ---------------------------------------------------------------------------
@@ -57,7 +58,7 @@ from research.exit_simulator import ExitParams, simulate_trades
 
 CONFIG_PATH = REPO_ROOT / "config" / "sovereign_configs.json"
 MODEL_DIR = REPO_ROOT / "models" / "sovereign_models"
-BAR_ROOT = Path("/home/tradebot/ssd_data_2/bars")
+BAR_ROOT = Path(r"C:\tick_data\bars")
 
 ALL_TIMEFRAMES = ["M1", "M15", "M30", "H1", "H4"]
 
@@ -289,8 +290,14 @@ def run_symbol_tf(symbol: str, timeframe: str, args_dict: dict) -> dict:
         # Heuristic spread from asset class when using bar data
         spread_bps = {"crypto": 15.0, "forex": 2.0, "equity": 3.0,
                       "index": 2.0, "commodity": 4.0}.get(cluster, 3.0)
-    fee_bps = broker_commission_bps(symbol)
-    slippage_bps = broker_slippage_bps(symbol)
+    account = args_dict.get("account", "")
+    if account:
+        _cm = get_cost_model(account)
+        fee_bps = _cm.commission_bps(symbol)
+        slippage_bps = _cm.slippage_bps(symbol)
+    else:
+        fee_bps = broker_commission_bps(symbol)
+        slippage_bps = broker_slippage_bps(symbol)
     cost_pct = (fee_bps + spread_bps + slippage_bps * 2.0) / 1e4
 
     # 6. Walk-forward splits (scaled per TF)
@@ -308,7 +315,28 @@ def run_symbol_tf(symbol: str, timeframe: str, args_dict: dict) -> dict:
                 "status": "no_folds", "rows": n_samples, "cluster": cluster}
 
     # 7. Optuna study — in-memory (no SQLite lock contention)
-    space = EXIT_SEARCH_SPACES.get(cluster, EXIT_SEARCH_SPACES["index"])
+    # TF-specific search space scaling — shorter TFs need tighter params
+    _TF_SPACE_SCALE = {
+        "M5":  {"sl": (0.15, 0.8), "tp": (0.5, 3.0), "be": (0.1, 0.6),
+                "ta": (0.3, 1.5), "td": (0.1, 0.8), "hz": (3, 12)},
+        "M15": {"sl": (0.2, 1.2), "tp": (0.8, 4.0), "be": (0.15, 0.8),
+                "ta": (0.4, 2.0), "td": (0.15, 1.0), "hz": (4, 18)},
+        "M30": {"sl": (0.3, 1.5), "tp": (1.0, 5.0), "be": (0.2, 1.0),
+                "ta": (0.5, 2.5), "td": (0.2, 1.2), "hz": (4, 24)},
+    }
+    base_space = EXIT_SEARCH_SPACES.get(cluster, EXIT_SEARCH_SPACES["index"])
+    tf_override = _TF_SPACE_SCALE.get(timeframe)
+    if tf_override:
+        space = {
+            "atr_sl_mult": tf_override["sl"],
+            "atr_tp_mult": tf_override["tp"],
+            "breakeven_atr": tf_override["be"],
+            "trail_activation_atr": tf_override["ta"],
+            "trail_distance_atr": tf_override["td"],
+            "horizon": tf_override["hz"],
+        }
+    else:
+        space = base_space
 
     study = optuna.create_study(
         direction="maximize",
@@ -513,6 +541,10 @@ def parse_args() -> argparse.Namespace:
     grp.add_argument("--symbols", type=str, default="",
                      help="Comma-separated symbol list")
 
+    p.add_argument(
+        "--account", type=str, default="",
+        help="Account ID for cost model (e.g. ftmo_100k, bright_100k)",
+    )
     p.add_argument("--trials", type=int, default=400)
     p.add_argument("--timeframes", type=str, default="M1,M15,M30,H1,H4",
                    help="Comma-separated timeframes (default: M1,M15,M30,H1,H4)")
@@ -585,6 +617,7 @@ def main():
         "use_sizing": args.use_sizing,
         "account_size": args.account_size,
         "max_years": args.max_years,
+        "account": args.account,
     }
 
     # Build task list: symbol × timeframe

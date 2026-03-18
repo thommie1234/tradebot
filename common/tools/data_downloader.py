@@ -24,20 +24,18 @@ from datetime import datetime, timezone
 
 import pandas as pd
 
-from mt5_bridge import get_mt5_bridge, initialize_mt5
+import MetaTrader5 as mt5_lib
 
 
-INFO_DIR = os.getenv("INFO_DIR", "/home/tradebot/tradebots/data/instrument_specs")
+INFO_DIR = os.getenv("INFO_DIR", r"C:\tradebots\data\instrument_specs")
 DATA_ROOT_DIR_NAME = os.getenv("DATA_ROOT_DIR_NAME", "bars_m1")
 YEARS_TO_DOWNLOAD = int(os.getenv("YEARS_TO_DOWNLOAD", "20"))
 DRIVE_FREE_SPACE_GB = float(os.getenv("DRIVE_FREE_SPACE_GB", "10"))
 
 DRIVE_PRIORITY = [
-    "/home/tradebot/ssd_data_1",
-    "/home/tradebot/ssd_data_2",
-    "/home/tradebot/data_1",
-    "/home/tradebot/data_2",
-    "/home/tradebot/data_3",
+    r"C:\tick_data\ssd1",
+    r"C:\tick_data\ssd2",
+    r"C:\tick_data\nvme",
 ]
 
 
@@ -149,12 +147,11 @@ def main() -> None:
     print_log("info", "Starting M1 bars downloader.")
     time.sleep(5)
 
-    mt5 = get_mt5_bridge()
-    ok, mt5_error, mode = initialize_mt5(mt5)
-    if not ok:
-        print_log("critical", f"MT5 initialize() failed, error code = {mt5_error}")
+    mt5 = mt5_lib
+    if not mt5.initialize():
+        print_log("critical", f"MT5 initialize() failed, error = {mt5.last_error()}")
         return
-    print_log("info", f"MT5 init mode: {mode}")
+    print_log("info", "MT5 initialized")
 
     symbols = load_symbols_from_information(INFO_DIR)
     if not symbols:

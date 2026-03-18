@@ -1,0 +1,2 @@
+symbol,timeframe,year,thread,train_years,n_obs,n_trades,win_rate,sharpe,sortino,max_drawdown_pct,profit_factor,device,spread_bps,slippage_bps,total_cost_bps
+AUDUSD,M30,2026,1,2024-2025,1731,66,0.5151515151515151,-1.3646945481135582,-2.952972606258286,-0.03433564908860032,0.827212895759403,cuda,0.6281209760988817,5.0,8.62812097609888
