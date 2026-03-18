@@ -1,0 +1,19 @@
+account_id: ftmo_100k
+spec_csvs:
+  - crypto.csv
+  - Forex.csv
+  - forex exotic.csv
+  - cash.csv
+  - metals.csv
+  - Equities.csv
+slippage_model:
+  crypto: 8.0
+  forex: 1.5
+  forex_exotic: 3.0
+  metals: 2.0
+  equity: 2.5
+  index: 1.5
+  commodity: 4.0
+  energy: 3.0
+  default: 3.0
+spread_source: ticks

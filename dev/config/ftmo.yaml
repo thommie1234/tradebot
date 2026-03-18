@@ -1,0 +1,19 @@
+# FTMO prop firm compliance limits
+
+max_daily_loss_pct: 0.05
+max_total_loss_pct: 0.10
+max_concurrent_positions: 200
+account_size: 100000
+
+timing:
+  heartbeat_interval: 10
+  blackout_rollover_start_min: 1430  # 23:50 in minutes
+  blackout_rollover_end_min: 10     # 00:10 in minutes
+
+friday_close:
+  buffer_minutes: 10
+
+temperature:
+  warn: 70
+  critical: 75
+  check_interval: 300

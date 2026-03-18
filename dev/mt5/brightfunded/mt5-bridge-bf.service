@@ -1,0 +1,24 @@
+[Unit]
+Description=MT5 Bridge Proxy — BrightFunded (port 5057)
+After=vncserver-bf.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/tradebot/tradebots/mt5/common
+Environment=WINEPREFIX=/home/tradebot/tradebots/mt5/brightfunded/wineprefix
+Environment=WINEDEBUG=-all
+Environment=DISPLAY=:2
+Environment=MT5_BRIDGE_HOST=127.0.0.1
+Environment=MT5_BRIDGE_PORT=5057
+Environment=XDG_RUNTIME_DIR=/tmp/xdg-1000
+Environment=TMPDIR=/tmp
+ExecStartPre=/usr/bin/mkdir -p /tmp/xdg-1000
+ExecStartPre=/usr/bin/chmod 700 /tmp/xdg-1000
+ExecStart=/home/tradebot/tradebots/mt5/common/run_wine.sh mt5_bridge_proxy.py
+StandardOutput=append:/home/tradebot/tradebots/mt5/brightfunded/logs/bridge.log
+StandardError=append:/home/tradebot/tradebots/mt5/brightfunded/logs/bridge.log
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target
