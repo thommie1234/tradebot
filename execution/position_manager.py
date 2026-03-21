@@ -236,6 +236,87 @@ class PositionManager:
                         self.logger.log('ERROR', 'PositionManager',
                                         'PROFIT_TRAIL_ERROR', str(e))
 
+                # Daily loss at -2%: check if total open SL risk exceeds remaining buffer to -3%
+                # Only protect (BE all) if combined SL risk would breach the 3% FTMO limit
+                if (positions and self._drawdown_guard
+                        and getattr(self._drawdown_guard, '_needs_daily_loss_protect', False)):
+                    self._drawdown_guard._needs_daily_loss_protect = False
+
+                    # Calculate remaining room to 3% daily limit
+                    _acc = self.mt5.account_info()
+                    _dg = self._drawdown_guard
+                    _base = _dg.daily_start_balance if _dg.daily_start_balance > 0 else (_acc.balance if _acc else 100000)
+                    _daily_limit_usd = _base * 0.03  # FTMO 3% hard limit
+                    _daily_loss = _base - (_acc.equity if _acc else _base)  # positive = loss
+                    _remaining = _daily_limit_usd - _daily_loss  # room left in USD
+
+                    # Calculate total SL risk of all open positions
+                    _total_sl_risk = 0
+                    _our_positions = [p for p in positions if p.magic >= 2000]
+                    for pos in _our_positions:
+                        entry = pos.price_open
+                        sl = pos.sl
+                        if sl == 0:
+                            _total_sl_risk += abs(pos.profit) + 300  # no SL = assume worst case
+                            continue
+                        if pos.type == 0:  # BUY
+                            sl_loss = (entry - sl) if sl < entry else 0
+                        else:  # SELL
+                            sl_loss = (sl - entry) if sl > entry else 0
+
+                        si = self.mt5.symbol_info(pos.symbol)
+                        if si and si.trade_tick_size > 0:
+                            _total_sl_risk += (sl_loss / si.trade_tick_size) * si.trade_tick_value * pos.volume
+                        else:
+                            _total_sl_risk += abs(pos.profit) + 100
+
+                    self.logger.log('INFO', 'DailyLossProtect', 'CHECK',
+                                    f'Daily loss: ${_daily_loss:.0f}, remaining to 3%: ${_remaining:.0f}, '
+                                    f'total SL risk: ${_total_sl_risk:.0f} ({len(_our_positions)} positions)')
+
+                    _total_sl_risk *= 1.2  # 20% slippage buffer
+                    if _total_sl_risk > _remaining:
+                        # SL risk exceeds buffer — move ALL positions to BE
+                        _protected = 0
+                        for pos in _our_positions:
+                            entry = pos.price_open
+                            is_buy = pos.type == 0
+                            current_sl = pos.sl or 0
+                            # Skip if already at or past BE
+                            if is_buy and current_sl >= entry:
+                                continue
+                            if not is_buy and current_sl != 0 and current_sl <= entry:
+                                continue
+                            try:
+                                _res = self.mt5.order_send({
+                                    "action": self.mt5.TRADE_ACTION_SLTP,
+                                    "symbol": pos.symbol,
+                                    "position": pos.ticket,
+                                    "sl": entry,
+                                    "tp": pos.tp,
+                                })
+                                if _res and _res.retcode == self.mt5.TRADE_RETCODE_DONE:
+                                    self.logger.log('INFO', 'DailyLossProtect', 'SL_TO_ENTRY',
+                                                    f'{pos.symbol} ticket={pos.ticket} SL->{entry}')
+                                    _protected += 1
+                            except Exception:
+                                pass
+
+                        _discord = getattr(_dg, 'discord', None)
+                        _name = getattr(_dg, 'account_name', '')
+                        if _discord:
+                            _discord.send(
+                                f"[{_name}] DAILY LOSS PROTECT — ALL TO BE",
+                                f"SL risk (${_total_sl_risk:.0f}) > remaining buffer (${_remaining:.0f}).\n"
+                                f"{_protected} positions moved to breakeven.\n"
+                                f"No new trades until tomorrow.",
+                                "red")
+                        self.logger.log('WARNING', 'DailyLossProtect', 'ALL_TO_BE',
+                                        f'SL risk ${_total_sl_risk:.0f} > buffer ${_remaining:.0f} — {_protected} to BE')
+                    else:
+                        self.logger.log('INFO', 'DailyLossProtect', 'SAFE',
+                                        f'SL risk ${_total_sl_risk:.0f} < buffer ${_remaining:.0f} — no action needed')
+
                 if positions:
                     for pos in positions:
                         if self._monitor_stop.is_set():

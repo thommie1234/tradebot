@@ -43,6 +43,7 @@ class DrawdownGuard:
         self._profit_lock_warned = False
         self._profit_gate_warned = False
         self._profit_trail_active = False
+        self._needs_daily_loss_protect = False
         self._profit_trail_hwm = 0.0
         self._profit_trail_floor = 0.0
         self._profit_trail_warned = False
@@ -75,20 +76,18 @@ class DrawdownGuard:
             return True, ""  # No valid balance — allow trading, don't crash
         daily_pnl_pct = (account_info.equity - base) / base
         if daily_pnl_pct <= -self.daily_loss_pct:
-            if self.discord and not self._daily_loss_warned:
-                self.discord.send(f"[{self.account_name}] DAILY LOSS LIMIT",
-                                  f"PnL: {daily_pnl_pct:.2%}\nNo new trades until tomorrow.",
-                                  "red")
+            if not self._daily_loss_warned:
                 self._daily_loss_warned = True
+                self._needs_daily_loss_protect = True
+                if self.discord:
+                    self.discord.send(f"[{self.account_name}] DAILY LOSS LIMIT",
+                                      f"PnL: {daily_pnl_pct:.2%}\nProtecting positions + no new trades.",
+                                      "red")
             return False, f"daily PnL {daily_pnl_pct:.2%} hit -{self.daily_loss_pct:.1%} limit"
 
-        if daily_pnl_pct >= self.profit_lock_pct:
-            if self.discord and not self._profit_lock_warned:
-                self.discord.send(f"[{self.account_name}] PROFIT LOCKED",
-                                  f"PnL: {daily_pnl_pct:.2%}\nNo new trades. Protecting gains.",
-                                  "green")
-                self._profit_lock_warned = True
-            return False, f"daily PnL {daily_pnl_pct:.2%} hit +{self.profit_lock_pct:.0%} — locking profits"
+        # Profit lock disabled — trailing stop on each position handles exits
+        # if daily_pnl_pct >= self.profit_lock_pct:
+        #     return False, "profit locked"
 
         return True, ""
 
@@ -154,21 +153,37 @@ class DrawdownGuard:
         return False, ""
 
     def check_dd_recovery(self, account_info) -> bool:
-        """Check if in drawdown recovery mode. Returns True if lots should be halved."""
+        """Check if in drawdown recovery mode. Returns True if lots should be halved.
+
+        Uses DAILY P/L (not floating DD) so it works even after trades are closed.
+        Triggers at dd_recovery_threshold (1.5%) daily loss.
+        Exits at dd_recovery_exit (0.5%) daily loss (recovery).
+        """
         if account_info is None:
             return False
 
-        base = account_info.balance if account_info.balance > 0 else cfg.ACCOUNT_SIZE
+        # Use daily P/L instead of balance vs equity
+        base = self.daily_start_balance if self.daily_start_balance > 0 else account_info.balance
         if base <= 0:
             return False
-        dd_pct = (base - account_info.equity) / base
-        if dd_pct >= self.dd_recovery_threshold:
+        daily_pnl_pct = (account_info.equity - base) / base  # negative = loss
+
+        if daily_pnl_pct <= -self.dd_recovery_threshold:
+            if not self._dd_recovery_mode:
+                self.logger.log('WARNING', 'DrawdownGuard', 'DD_RECOVERY_ON',
+                                f'[{self.account_name}] Daily loss {daily_pnl_pct:.2%} hit '
+                                f'-{self.dd_recovery_threshold:.1%} — halving lot sizes')
+                if self.discord:
+                    self.discord.send(
+                        f"[{self.account_name}] DD RECOVERY MODE",
+                        f"Daily loss: {daily_pnl_pct:.2%}\nLot sizes halved until recovery.",
+                        "orange")
             self._dd_recovery_mode = True
-        elif dd_pct <= self.dd_recovery_exit:
+        elif daily_pnl_pct >= -self.dd_recovery_exit:
             if self._dd_recovery_mode:
                 self.logger.log('INFO', 'DrawdownGuard', 'DD_RECOVERY_OFF',
-                                f'[{self.account_name}] Drawdown recovery OFF — '
-                                f'equity recovered to {dd_pct:.2%} DD')
+                                f'[{self.account_name}] Daily loss recovered to {daily_pnl_pct:.2%} '
+                                f'— normal lot sizes resumed')
             self._dd_recovery_mode = False
 
         return self._dd_recovery_mode
@@ -179,6 +194,7 @@ class DrawdownGuard:
         self._profit_lock_warned = False
         self._profit_gate_warned = False
         self._profit_trail_active = False
+        self._needs_daily_loss_protect = False
         self._profit_trail_hwm = 0.0
         self._profit_trail_floor = 0.0
         self._profit_trail_warned = False

@@ -1,16 +1,18 @@
 """
-Multi-timeframe scanner — runs ALL symbols on their optimal timeframe.
+Multi-timeframe scanner — runs ALL symbols on ALL timeframes simultaneously.
 
-Every TF from M1 to H4 is treated equally. No more H1 "default loop".
+Every TF from M1 to H4 is treated equally. No H1 bias.
 Scans fire when timeframe boundaries are hit. Feature computation + ML
-inference run in parallel across TFs using ThreadPoolExecutor.
+inference run in parallel across ALL ready TFs using ThreadPoolExecutor.
+
+Returns Signal objects to caller (MasterOrderGenerator handles execution).
 
 Usage from run_bot.py:
     scanner = MultiTFScanner(bot)
     scanner.load_config()
 
     # In the main loop, call this every ~5 seconds:
-    scanner.tick(mt5)  # fires scans when timeframe boundaries are hit
+    signals = scanner.tick(mt5)  # returns list[_Signal], no execution
 """
 from __future__ import annotations
 
@@ -40,8 +42,8 @@ TF_MAP = {
     "H4":  (240, "TIMEFRAME_H4"),
 }
 
-# Number of threads for parallel feature computation
-_MAX_WORKERS = 4
+# Scale workers to available CPU cores (clamped 4–16)
+_MAX_WORKERS = max(4, min(16, (os.cpu_count() or 4)))
 
 
 @dataclass
@@ -119,31 +121,45 @@ class MultiTFScanner:
                 continue
             self._tf_groups.setdefault(tf, []).append(sym)
 
-        # Load models per TF
+        # Load ALL models in parallel — not one by one
         _ensure_ml_imports()
-        loaded = 0
+        load_tasks = []
         for sym, sym_cfg in self.symbols.items():
             tf = sym_cfg.get("timeframe", "H1")
             if tf == "H1":
-                # H1 models live in the root model dir
                 model_dir = None
             else:
                 tf_model_dir = os.path.join(cfg.MODEL_DIR, tf)
                 model_dir = tf_model_dir if os.path.isdir(tf_model_dir) else None
-            filt = SovereignMLFilter(sym, self.bot.logger, model_dir=model_dir)
-            if filt.load_model():
-                self.filters[sym] = filt
-                loaded += 1
-            else:
-                self.bot.logger.log('WARNING', 'MultiTF', 'NO_MODEL',
-                                    f'{sym}[{tf}]: no model found, skipping')
+            load_tasks.append((sym, tf, model_dir))
+
+        loaded = 0
+        t_load = time.time()
+        with ThreadPoolExecutor(max_workers=min(_MAX_WORKERS, len(load_tasks) or 1)) as pool:
+            def _load_one(sym, tf, mdir):
+                filt = SovereignMLFilter(sym, self.bot.logger, model_dir=mdir)
+                ok = filt.load_model()
+                return sym, tf, filt, ok
+
+            futures = {pool.submit(_load_one, s, t, m): s for s, t, m in load_tasks}
+            for f in as_completed(futures):
+                sym, tf, filt, ok = f.result()
+                if ok:
+                    self.filters[sym] = filt
+                    loaded += 1
+                else:
+                    self.bot.logger.log('WARNING', 'MultiTF', 'NO_MODEL',
+                                        f'{sym}[{tf}]: no model found, skipping')
+
+        load_ms = (time.time() - t_load) * 1000
 
         if loaded > 0:
             tf_summary = ", ".join(
                 f"{tf}:{len(syms)}" for tf, syms in sorted(self._tf_groups.items(),
                                                              key=lambda x: TF_MAP[x[0]][0]))
             self.bot.logger.log('INFO', 'MultiTF', 'LOADED',
-                                f'{loaded} symbols across {len(self._tf_groups)} timeframes: {tf_summary}')
+                                f'{loaded} models in {load_ms:.0f}ms (parallel), '
+                                f'{len(self._tf_groups)} timeframes: {tf_summary}')
 
         return loaded
 
@@ -151,29 +167,33 @@ class MultiTFScanner:
         """Return ALL managed symbols (for backwards compat)."""
         return set(self.symbols.keys())
 
-    # ── Main tick — three-phase pipeline ──────────────────────────
+    # ── Main tick — two-phase pipeline (returns signals) ─────────
 
-    def tick(self, mt5) -> tuple[int, int]:
+    def tick(self, mt5) -> list[_Signal]:
         """Called every ~5s from main loop.
 
-        Handles preloading + scanning for ALL timeframes.
-        When multiple TFs fire at the same moment (e.g. :00 → M15+M30+H1),
-        feature computation runs in parallel.
+        Handles preloading + scanning for ALL timeframes simultaneously.
+        When multiple TFs fire at the same moment (e.g. :00 → M5+M15+M30+H1),
+        ALL are fetched and computed in one pass — no TF gets priority.
 
-        Returns (total_signals_found, total_signals_executed).
+        Returns list of _Signal objects. Caller (MasterOrderGenerator)
+        handles execution.
         """
         if not self._tf_groups:
-            return 0, 0
+            return []
 
         now = datetime.now()
 
-        # Handle preloads for all TFs
+        # Handle preloads for ALL TFs simultaneously
+        preload_tfs = []
         for tf, symbols in self._tf_groups.items():
             minutes, _ = TF_MAP[tf]
             if self._should_preload(tf, minutes, now):
-                self._preload_tf(tf, symbols, mt5)
+                preload_tfs.append((tf, symbols))
+        for tf, symbols in preload_tfs:
+            self._preload_tf(tf, symbols, mt5)
 
-        # Collect all TFs that need scanning NOW
+        # Collect ALL TFs that need scanning NOW — no priority, all at once
         ready_tfs = []
         for tf, symbols in self._tf_groups.items():
             minutes, _ = TF_MAP[tf]
@@ -181,29 +201,31 @@ class MultiTFScanner:
                 ready_tfs.append((tf, symbols))
 
         if not ready_tfs:
-            return 0, 0
+            return []
 
-        # Run the three-phase parallel pipeline
+        # Run the two-phase parallel pipeline (fetch + compute, no execution)
         return self._parallel_scan(ready_tfs, mt5)
 
-    def force_scan(self, mt5) -> tuple[int, int]:
+    def force_scan(self, mt5) -> list[_Signal]:
         """Force-scan all timeframes immediately."""
         if not self._tf_groups:
-            return 0, 0
+            return []
         all_tfs = list(self._tf_groups.items())
         self.bot.logger.log('INFO', 'MultiTF', 'FORCE_SCAN',
                             f'Force-scanning {sum(len(s) for _, s in all_tfs)} symbols '
                             f'across {len(all_tfs)} TFs')
         return self._parallel_scan(all_tfs, mt5, force=True)
 
-    # ── Three-phase parallel scan ─────────────────────────────────
+    # ── Two-phase parallel scan (returns signals, no execution) ──
 
     def _parallel_scan(self, ready_tfs: list[tuple[str, list[str]]],
-                       mt5, force: bool = False) -> tuple[int, int]:
+                       mt5, force: bool = False) -> list[_Signal]:
         """
-        Phase 1: Batch MT5 data fetch (main thread, serial)
-        Phase 2: Feature computation + ML inference (parallel)
-        Phase 3: Trade execution (main thread, serial)
+        Phase 1: Batch MT5 data fetch (main thread, serial — MT5 not thread-safe)
+        Phase 2: Feature computation + ML inference (parallel, max workers)
+
+        Returns list of _Signal objects sorted by TF speed then confidence.
+        No trade execution — caller handles that via MasterOrderGenerator.
         """
         _ensure_ml_imports()
         from engine.inference import FEATURE_COLUMNS
@@ -211,15 +233,14 @@ class MultiTFScanner:
         t0 = time.time()
         sentiment_cache = getattr(self.bot.order_router, '_cached_sentiment', {})
 
-        # ── Phase 1: Batch fetch all MT5 data on main thread ──────
-        fetch_tasks = []  # [(symbol, tf, mt5_tf, broker_sym)]
+        # ── Phase 1: Batch fetch ALL symbols across ALL ready TFs ──
+        fetch_tasks = []
         for tf, symbols in ready_tfs:
             minutes, mt5_tf_attr = TF_MAP[tf]
             mt5_tf = getattr(mt5, mt5_tf_attr, None)
             if mt5_tf is None:
                 continue
 
-            # For H4+: check new bar per symbol
             for sym in symbols:
                 if self.bot.emergency_stop:
                     break
@@ -239,9 +260,9 @@ class MultiTFScanner:
         if not fetch_tasks:
             for tf, _ in ready_tfs:
                 self._last_scan[tf] = time.time()
-            return 0, 0
+            return []
 
-        # Log scan start
+        # Log scan start — show ALL TFs firing simultaneously
         tf_counts = {}
         for _, tf, _, _ in fetch_tasks:
             tf_counts[tf] = tf_counts.get(tf, 0) + 1
@@ -251,7 +272,7 @@ class MultiTFScanner:
                             f'{len(fetch_tasks)} symbols [{tf_str}]')
 
         # Batch fetch: get rates from MT5 for all symbols (serial, MT5 not thread-safe)
-        prefetched = {}  # (symbol, tf) -> rates list
+        prefetched = {}
         cache = getattr(self.bot, 'scan_cache', None)
 
         for sym, tf, mt5_tf, minutes in fetch_tasks:
@@ -292,7 +313,7 @@ class MultiTFScanner:
         if not prefetched:
             for tf, _ in ready_tfs:
                 self._last_scan[tf] = time.time()
-            return 0, 0
+            return []
 
         # Grab cached tick + lead-lag data (read-only, thread-safe)
         cached_ticks = {}
@@ -301,10 +322,10 @@ class MultiTFScanner:
             cached_ticks = cache.tick_data
             cached_lead_lag = cache.lead_lag
 
-        # ── Phase 2: Parallel feature computation + ML inference ──
+        # ── Phase 2: Parallel feature + ML inference (ALL at once) ─
         t1 = time.time()
         signals: list[_Signal] = []
-        all_scan_results: dict[str, list] = {}  # tf -> [scan_info]
+        all_scan_results: dict[str, list] = {}
 
         def _compute_one(sym: str, tf: str, rates, filt: SovereignMLFilter):
             """Pure computation — NO MT5 calls. Thread-safe."""
@@ -312,7 +333,9 @@ class MultiTFScanner:
                 sym, tf, rates, filt, sentiment_cache,
                 cached_ticks, cached_lead_lag)
 
-        with ThreadPoolExecutor(max_workers=min(_MAX_WORKERS, len(prefetched))) as pool:
+        # Use ALL available workers — no artificial cap during peak moments
+        n_workers = min(_MAX_WORKERS, len(prefetched))
+        with ThreadPoolExecutor(max_workers=n_workers) as pool:
             futures = {}
             for (sym, tf), rates in prefetched.items():
                 filt = self.filters.get(sym)
@@ -333,7 +356,6 @@ class MultiTFScanner:
                     if result.should_trade:
                         signals.append(result)
                     else:
-                        # Log skip
                         sent_info = f" sent={result.sent_boost:+.3f}" if result.sent_boost != 0 else ""
                         sym_thr = cfg.SYMBOLS.get(sym, {}).get("prob_threshold", cfg.ML_THRESHOLD)
                         thr_info = f" thr={sym_thr:.2f}" if sym_thr != cfg.ML_THRESHOLD else ""
@@ -345,16 +367,11 @@ class MultiTFScanner:
 
         compute_ms = (time.time() - t1) * 1000
 
-        # ── Phase 3: Execute trades on main thread ────────────────
         # Sort: shortest TF first (most time-sensitive), then highest confidence
         signals.sort(key=lambda s: (TF_MAP.get(s.tf, (999,))[0], -s.confidence))
 
-        t2 = time.time()
-        executed = 0
+        # Log signals found (no execution here — caller handles that)
         for sig in signals:
-            if self.bot.emergency_stop:
-                break
-
             sent_info = f" sent={sig.sent_boost:+.3f}" if sig.sent_boost != 0 else ""
             sym_thr = cfg.SYMBOLS.get(sig.symbol, {}).get("prob_threshold", cfg.ML_THRESHOLD)
             thr_info = f" thr={sym_thr:.2f}" if sym_thr != cfg.ML_THRESHOLD else ""
@@ -362,14 +379,6 @@ class MultiTFScanner:
                                 f'{sig.symbol}[{sig.tf}] {sig.direction} '
                                 f'(proba={sig.confidence:.3f}{sent_info}{thr_info})')
 
-            success = self.bot.execute_trade(sig.symbol, sig.direction, sig.confidence,
-                                             features_dict=sig.features_dict)
-            if success:
-                executed += 1
-                sig.scan_info["status"] = "TRADE"
-                sig.scan_info["reason"] = "trade geplaatst"
-
-        exec_ms = (time.time() - t2) * 1000
         total_ms = (time.time() - t0) * 1000
 
         # Mark all ready TFs as scanned
@@ -377,10 +386,9 @@ class MultiTFScanner:
             self._last_scan[tf] = time.time()
 
         self.bot.logger.log('INFO', 'MultiTF', 'SCAN_DONE',
-                            f'{len(prefetched)} symbols, signals={len(signals)}, '
-                            f'executed={executed} | '
+                            f'{len(prefetched)} symbols, signals={len(signals)} | '
                             f'fetch={fetch_ms:.0f}ms compute={compute_ms:.0f}ms '
-                            f'exec={exec_ms:.0f}ms total={total_ms:.0f}ms')
+                            f'total={total_ms:.0f}ms (workers={n_workers})')
 
         # LLM commentary per TF
         for tf, results in all_scan_results.items():
@@ -390,7 +398,7 @@ class MultiTFScanner:
                 exec_tf = sum(1 for r in results if r["status"] == "TRADE")
                 llm_callback(tf, results, found_tf, exec_tf)
 
-        return len(signals), executed
+        return signals
 
     # ── Pure computation (thread-safe, no MT5) ────────────────────
 

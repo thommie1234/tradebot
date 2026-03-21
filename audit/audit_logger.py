@@ -42,7 +42,7 @@ class BlackoutLogger:
         if self._db_dir:
             os.makedirs(self._db_dir, exist_ok=True)
         conn = sqlite3.connect(self.db_path, timeout=30, check_same_thread=False)
-        conn.execute("PRAGMA journal_mode=DELETE")
+        conn.execute("PRAGMA journal_mode=WAL")
         conn.execute("PRAGMA synchronous=NORMAL")
         conn.execute("PRAGMA busy_timeout=30000")
         return conn

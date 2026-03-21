@@ -142,6 +142,20 @@ Live trading requires triple opt-in:
 - **Always verify broker state**: Re-query MT5 after modifications
 - **Evaluate paper results per-symbol, never portfolio-level**
 - **Express trade values in USD or % of equity**
+- **NO OPTIMIZATION until 500+ trades**: only fix bugs, no parameter tuning on small samples
+- **ConfMult is DISABLED**: data shows higher confidence = lower winrate. Fixed at 1.0.
+- **TRADE_META logging**: every trade logs ADX, ATR ratio, session, hour, signal flip for post-analysis
+
+## SessionExporter EA (CRITICAL)
+
+**When adding a new symbol to the portfolio**, ALWAYS remind the user to add it to Market Watch in MT5 so the SessionExporter EA can export its trading hours. The EA runs on one chart per terminal and exports ALL Market Watch symbols to `data/sessions/{broker}_sessions.json`.
+
+- EA source: `mt5_scripts/SessionExporter.mq5`
+- BF terminal: BrokerTag="bf", outputs `bf_sessions.json`
+- FTMO terminal: BrokerTag="ftmo", outputs `ftmo_sessions.json`
+- `risk/session_guard.py` reads these files + Finnhub holidays for proactive session close
+- Short breaks (<60 min) are ignored — only daily close triggers position close
+- Finnhub API key in `.env` as `FINNHUB_API_KEY`
 
 ## Config Locations (common source of bugs!)
 

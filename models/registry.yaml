@@ -178,3 +178,14 @@ symbols:
         optuna_ev: 9.951268078435081e-05
         num_boost_round: 800
     ab_results: []
+  NVDA:
+    champion: NVDA_20260318_201424
+    versions:
+    - version: NVDA_20260318_201424
+      path: C:\tradebots\bf\models\versions\NVDA_20260318_201424.json
+      timestamp: '20260318_201424'
+      metadata:
+        train_samples: 3542
+        optuna_ev: 0.0
+        num_boost_round: 600
+    ab_results: []

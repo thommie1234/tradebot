@@ -440,15 +440,20 @@ class OrderRouter:
         tp_distance += spread_price + commission_price + slippage_price
         # ─────────────────────────────────────────────────────────────
 
-        # Position sizing — Kelly with config risk as absolute floor
+        # Position sizing — config risk as ceiling for micro-risk accounts
         # risk_scale < 1.0 reduces position size account-wide (e.g. BF=0.8)
         config_risk = sym_cfg.get('risk_per_trade', 0.003) * self.risk_scale
-        risk_pct = max(self.position_sizer.kelly_risk_pct(symbol), config_risk)
+        kelly_risk = self.position_sizer.kelly_risk_pct(symbol)
+        if config_risk < 0.001:
+            # Micro-risk mode: config is HARD CAP, ignore Kelly
+            risk_pct = config_risk
+        else:
+            risk_pct = max(kelly_risk, config_risk)
 
-        # ── F4: Confidence-scaled sizing ─────────────────────────────
-        # 0.55->0.5×, 0.70->1.0×, 0.85->1.5×, capped at 2.0×
-        conf_multiplier = max(0.5, min(2.0, 0.5 + (ml_confidence - 0.55) * 3.33))
-        risk_pct *= conf_multiplier
+        # ── F4: Confidence-scaled sizing — DISABLED ────────────────
+        # Data shows higher confidence correlates with LOWER winrate.
+        # ConfMult was punishing performance. Fixed at 1.0 for all accounts.
+        conf_multiplier = 1.0
 
         # ── F3: RL position sizing ──────────────────────────────────
         self._last_rl_arm = None
@@ -545,6 +550,63 @@ class OrderRouter:
                         f'{symbol} ATR:{atr:.5f} SL:{sl_distance:.5f} TP:{tp_distance:.5f} '
                         f'Lots:{lot_size:.2f} Risk:{risk_pct:.3%} '
                         f'ConfMult:{conf_multiplier:.2f} TPfact:{tp_confidence_factor:.2f}')
+
+        # ── Log trade metadata for post-analysis ──────────────────────
+        try:
+            import json as _json
+            from datetime import datetime as _dt, timezone as _tz
+            _now = _dt.now(_tz.utc)
+            _hour = _now.hour
+            _session = 'asian' if _hour < 7 else ('london' if _hour < 13 else ('ny_overlap' if _hour < 17 else ('ny' if _hour < 21 else 'late')))
+
+            # ADX calculation
+            _adx = 0
+            _atr_ratio = 1.0
+            try:
+                _tf_map = {'M5': mt5.TIMEFRAME_M5, 'M15': mt5.TIMEFRAME_M15,
+                           'M30': mt5.TIMEFRAME_M30, 'H1': mt5.TIMEFRAME_H1, 'H4': mt5.TIMEFRAME_H4}
+                _tf = _tf_map.get(sym_cfg.get('atr_timeframe', 'M30'), mt5.TIMEFRAME_M30)
+                import numpy as _np
+                _bars = mt5.copy_rates_from_pos(symbol, _tf, 0, 30)
+                if _bars is not None and len(_bars) >= 20:
+                    _h = _np.array([b[2] for b in _bars])
+                    _l = _np.array([b[3] for b in _bars])
+                    _c = _np.array([b[4] for b in _bars])
+                    _tr = _np.maximum(_h[1:]-_l[1:], _np.maximum(_np.abs(_h[1:]-_c[:-1]), _np.abs(_l[1:]-_c[:-1])))
+                    _cur_atr = _np.mean(_tr[-5:])
+                    _avg_atr = _np.mean(_tr[-20:])
+                    _atr_ratio = round(_cur_atr / _avg_atr, 3) if _avg_atr > 0 else 1.0
+                    _pdm = _np.maximum(_h[1:]-_h[:-1], 0)
+                    _mdm = _np.maximum(_l[:-1]-_l[1:], 0)
+                    _mask = _pdm > _mdm
+                    _pdm2 = _pdm.copy(); _pdm2[~_mask] = 0
+                    _mdm2 = _mdm.copy(); _mdm2[_mask] = 0
+                    _pdi = _np.mean(_pdm2[-14:]) / _np.mean(_tr[-14:]) * 100 if _np.mean(_tr[-14:]) > 0 else 0
+                    _mdi = _np.mean(_mdm2[-14:]) / _np.mean(_tr[-14:]) * 100 if _np.mean(_tr[-14:]) > 0 else 0
+                    _adx = round(abs(_pdi - _mdi) / (_pdi + _mdi) * 100, 1) if (_pdi + _mdi) > 0 else 0
+            except Exception:
+                pass
+
+            # Signal flip check
+            _flip = False
+            _last_dir_key = f'_last_signal_dir_{symbol}'
+            _prev = getattr(self, _last_dir_key, None)
+            if _prev is not None and _prev != direction:
+                _flip = True
+            setattr(self, _last_dir_key, direction)
+
+            _meta = {
+                'symbol': symbol, 'direction': direction,
+                'confidence': round(ml_confidence, 4),
+                'adx': _adx, 'atr_ratio': _atr_ratio,
+                'session': _session, 'hour': _hour,
+                'signal_flip': _flip,
+                'risk_pct': round(risk_pct, 5),
+            }
+            self.logger.log('INFO', 'OrderRouter', 'TRADE_META',
+                            _json.dumps(_meta), data=_json.dumps(_meta))
+        except Exception:
+            pass
 
         # ── Split into chunks if lot_size > broker volume_max ──────────
         vol_max = sym_info.get("volume_max", 100.0) if sym_info else 100.0

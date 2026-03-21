@@ -117,6 +117,17 @@ class SovereignBot:
                                      "instrument_specs", "bf_sessions.csv")
         _override = _bf_sessions if "bright" in (self._account_id or '') else None
         self.trading_schedule = TradingSchedule(override_csv=_override)
+        # SessionGuard: MQL5 EA export + Finnhub holidays (more accurate than CSV)
+        try:
+            from risk.session_guard import SessionGuard
+            _broker_tag = "bf" if "bright" in (self._account_id or '') else "ftmo"
+            self.session_guard = SessionGuard(_broker_tag, self.logger)
+            if self.session_guard._sessions:
+                self.logger.log('INFO', 'SovereignBot', 'SESSION_GUARD_OK',
+                                f'SessionGuard loaded {len(self.session_guard._sessions)} symbols from MQL5 EA')
+        except Exception as _sg_err:
+            self.session_guard = None
+            self.logger.log('WARNING', 'SovereignBot', 'SESSION_GUARD_FAIL', str(_sg_err))
         self.position_sizer = PositionSizingEngine(self.logger, mt5)
         self.decay_tracker = ModelDecayTracker(self.logger)
         self.position_manager = PositionManager(self.logger, mt5)
@@ -822,6 +833,16 @@ class SovereignBot:
             filled = int(max(0, min(progress_pct, 100)) / 100 * bar_len)
             progress_bar = "█" * filled + "░" * (bar_len - filled)
 
+            # Best day rule
+            best_day_info = ""
+            if current_profit > 0 and daily_pnl > 0:
+                best_day_ratio = daily_pnl / current_profit * 100
+                best_day_status = "OK" if best_day_ratio <= 50 else f"NEED MORE ({best_day_ratio:.0f}%)"
+                best_day_info = f"\n**Best Day Rule:** {best_day_status}"
+                if best_day_ratio > 50:
+                    needed = daily_pnl - (current_profit - daily_pnl)
+                    best_day_info += f" (need ${needed:+,.0f} on other days)"
+
             body = (
                 f"**Balance:** ${balance:,.2f}\n"
                 f"**Equity:** ${equity:,.2f}\n"
@@ -834,6 +855,7 @@ class SovereignBot:
                 f"**Safety:**\n"
                 f"Daily loss margin: ${daily_loss_limit + daily_pnl:,.2f} remaining\n"
                 f"Total DD margin: ${total_dd_limit + current_profit:,.2f} remaining"
+                f"{best_day_info}"
             )
             self.discord.send("DAILY SUMMARY", body, "blue")
         except Exception as e:
